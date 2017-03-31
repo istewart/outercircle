@@ -5,5 +5,5 @@ import css from '../css/main.css';
 
 ReactDOM.render(
   <Navbar/>,
-  document.getElementById('app')
+  document.body
 );

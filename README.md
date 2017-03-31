@@ -18,3 +18,10 @@ This will create a handful of compiled files in dist/ containing the front end c
 Which will create a web server listening on port 8080 that you can access at:
 
     localhost:8080/
+
+As a shortcut after making changes, you can also run:
+
+    npm run boot
+
+Which will clean dist, run build, and start the server.
+
