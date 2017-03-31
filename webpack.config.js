@@ -20,5 +20,6 @@ module.exports = {
     filename: 'feed.html',
     inject: 'body',
     title:  'OuterCircle',
+    template: path.join(__dirname, '/app/html/feed.html'),
   })]
 };
