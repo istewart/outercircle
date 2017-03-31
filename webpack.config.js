@@ -4,14 +4,16 @@ module.exports = {
   context: __dirname + "/app",
   entry: {
 	  javascript: "./index.jsx",
+    html: "./feed.html"
 	},
   output: {
-    filename: 'bundle.js',
+    filename: '[name]',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: "babel-loader" }
+      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: "babel-loader" },
+      { test: /\.html$/, loader: "file-loader?name=[name].[ext]"},
     ]
   }
 };
