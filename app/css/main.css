@@ -1,3 +1,19 @@
-body {
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding: 12px 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#logo {
+  display: block;
   background-color: green;
+  height: 34px;
+  width: 34px;
+  margin-right: 16px;
+  border-radius: 3px;
 }

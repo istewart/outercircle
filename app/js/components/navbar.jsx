@@ -4,6 +4,9 @@ export default React.createClass({
   render: function() {
     return (
       <div id="navbar">
+        <a href="/">
+          <div id="logo"></div>
+        </a>
         <input id="search" 
           className="form-control" 
           type="text" 
