@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Greeting from './greeting.jsx';
+import Navbar from './components/navbar.jsx';
 
 ReactDOM.render(
-  <Greeting name="World"/>,
-  document.body
+  <Navbar/>,
+  document.getElementById('app')
 );
