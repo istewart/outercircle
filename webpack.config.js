@@ -3,8 +3,8 @@ var path = require('path');
 module.exports = {
   context: __dirname + "/app",
   entry: {
-	  javascript: "./index.jsx",
-    html: "./feed.html"
+	  javascript: "./js/index.jsx",
+    html: "./html/feed.html"
 	},
   output: {
     filename: '[name]',
