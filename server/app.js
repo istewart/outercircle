@@ -1,9 +1,9 @@
 var express = require('express');
-// var anyDB = require('any-db');
+// var anyDB = require('any-db'); // TODO:
 var bodyParser = require('body-parser');
 
 var app = express();
-app.use(express.static('../dist')); // TODO: not sure about this
+app.use(express.static('dist')); // TODO: not sure about this
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 //   {min: 2, max: 8}
 // );
 
-app.get('*', function(request, response) {
+app.get('/', function(request, response) {
   console.log('- Request received /:');
   response.sendFile('feed.html', {root : "dist"}); // TODO: again here
 });

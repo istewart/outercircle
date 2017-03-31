@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf dist/",
+    "server": "node server/app.js"
   },
   "author": "",
   "license": "ISC",
