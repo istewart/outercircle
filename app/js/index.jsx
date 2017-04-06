@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './components/navbar.jsx';
+import Feed from './components/feed.jsx';
 import css from '../css/main.css';
 
 ReactDOM.render(
-  <Navbar/>,
+  <Feed/>,
   document.getElementById('app')
 );

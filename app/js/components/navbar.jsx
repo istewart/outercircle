@@ -12,6 +12,9 @@ export default React.createClass({
           type="text" 
           placeholder="Search"
         />
+        <a href="/">
+          <div id="menu"></div>
+        </a>
       </div>
     );
   },

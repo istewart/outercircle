@@ -17,3 +17,17 @@
   margin-right: 16px;
   border-radius: 3px;
 }
+
+#menu {
+  display: block;
+  background-color: orange;
+  height: 34px;
+  width: 34px;
+  margin-left: 16px;
+  border-radius: 3px;
+}
+
+#main {
+  padding-top: 78px;
+  float: none;
+}
