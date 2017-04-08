@@ -31,3 +31,12 @@
   padding-top: 78px;
   float: none;
 }
+
+.headerIMGContainer {
+  padding: 10px;
+  margin: auto;
+  height: 150px;
+  display: block;
+  overflow: hidden;
+  width: 75%;
+}

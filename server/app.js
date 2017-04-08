@@ -20,7 +20,11 @@ app.get('/', function(request, response) {
   response.sendFile('feed.html', {root : "dist"}); // TODO: again here
 });
 
+// Set up public access for images folder
+app.use(express.static("img"));
+
 // start the web server
 app.listen(8080, function(){
   console.log('- Server listening on port 8080');
 });
+
