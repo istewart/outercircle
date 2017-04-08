@@ -1,20 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default React.createClass({
   render: function() {
     return (
       <div id="navbar">
-        <a href="/">
+        <Link to="/">
           <div id="logo"></div>
-        </a>
+        </Link>
         <input id="search" 
           className="form-control" 
           type="text" 
           placeholder="Search"
         />
-        <a href="/">
+        <Link to="/">
           <div id="menu"></div>
-        </a>
+        </Link>
       </div>
     );
   },
