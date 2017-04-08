@@ -14,7 +14,7 @@ export default React.createClass({
                 <IMGheader/>
                 <div className="rows">
                     <div className="donorProfile col-lg-2 col-lg-offset-2 col-md-offset-1">
-                        <img src={this.state.imgsrc} alt="Image Not Found" className="img-thumbnail"/>
+                        <img src={window.location.origin + "/" + this.state.imgsrc} alt="Image Not Found" className="img-thumbnail"/>
                     </div>
                     <div className="donorInfo panel panel-default col-lg-4">
                         <div className="donorIntroduction panel-body">
