@@ -8,17 +8,16 @@ import {
 
 import css from '../css/main.css';
 
-import Navbar from './components/navbar.jsx';
 import Feed from './components/feed.jsx';
 import IMGheader from './components/IMGheader.jsx';
+import donorProfile from './components/donorProfile.jsx';
 
 const Routes = () => (
   <BrowserRouter>
     <div>
-      <Navbar/>
-
-      <Route exact path='/' component={Feed}/>
-      <Route path='/images' component={IMGheader}/>
+        <Route exact path='/' component={Feed}/>
+        <Route path='/images' component={IMGheader}/>
+        <Route path='/donor' component={donorProfile}/>
     </div>
   </BrowserRouter>
 );
