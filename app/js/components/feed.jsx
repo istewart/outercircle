@@ -10,11 +10,13 @@ export default React.createClass({
           name: 'Ian Stewart',
           body: 'TODO',
           user: 'some id',
+          time: new Date().getTime(),
         },
         {
           name: 'Not Ian Stewart',
           body: 'Hello, World!',
           user: 'some other id',
+          time: new Date().getTime(),
         },
       ],
     };
