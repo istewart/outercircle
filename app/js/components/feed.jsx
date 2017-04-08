@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Navbar from './navbar.jsx';
 import Post from './post.jsx';
 
 export default React.createClass({
@@ -28,7 +27,6 @@ export default React.createClass({
 
     return (
       <div id="main" className="center-block col-md-6">
-        <Navbar/>
         {renderedPosts}
       </div>
     );

@@ -40,3 +40,11 @@
   overflow: hidden;
   width: 75%;
 }
+
+.donor-thumbnail {
+  margin-right: 10px;
+}
+
+.post-header {
+  padding-bottom: 10px;
+}
