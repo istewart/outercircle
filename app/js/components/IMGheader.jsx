@@ -3,7 +3,7 @@ import React from 'react';
 export default React.createClass({
   getInitialState: function() {
     return {
-      imgsrc : 'test.jpg'
+      imgsrc : 'beach.jpg'
     };
   },
 
