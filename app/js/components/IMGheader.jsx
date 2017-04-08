@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default React.createClass({
-getInitialState: function() {
+  getInitialState: function() {
     return {
       imgsrc : 'test.jpg'
-      };
+    };
   },
 
   render: function() {

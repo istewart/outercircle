@@ -15,13 +15,13 @@ app.use(bodyParser.urlencoded({
 //   {min: 2, max: 8}
 // );
 
-app.get('/', function(request, response) {
-  console.log('- Request received /:');
-  response.sendFile('feed.html', {root : "dist"}); // TODO: again here
-});
-
 // Set up public access for images folder
 app.use(express.static("img"));
+
+app.get('*', function(request, response) {
+  console.log('- Request received *:');
+  response.sendFile('feed.html', {root : "dist"}); // TODO: again here
+});
 
 // start the web server
 app.listen(8080, function(){
