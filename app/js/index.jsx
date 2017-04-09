@@ -11,6 +11,7 @@ import css from '../css/main.css';
 import Feed from './components/feed.jsx';
 import IMGheader from './components/IMGheader.jsx';
 import donorProfile from './components/donorProfile.jsx';
+import Title from './components/title.jsx';
 
 const Routes = () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ const Routes = () => (
         <Route exact path='/' component={Feed}/>
         <Route path='/images' component={IMGheader}/>
         <Route path='/donor' component={donorProfile}/>
+      <Route path='/charity' component={Title}/>
     </div>
   </BrowserRouter>
 );
