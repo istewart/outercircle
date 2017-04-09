@@ -12,7 +12,8 @@ import Feed from './components/feed.jsx';
 import IMGheader from './components/IMGheader.jsx';
 import donorProfile from './components/donorProfile.jsx';
 import Title from './components/title.jsx';
-import Stats from './components/stats.jsx';
+// This doesn't work because stats.jsx doesn't exist
+//import Stats from './components/stats.jsx';
 
 const Routes = () => (
   <BrowserRouter>

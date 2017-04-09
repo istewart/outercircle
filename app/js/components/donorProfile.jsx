@@ -36,4 +36,4 @@ class DonorProfile extends React.Component {
             </div>
         );
     }
-};
+}

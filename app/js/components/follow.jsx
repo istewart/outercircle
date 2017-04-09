@@ -54,4 +54,4 @@ class Follow extends React.Component {
       );
     }
   }
-};
+}
