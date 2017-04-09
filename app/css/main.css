@@ -63,3 +63,26 @@
 .donorToolbar{
   text-align: right;
 }
+
+.post-time {
+  font-size: 11px;
+  color: #8899a6;
+}
+
+.vtc-center{
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+}
+
+.btn-margin{
+  margin: 0 10px;
+}
+
+#charityTitle{
+  width:70%;
+  margin-top: 10%;
+  padding: 0 3%;
+  border: 2px outset;
+  border-radius:5px;
+}
