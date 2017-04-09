@@ -1,9 +1,10 @@
 import React from 'react';
 import Post from './post.jsx';
 
-class Feed extends React.Component {
-  getInitialState() {
-    return {
+export default class Feed extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       posts: [
         {
           name: 'Ian Stewart',
@@ -20,7 +21,6 @@ class Feed extends React.Component {
       ],
     };
   }
-
   render() {
     const renderedPosts = this.state.posts.map((post) =>
       <Post data={post}/>

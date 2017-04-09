@@ -18,18 +18,19 @@ function UnfollowButton(props){
   )
 }
 
-class Follow extends React.Component {
+export default class Follow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFollow : this.props.isFollow,
+      isLogin : this.props.isLogin
+    };
+  }
+  
   getDefaultProps() {
     return {
       isFollow: false,
       isLogin: false
-    };
-  }
-
-  getInitialState() {
-    return {
-      isFollow : this.props.isFollow,
-      isLogin: this.props.isLogin
     };
   }
 

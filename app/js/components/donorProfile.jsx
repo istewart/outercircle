@@ -1,9 +1,10 @@
 import React from 'react';
 import IMGheader from './IMGheader.jsx';
 
-class DonorProfile extends React.Component {
-    getInitialState() {
-        return {
+export default class DonorProfile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
             imgsrc : 'test2.png'
         };
     }

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Post extends React.Component {
+export default class Post extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
   render() {
     const time = new Date(this.props.data.time).toLocaleTimeString();
 

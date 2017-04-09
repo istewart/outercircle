@@ -12,7 +12,7 @@ import Feed from './components/feed.jsx';
 import IMGheader from './components/IMGheader.jsx';
 import donorProfile from './components/donorProfile.jsx';
 import Title from './components/title.jsx';
-// This doesn't work because stats.jsx doesn't exist
+// Commenting this out because crashes since stats.jsx doesn't exist
 //import Stats from './components/stats.jsx';
 
 const Routes = () => (
@@ -22,7 +22,6 @@ const Routes = () => (
         <Route path='/images' component={IMGheader}/>
         <Route path='/donor' component={donorProfile}/>
         <Route path='/charity' component={Title}/>
-      
     </div>
   </BrowserRouter>
 );
