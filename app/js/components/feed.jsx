@@ -1,9 +1,8 @@
 import React from 'react';
-
 import Post from './post.jsx';
 
-export default React.createClass({
-  getInitialState: function() {
+class Feed extends React.Component {
+  getInitialState() {
     return {
       posts: [
         {
@@ -20,9 +19,9 @@ export default React.createClass({
         },
       ],
     };
-  },
+  }
 
-  render: function() {
+  render() {
     const renderedPosts = this.state.posts.map((post) =>
       <Post data={post}/>
     );
@@ -32,5 +31,5 @@ export default React.createClass({
         {renderedPosts}
       </div>
     );
-  },
+  }
 });

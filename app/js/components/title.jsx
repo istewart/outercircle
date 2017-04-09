@@ -1,22 +1,22 @@
 import React from 'react';
 import Follow from './follow.jsx';
 
-export default React.createClass({
-  getDefaultProps: function() {
+class Title extends React.Component {
+  getDefaultProps() {
     return {
       title : 'OutCircle',
       body : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     };
-  },
+  }
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       title : this.props.title,
       body : this.props.body
     };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div id="charityTitle" className="center-block well">
         <div className="row vtc-center">

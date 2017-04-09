@@ -1,17 +1,17 @@
 import React from 'react';
 
-export default React.createClass({
-  getInitialState: function() {
+class IMGheader extends React.Component {
+  getInitialState() {
     return {
       imgsrc : 'beach.jpg'
     };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="center-block headerIMGContainer">
       	<img src={window.location.origin + "/" + this.state.imgsrc} className="headerIMG"/>
       </div>
     );
-  },
-});
+  }
+}

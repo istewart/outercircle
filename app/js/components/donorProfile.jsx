@@ -1,14 +1,14 @@
 import React from 'react';
 import IMGheader from './IMGheader.jsx';
 
-export default React.createClass({
-    getInitialState: function() {
+class DonorProfile extends React.Component {
+    getInitialState() {
         return {
             imgsrc : 'test2.png'
         };
-    },
+    }
 
-    render: function() {
+    render() {
         return (
             <div>
                 <IMGheader/>
@@ -36,4 +36,4 @@ export default React.createClass({
             </div>
         );
     }
-});
+};

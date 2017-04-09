@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default React.createClass({
-  render: function() {
+class Post extends React.Component {
+  render() {
     const time = new Date(this.props.data.time).toLocaleTimeString();
 
     return (
@@ -21,5 +21,5 @@ export default React.createClass({
         <p>{this.props.data.body}</p>
       </div>
     );
-  },
-});
+  }
+};

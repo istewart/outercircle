@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default React.createClass({
-  render: function() {
+class Navbar extends React.Component {
+  render() {
     return (
       <div id="navbar">
         <Link to="/">
@@ -18,5 +18,5 @@ export default React.createClass({
         </Link>
       </div>
     );
-  },
+  }
 });

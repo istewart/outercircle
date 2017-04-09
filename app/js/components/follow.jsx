@@ -18,30 +18,30 @@ function UnfollowButton(props){
   )
 }
 
-export default React.createClass({
-  getDefaultProps: function() {
+class Follow extends React.Component {
+  getDefaultProps() {
     return {
       isFollow: false,
       isLogin: false
     };
-  },
+  }
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isFollow : this.props.isFollow,
       isLogin: this.props.isLogin
     };
-  },
+  }
 
-  handleFollow: function(){
+  handleFollow(){
     this.setState({isFollow: true});
-  },
+  }
 
-  handleUnfollow: function(){
+  handleUnfollow(){
     this.setState({isFollow: false});
-  },
+  }
 
-  render: function() {
+  render() {
     const isFollow = this.state.isFollow;
     let button = null;
     if(isFollow){
@@ -54,4 +54,4 @@ export default React.createClass({
       );
     }
   }
-});
+};
