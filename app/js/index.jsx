@@ -22,7 +22,7 @@ const Routes = () => (
         <Route path='/images' component={IMGheader}/>
         <Route path='/donor' component={donorProfile}/>
         <Route path='/charity' component={Title}/>
-        <Route path='/stats' component={Stats}/>
+      
     </div>
   </BrowserRouter>
 );
