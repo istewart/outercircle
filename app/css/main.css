@@ -88,5 +88,9 @@
 }
 
 .newPost {
-  display: flex;
+  position: relative;
+  display: block;
+  top: 65px;
+  margin: auto;
+  width: 50%;
 }

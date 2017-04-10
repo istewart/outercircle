@@ -7,13 +7,13 @@ export default class NewPost extends React.Component {
   
   render() {
     return (
-      <div className="newPost well well-sm">
+      <div className="newPost well well-sm center-block">
         <form>
-          <div class="form-group">
-            <textarea class="form-control" id="newPost" placeholder="Enter a status" rows="3"></textarea>
+          <div className="form-group">
+            <textarea className="form-control" id="newPost" placeholder="Enter a status" rows="3"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary">Post</button>
+          <button type="submit" className="btn btn-primary">Post</button>
         </form>
       </div>
     );
