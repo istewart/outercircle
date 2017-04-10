@@ -81,6 +81,13 @@
   width: 100%;
 }
 
+.donorPage-content {
+  width: 100%;
+  display: block;
+  margin-top: 140px;
+  border-top: 1px solid rgba(190, 193, 198, .5);
+}
+
 .post-time {
   font-size: 11px;
   color: #8899a6;

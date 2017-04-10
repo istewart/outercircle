@@ -14,8 +14,10 @@ export default class DonorPage extends React.Component {
     <div className="donor-page-container">
       <Navbar/>
       <DonorProfile/>
-      <Feed/>
-      <Stats/>
+      <div className="donorPage-content">
+        <Feed/>
+        <Stats/>
+      </div>
     </div>
     );
   }
