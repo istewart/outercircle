@@ -86,3 +86,7 @@
   border: 2px outset;
   border-radius:5px;
 }
+
+.newPost {
+  display: flex;
+}
