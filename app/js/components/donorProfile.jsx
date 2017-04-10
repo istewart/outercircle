@@ -5,7 +5,7 @@ export default class DonorProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            imgsrc : 'test2.png'
+            imgsrc : this.props.imgsrc
         };
     }
 
@@ -38,3 +38,7 @@ export default class DonorProfile extends React.Component {
         );
     }
 }
+
+DonorProfile.defaultProps = {
+    imgsrc : 'test2.png'
+};

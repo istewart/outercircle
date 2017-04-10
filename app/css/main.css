@@ -97,11 +97,14 @@
 }
 
 #charityTitle{
-  width:70%;
-  margin-top: 10%;
+  display: block;
+  position: relative;
+  margin-top: -75px;
+  z-index: 999;
+  width:60%;
   padding: 0 3%;
-  border: 2px outset;
-  border-radius:5px;
+  border: white outset 5px;
+  border-radius:10px;
 }
 
 .newPost {

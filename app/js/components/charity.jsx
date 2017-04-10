@@ -19,7 +19,7 @@ export default class Charity extends React.Component{
     return (
     <div>
       <Navbar/>
-      <IMGheader imgsrc={this.state.headerImg}/>
+
       <Title data={this.state.title}/>
       <Feed posts={this.state.posts}/>
       <Stats/>
