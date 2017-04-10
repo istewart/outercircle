@@ -3,6 +3,7 @@ import Navbar from './navbar.jsx';
 import IMGheader from './IMGheader.jsx';
 import Title from './Title.jsx';
 import Feed from './feed.jsx';
+import Stats from './stats.jsx';
 
 export default class Charity extends React.Component{
   constructor(props){
@@ -10,7 +11,7 @@ export default class Charity extends React.Component{
     this.state = {
       title : this.props.title,
       posts: this.props.posts,
-      header: this.props.headerImgsrc
+      headerImg: this.props.headerImg
     };
   }
 
@@ -18,9 +19,10 @@ export default class Charity extends React.Component{
     return (
     <div>
       <Navbar/>
-      <IMGheader/>
-      <Title/>
-      <Feed/>
+      <IMGheader imgsrc={this.state.headerImg}/>
+      <Title data={this.state.title}/>
+      <Feed posts={this.state.posts}/>
+      <Stats/>
     </div>
     )
   }
