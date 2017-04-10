@@ -26,13 +26,6 @@ export default class Follow extends React.Component {
       isLogin : this.props.isLogin
     };
   }
-  
-  getDefaultProps() {
-    return {
-      isFollow: false,
-      isLogin: false
-    };
-  }
 
   handleFollow(){
     this.setState({isFollow: true});
@@ -56,3 +49,8 @@ export default class Follow extends React.Component {
     }
   }
 }
+
+Follow.defaultProps = {
+    isFollow: false,
+    isLogin: false
+};
