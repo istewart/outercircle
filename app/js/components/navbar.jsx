@@ -5,16 +5,16 @@ export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <div id="navbar">
         <Link to="/">
           <div id="logo"></div>
         </Link>
-        <input id="search" 
-          className="form-control" 
-          type="text" 
+        <input id="search"
+          className="form-control"
+          type="text"
           placeholder="Search"
         />
         <Link to="/">

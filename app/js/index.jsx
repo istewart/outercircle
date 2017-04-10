@@ -14,7 +14,8 @@ import donorProfile from './components/donorProfile.jsx';
 import Title from './components/title.jsx';
 import Home from './components/home.jsx';
 // Commenting this out because crashes since stats.jsx doesn't exist
-//import Stats from './components/stats.jsx';
+import Stats from './components/stats.jsx';
+import Charity from './components/charity.jsx';
 
 const Routes = () => (
   <BrowserRouter>
@@ -22,7 +23,7 @@ const Routes = () => (
         <Route exact path='/' component={Home}/>
         <Route path='/images' component={IMGheader}/>
         <Route path='/donor' component={donorProfile}/>
-        <Route path='/charity' component={Title}/>
+        <Route path='/charity' component={Charity}/>
     </div>
   </BrowserRouter>
 );
