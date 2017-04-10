@@ -25,6 +25,8 @@ export default class Follow extends React.Component {
       isFollow : this.props.isFollow,
       isLogin : this.props.isLogin
     };
+    this.handleFollow = this.handleFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
   handleFollow(){
@@ -37,7 +39,6 @@ export default class Follow extends React.Component {
 
   render() {
     const isFollow = this.state.isFollow;
-    let button = null;
     if(isFollow){
       return(
         <UnfollowButton onClick={this.handleUnfollow} />

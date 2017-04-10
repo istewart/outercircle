@@ -5,20 +5,7 @@ export default class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [
-        {
-          name: 'Ian Stewart',
-          body: 'TODO',
-          user: 'some id',
-          time: new Date().getTime(),
-        },
-        {
-          name: 'Not Ian Stewart',
-          body: 'Hello, World!',
-          user: 'some other id',
-          time: new Date().getTime(),
-        },
-      ],
+      posts: this.props.posts
     };
   }
   render() {
@@ -33,3 +20,20 @@ export default class Feed extends React.Component {
     );
   }
 }
+
+Feed.defaultProps = {
+    posts: [
+        {
+            name: 'Ian Stewart',
+            body: 'TODO',
+            user: 'some id',
+            time: new Date().getTime(),
+        },
+        {
+            name: 'Not Ian Stewart',
+            body: 'Hello, World!',
+            user: 'some other id',
+            time: new Date().getTime(),
+        },
+    ],
+};

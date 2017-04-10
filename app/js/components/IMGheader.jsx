@@ -4,7 +4,7 @@ export default class IMGheader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgsrc : 'beach.jpg'
+      imgsrc : this.props.imgsrc
     };
   }
   
@@ -16,3 +16,7 @@ export default class IMGheader extends React.Component {
     );
   }
 }
+
+IMGheader.defaultProps={
+  imgsrc:'beach.jpg'
+};
