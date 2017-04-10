@@ -19,10 +19,10 @@ export default class Post extends React.Component {
             <Link to='/donor/123'>
               <p>{this.props.data.name}</p>
             </Link>
-            <p className="post-time">{time}</p>
+            <p className="post-time"> {time}</p>
           </div>
         </div>
-        <p>{this.props.data.body}</p>
+        <span className="post-body">{this.props.data.body}</span>
       </div>
     );
   }

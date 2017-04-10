@@ -35,21 +35,27 @@
 .headerIMGContainer {
   padding: 10px;
   margin: auto;
-  height: 150px;
+  height: 250px;
   display: block;
   overflow: hidden;
   width: 75%;
+}
+
+.img-thumbnail {
+  height: 200px;
+  width: 200px;
 }
 
 .donorProfile {
   position: relative;
   width: 200px;
   height: 200px;
-  margin-top: -15px;
+  padding: 0;
+  margin-top: -75px;
 }
 
 .donorInfo {
-  width: 600px;
+  width: 40%;
   height: 200px;
   overflow: hidden;
   margin-top: -200px;
@@ -94,3 +100,4 @@
   margin: auto;
   width: 50%;
 }
+
