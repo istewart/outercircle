@@ -88,6 +88,12 @@
   border-top: 1px solid rgba(190, 193, 198, .5);
 }
 
+.charityPage-content {
+  width: 100%;
+  display: block;
+  border-top: 1px solid rgba(190, 193, 198, .5);
+}
+
 .post-time {
   font-size: 11px;
   color: #8899a6;
