@@ -28,6 +28,8 @@
 }
 
 #main {
+  display: block;
+  position: relative;
   padding-top: 78px;
   float: none;
 }
@@ -47,6 +49,7 @@
 }
 
 .donorProfile {
+  display: block;
   position: relative;
   width: 200px;
   height: 200px;
@@ -68,6 +71,14 @@
 
 .donorToolbar{
   text-align: right;
+}
+
+.donor-page-container {
+  position: relative;
+  display: block;
+  top: 60px;
+  margin: auto;
+  width: 100%;
 }
 
 .post-time {
