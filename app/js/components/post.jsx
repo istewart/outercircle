@@ -5,7 +5,7 @@ export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgsrc : 'profile.jpg'
+      imgsrc : this.props.imgsrc
     };
   }
   
@@ -30,3 +30,7 @@ export default class Post extends React.Component {
     );
   }
 }
+
+Post.defaultProps = {
+  imgsrc : 'profile.jpg'
+};
