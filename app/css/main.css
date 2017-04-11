@@ -138,9 +138,17 @@ body {
 .stat-graphic {
   height: 350px;
   width: 350px;
+  z-index: -100;
+}
+
+.stat-graphic-container {
+  text-align: center;
+  overflow: hidden;
 }
 
 /* Bootstrap Changes Below */
 .col-md-8 {
   width: 80%;
 }
+
+
