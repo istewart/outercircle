@@ -19,10 +19,18 @@ export default class Charity extends React.Component{
     return (
     <div>
       <Navbar/>
-      <Title data={this.state.title}/>
-      <div className="charityPage-content">
-        <Feed posts={this.state.posts}/>
-        <Stats/>
+      <div id="main" className="center-block col-md-8">
+        <div className="row">
+          <Title data={this.state.title}/>
+        </div>
+        <div className="row">
+          <div className="col-md-6">            
+            <Stats/>
+          </div>
+          <div className="col-md-6">
+            <Feed/>
+          </div>
+        </div>
       </div>
     </div>
     )

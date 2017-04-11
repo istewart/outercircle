@@ -104,44 +104,24 @@ body {
   width: 100%;
 }
 
-.donorPage-content {
-  width: 100%;
-  display: block;
-  margin-top: 140px;
-  border-top: 1px solid rgba(190, 193, 198, .5);
-}
-
 .donor-header {
   display: flex;
   justify-content: space-between;
-  margin-top: -75px;
-}
-
-.charityPage-content {
-  width: 100%;
-  display: block;
-  border-top: 1px solid rgba(190, 193, 198, .5);
-}
-
-.vtc-center{
-    display: -webkit-flex;
-    display: flex;
-    align-items: center;
+  margin-top: -100px;
 }
 
 .btn-margin{
   margin: 0 10px;
 }
 
-#charityTitle{
-  display: block;
-  position: relative;
-  margin-top: -75px;
-  z-index: 999;
-  width:60%;
-  padding: 0 3%;
-  border: white outset 5px;
-  border-radius:10px;
+.charity-title {
+  margin-top: -100px;
+}
+
+.charity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .newPost {
@@ -154,27 +134,3 @@ body {
   resize: none;
   margin-bottom: 10px;
 }
-
-/*@media (max-width: 800px) {
-  .donorProfile {
-    display: block;
-    position: relative;
-    width: 200px;
-    height: 200px;
-    padding: 0;
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-
-  .donorInfo {
-    width: 80%;
-    height: 200px;
-    overflow: hidden;
-    margin:0 auto;
-    margin-top: 20px;
-  }
-
-  .donorPage-content {
-    margin-top: 40px;
-  }
-}*/
