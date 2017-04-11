@@ -1,3 +1,11 @@
+body {
+  background-color: #f5f5f5;
+}
+
+.well {
+  background-color: #fff;
+}
+
 #navbar {
   position: fixed;
   top: 0;
@@ -32,6 +40,30 @@
   position: relative;
   padding-top: 78px;
   float: none;
+}
+
+.donor-thumbnail {
+  margin-right: 10px;
+}
+
+.post-header {
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.post-title {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.post-title p {
+  margin: 0;
+}
+
+.post-time {
+  font-size: 11px;
+  color: #8899a6;
 }
 
 .headerIMGContainer {
@@ -92,11 +124,6 @@
   width: 100%;
   display: block;
   border-top: 1px solid rgba(190, 193, 198, .5);
-}
-
-.post-time {
-  font-size: 11px;
-  color: #8899a6;
 }
 
 .vtc-center{
