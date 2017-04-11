@@ -7,6 +7,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  z-index: 99999;
 }
 
 #logo {
@@ -41,6 +42,8 @@
   display: block;
   overflow: hidden;
   width: 75%;
+  position: relative;
+  z-index:-100;
 }
 
 .img-thumbnail {
@@ -55,6 +58,7 @@
   height: 200px;
   padding: 0;
   margin-top: -75px;
+  margin-left: 15%;
 }
 
 .donorInfo {
@@ -63,10 +67,12 @@
   overflow: hidden;
   margin-top: -200px;
   margin-left: 40%;
+  background-color: white;
 }
 
 .donorIntroduction {
-  height: 85%;
+  height: 160px;
+  overflow: hidden;
 }
 
 .donorToolbar{
@@ -128,3 +134,26 @@
   width: 50%;
 }
 
+@media (max-width: 800px) {
+  .donorProfile {
+    display: block;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    padding: 0;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .donorInfo {
+    width: 80%;
+    height: 200px;
+    overflow: hidden;
+    margin:0 auto;
+    margin-top: 20px;
+  }
+
+  .donorPage-content {
+    margin-top: 40px;
+  }
+}
