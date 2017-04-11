@@ -10,12 +10,12 @@ export default class Home extends React.Component {
   
   render() {
     return (
-    <div>
-      <Navbar/>
-      <div id="main" className="center-block col-md-6">
-        <Feed/>
+      <div>
+        <Navbar/>
+        <div id="main" className="center-block col-md-6">
+          <Feed/>
+        </div>
       </div>
-    </div>
     );
   }
 }

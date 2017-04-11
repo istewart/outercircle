@@ -1,22 +1,25 @@
 import React from 'react';
 
-// import Post from './post.jsx';
-
 export default class Stats extends React.Component{
   constructor(props) {
     super(props);
-    this.state= {
-      stats: ["Hi"]
-    };
   }
 
   render() {
-    // const renderedStats = this.state.stats.map((stat) =>
-    //   <Stat data={post}/>
-    // );
+    const renderedStats = this.props.data.map((fact) =>
+      <li>{fact}</li>
+    );
 
-      return <div id="main" className="center-block col-md-10">
-          {this.state.stats[0]}
+    return (
+      <div className="well well-sm">
+        <ul>
+          {renderedStats}
+        </ul>
       </div>
+    );
   }
+}
+
+Stats.defaultProps = {
+  data: ["378 puppies rescued", "9384 veterinary visits made", "173 adoptions"],
 }

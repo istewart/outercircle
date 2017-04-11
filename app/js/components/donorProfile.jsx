@@ -13,10 +13,8 @@ export default class DonorProfile extends React.Component {
         return (
             <div>
                 <IMGheader/>
-                <div className="rows">
-                    <div className="donorProfile">
-                        <img src={window.location.origin + "/" + this.state.imgsrc} alt="Image Not Found" className="img-thumbnail"/>
-                    </div>
+                <div className="row donor-header">
+                    <img src={window.location.origin + "/" + this.state.imgsrc} alt="TODO's Profile Picture" className="img-thumbnail"/>
                     <div className="donorInfo panel panel-default">
                         <div className="donorIntroduction panel-body">
                             <h2>I am a donor</h2>

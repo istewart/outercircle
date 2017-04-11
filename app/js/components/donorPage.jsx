@@ -11,14 +11,22 @@ export default class DonorPage extends React.Component {
   
   render() {
     return (
-    <div className="donor-page-container">
-      <Navbar/>
-      <DonorProfile/>
-      <div className="donorPage-content">
-        <Feed/>
-        <Stats/>
+      <div>
+        <Navbar/>
+        <div id="main" className="center-block col-md-8">
+          <div className="row">
+            <DonorProfile/>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <Feed/>
+            </div>
+            <div className="col-md-6">            
+              <Stats/>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     );
   }
 }

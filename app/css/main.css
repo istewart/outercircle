@@ -38,7 +38,6 @@ body {
 
 #main {
   display: block;
-  position: relative;
   padding-top: 78px;
   float: none;
 }
@@ -73,7 +72,6 @@ body {
   height: 250px;
   display: block;
   overflow: hidden;
-  width: 75%;
   position: relative;
   z-index:-100;
 }
@@ -81,25 +79,12 @@ body {
 .img-thumbnail {
   height: 200px;
   width: 200px;
-}
-
-.donorProfile {
-  display: block;
-  position: relative;
-  width: 200px;
-  height: 200px;
-  padding: 0;
-  margin-top: -75px;
-  margin-left: 15%;
+  margin-right: 20px;
 }
 
 .donorInfo {
-  width: 40%;
   height: 200px;
   overflow: hidden;
-  margin-top: -200px;
-  margin-left: 40%;
-  background-color: white;
 }
 
 .donorIntroduction {
@@ -124,6 +109,12 @@ body {
   display: block;
   margin-top: 140px;
   border-top: 1px solid rgba(190, 193, 198, .5);
+}
+
+.donor-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -75px;
 }
 
 .charityPage-content {
@@ -164,7 +155,7 @@ body {
   margin-bottom: 10px;
 }
 
-@media (max-width: 800px) {
+/*@media (max-width: 800px) {
   .donorProfile {
     display: block;
     position: relative;
@@ -186,4 +177,4 @@ body {
   .donorPage-content {
     margin-top: 40px;
   }
-}
+}*/
