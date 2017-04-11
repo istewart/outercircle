@@ -134,3 +134,13 @@ body {
   resize: none;
   margin-bottom: 10px;
 }
+
+.stat-graphic {
+  height: 350px;
+  width: 350px;
+}
+
+/* Bootstrap Changes Below */
+.col-md-8 {
+  width: 80%;
+}
