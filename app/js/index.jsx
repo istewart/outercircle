@@ -12,14 +12,12 @@ import DonorPage from './components/donorPage.jsx';
 import Home from './components/home.jsx';
 import Charity from './components/charity.jsx';
 
-
-
 const Routes = () => (
   <BrowserRouter>
     <div>
-        <Route exact path='/' component={Home}/>
-        <Route path='/donor' component={DonorPage}/>
-        <Route path='/charity' component={Charity}/>
+      <Route exact path='/' component={Home}/>
+      <Route path='/donor' component={DonorPage}/>
+      <Route path='/charity' component={Charity}/>
     </div>
   </BrowserRouter>
 );

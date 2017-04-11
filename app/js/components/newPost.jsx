@@ -8,13 +8,8 @@ export default class NewPost extends React.Component {
   render() {
     return (
       <div className="newPost well well-sm center-block">
-        <form>
-          <div className="form-group">
-            <textarea className="form-control" id="newPost" placeholder="Enter a status" rows="3"></textarea>
-          </div>
-
-          <button type="submit" className="btn btn-primary">Post</button>
-        </form>
+        <textarea className="form-control" id="newPost" placeholder="Enter a status" rows="3"></textarea>
+        <button type="submit" className="btn btn-primary">Post</button>
       </div>
     );
   }

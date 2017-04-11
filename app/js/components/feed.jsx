@@ -1,4 +1,6 @@
 import React from 'react';
+
+import NewPost from './newPost.jsx';
 import Post from './post.jsx';
 
 export default class Feed extends React.Component {
@@ -8,13 +10,15 @@ export default class Feed extends React.Component {
       posts: this.props.posts
     };
   }
+
   render() {
     const renderedPosts = this.state.posts.map((post) =>
       <Post data={post}/>
     );
 
     return (
-      <div id="main" className="center-block col-md-6">
+      <div>
+        <NewPost/>
         {renderedPosts}
       </div>
     );

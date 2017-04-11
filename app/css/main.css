@@ -154,11 +154,14 @@ body {
 }
 
 .newPost {
-  position: relative;
-  display: block;
-  top: 65px;
-  margin: auto;
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#newPost {
+  resize: none;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 800px) {
