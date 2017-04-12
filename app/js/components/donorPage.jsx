@@ -13,7 +13,7 @@ export default class DonorPage extends React.Component {
     return (
       <div>
         <Navbar/>
-        <div id="main" className="center-block col-md-8">
+        <div id="main" className="center-block col-md-9">
           <div className="row">
             <DonorProfile/>
           </div>
