@@ -111,6 +111,7 @@ body {
 
 .charity-title {
   margin-top: -100px;
+  padding-top: 0px;
 }
 
 .charity-header {
@@ -141,9 +142,5 @@ body {
   overflow: hidden;
 }
 
-/* Bootstrap Changes Below */
-.col-md-8 {
-  width: 80%;
-}
 
 
