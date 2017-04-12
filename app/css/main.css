@@ -27,13 +27,8 @@ body {
   border-radius: 3px;
 }
 
-#menu {
-  display: block;
-  background-color: orange;
-  height: 34px;
-  width: 34px;
+#user-menu {
   margin-left: 16px;
-  border-radius: 3px;
 }
 
 #main {

@@ -18,7 +18,7 @@ export default class Navbar extends React.Component {
           placeholder="Search"
         />
         <Link to="/">
-          <div id="menu"></div>
+          <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu"/>
         </Link>
       </div>
     );
