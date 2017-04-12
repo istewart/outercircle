@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from './navbar.jsx';
-import IMGheader from './IMGheader.jsx';
 import Title from './Title.jsx';
 import Feed from './feed.jsx';
 import Stats from './stats.jsx';
@@ -24,11 +23,11 @@ export default class Charity extends React.Component{
           <Title data={this.state.title}/>
         </div>
         <div className="row">
-          <div className="col-md-6">            
-            <Stats/>
-          </div>
-          <div className="col-md-6">
+          <div className="col-md-7">
             <Feed/>
+          </div>
+          <div className="col-md-5">
+            <Stats/>
           </div>
         </div>
       </div>

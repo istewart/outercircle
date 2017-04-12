@@ -14,10 +14,10 @@ export default class Home extends React.Component {
       <div>
         <Navbar/>
         <div id="main" className="center-block">
-            <div className="col-md-6">            
+            <div className="col-md-6 col-md-offset-1">
               <Feed/>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <Stats/>
             </div>
         </div>

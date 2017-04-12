@@ -16,7 +16,7 @@ export default class Title extends React.Component {
     return (
       <div>
           <IMGheader imgsrc={this.state.imgsrc}/>
-          <div className="well charity-title">
+          <div className="well charity-title center-block">
             <div className="charity-header">
               <h1>{this.state.title}</h1>
               <div className="charity-buttons">

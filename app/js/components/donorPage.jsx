@@ -18,11 +18,11 @@ export default class DonorPage extends React.Component {
             <DonorProfile/>
           </div>
           <div className="row">
-            <div className="col-md-6">            
-              <Stats/>
-            </div>
-            <div className="col-md-6">
+            <div className="col-md-7">
               <Feed/>
+            </div>
+            <div className="col-md-5">
+              <Stats/>
             </div>
           </div>
         </div>

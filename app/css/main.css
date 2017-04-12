@@ -111,7 +111,8 @@ body {
 
 .charity-title {
   margin-top: -100px;
-  padding-top: 0px;
+  padding-top: 0;
+  width:80%;
 }
 
 .charity-header {
