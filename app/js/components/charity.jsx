@@ -23,11 +23,11 @@ export default class Charity extends React.Component{
           <Title data={this.state.title}/>
         </div>
         <div className="row">
-          <div className="col-md-7">
-            <Feed/>
-          </div>
-          <div className="col-md-5">
+          <div className="col-md-5 col-sm-5 col-sm-push-7">
             <Stats/>
+          </div>
+          <div className="col-md-7 col-sm-7 col-sm-pull-5">
+            <Feed/>
           </div>
         </div>
       </div>
