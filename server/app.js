@@ -80,9 +80,11 @@ function init(callback) {
   sql = 'CREATE TABLE IF NOT EXISTS post ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     donor INTEGER, \
+    charity INTEGER, \
     body TEXT, \
     time INTEGER, \
-    FOREIGN KEY(donor) REFERENCES donor(id) \
+    FOREIGN KEY(donor) REFERENCES donor(id), \
+    FOREIGN KEY(charity) REFERENCES charity(id) \
   );'
 
   db.query(sql, function(error, result) {

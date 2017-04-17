@@ -11,6 +11,18 @@ export default class Feed extends React.Component {
     };
   }
 
+  handlePost() { // TODO: security, xss, rendering
+    const data = {
+      donor: 123,
+      charity: 123,
+      body: $('#newPost').val()
+    };
+
+    $.post('/post', data, function(response) {
+      $('#newPost').val('');
+    });
+  }
+
   render() {
     const renderedPosts = this.state.posts.map((post) =>
       <Post data={post}/>
@@ -18,7 +30,7 @@ export default class Feed extends React.Component {
 
     return (
       <div>
-        <NewPost/>
+        <NewPost handlePost={this.handlePost}/>
         {renderedPosts}
       </div>
     );
