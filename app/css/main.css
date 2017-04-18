@@ -121,15 +121,16 @@ body {
   align-items: center;
 }
 
-.newPost {
+.post-button-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-bottom: 0;
+  margin-top: -5px;
 }
 
 #newPost {
   resize: none;
-  margin-bottom: 10px;
 }
 
 .stat-graphic {
@@ -142,6 +143,3 @@ body {
   text-align: center;
   overflow: hidden;
 }
-
-
-

@@ -50,7 +50,8 @@ app.get('/posts', function(request, response) {
 
   var sql = 'SELECT d.name, d.profile_image, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
-    + 'ON p.donor = d.id WHERE time >= ?';
+    + 'ON p.donor = d.id WHERE time >= ?'
+    + 'ORDER BY time DESC';
   db.query(sql, [0], function(error, result) {
     if (!result.rowCount) { // TODO: errors, which posts, sorting
       // todo errors, also auth

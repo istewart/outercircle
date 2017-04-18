@@ -10,7 +10,7 @@ export default class Post extends React.Component {
     const time = new Date(this.props.data.time).toLocaleTimeString();
 
     return (
-      <div className="post well well-sm">
+      <div className="well well-sm">
         <div className="post-header">
           <Link to='/donor/123'>
             <img 
