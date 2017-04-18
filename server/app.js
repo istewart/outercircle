@@ -48,13 +48,15 @@ app.get('/posts', function(request, response) {
   const donor = 'todo';
   const charity = 'todo';
 
-  var sql = 'SELECT * FROM post WHERE time >= ?';
+  var sql = 'SELECT d.name, d.profile_image, p.body, p.time '
+    + 'FROM post AS p JOIN donor AS d '
+    + 'ON p.donor = d.id WHERE time >= ?';
   db.query(sql, [0], function(error, result) {
     if (!result.rowCount) { // TODO: errors, which posts, sorting
       // todo errors, also auth
     } else {
       // return the requested posts
-      response.json(result.rows)
+      response.json(result.rows);
     }
   });
 });

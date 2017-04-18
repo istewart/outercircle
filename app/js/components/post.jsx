@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      imgsrc : this.props.imgsrc
-    };
   }
   
   render() {
@@ -16,7 +13,10 @@ export default class Post extends React.Component {
       <div className="post well well-sm">
         <div className="post-header">
           <Link to='/donor/123'>
-            <img src={window.location.origin + "/" + this.state.imgsrc} className="img-rounded donor-thumbnail"/>
+            <img 
+              src={window.location.origin + "/" + this.props.data.profile_image}
+              className="img-rounded donor-thumbnail"
+            />
           </Link>
           <div className="post-title">
             <Link to='/donor/123'>
@@ -30,7 +30,3 @@ export default class Post extends React.Component {
     );
   }
 }
-
-Post.defaultProps = {
-  imgsrc : 'profile.jpg'
-};
