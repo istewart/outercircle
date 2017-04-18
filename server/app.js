@@ -48,7 +48,7 @@ app.get('/posts', function(request, response) {
   const donor = 'todo';
   const charity = 'todo';
 
-  var sql = 'SELECT d.name, d.profile_image, p.body, p.time '
+  var sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
     + 'ON p.donor = d.id WHERE time >= ?'
     + 'ORDER BY time DESC';
