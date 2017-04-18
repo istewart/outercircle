@@ -9,17 +9,24 @@ export default class Feed extends React.Component {
     this.state = {
       posts: this.props.posts
     };
+
+    this.handlePost = this.handlePost.bind(this);
   }
 
-  handlePost() { // TODO: security, xss, rendering
+  handlePost() { // TODO: security, xss, rendering, errors
     const data = {
       donor: 123,
       charity: 123,
       body: $('#newPost').val()
     };
 
-    $.post('/post', data, function(response) {
+    const feed = this;
+
+    $.post('/post', data, function(data, status) {
       $('#newPost').val('');
+      feed.setState({
+        posts: [data].concat(feed.state.posts),
+      });
     });
   }
 

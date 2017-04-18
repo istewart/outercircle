@@ -31,7 +31,12 @@ app.post('/post', function(request, response) {
             VALUES (?, ?, ?)';
   db.query(sql, [donor, body, time], function(error, result) {
     // TODO: error handling and security and auth and xss and csrf
-    response.sendStatus(200);
+    response.json({
+      id: result.lastInsertId,
+      donor: donor,
+      body: body,
+      time: time,
+    });
   });
 });
 
