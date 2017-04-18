@@ -6,17 +6,32 @@ import Post from './post.jsx';
 export default class Feed extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      posts: this.props.posts
+      posts: [],
     };
+    this.fetchPosts();
 
     this.handlePost = this.handlePost.bind(this);
   }
 
+  fetchPosts() {
+    const feed = this;
+
+    $.get('/posts', function(data, status) {
+      if (status === 'success') {
+        // we succesfully retrieved some posts so update state
+        feed.setState({posts: data});
+      } else {
+        // todo error handling
+      }
+    });
+  }
+
   handlePost() { // TODO: security, xss, rendering, errors
     const data = {
-      donor: 123,
-      charity: 123,
+      donor: 1,
+      charity: 1,
       body: $('#newPost').val()
     };
 
@@ -43,20 +58,3 @@ export default class Feed extends React.Component {
     );
   }
 }
-
-Feed.defaultProps = {
-    posts: [
-        {
-            name: 'Ian Stewart',
-            body: 'TODO',
-            user: 'some id',
-            time: new Date().getTime(),
-        },
-        {
-            name: 'Not Ian Stewart',
-            body: 'Hello, World!',
-            user: 'some other id',
-            time: new Date().getTime(),
-        },
-    ],
-};

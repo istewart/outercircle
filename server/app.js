@@ -40,6 +40,25 @@ app.post('/post', function(request, response) {
   });
 });
 
+// retrieve the posts for a feed
+app.get('/posts', function(request, response) {
+  console.log('- Request received /posts:');
+
+  const requester = 'todo';
+  const donor = 'todo';
+  const charity = 'todo';
+
+  var sql = 'SELECT * FROM post WHERE time >= ?';
+  db.query(sql, [0], function(error, result) {
+    if (!result.rowCount) { // TODO: errors, which posts, sorting
+      // todo errors, also auth
+    } else {
+      // return the requested posts
+      response.json(result.rows)
+    }
+  });
+});
+
 // serve the home page on any other request // TODO: this is sketchy
 app.get('*', function(request, response) {
   console.log('- Request received *:');
