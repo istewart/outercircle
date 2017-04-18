@@ -1,8 +1,9 @@
 import React from 'react';
-import Navbar from './navbar.jsx';
+
+import Feed from './Feed.jsx';
+import Navbar from './Navbar.jsx';
+import Stats from './Stats.jsx';
 import Title from './Title.jsx';
-import Feed from './feed.jsx';
-import Stats from './stats.jsx';
 
 export default class Charity extends React.Component{
   constructor(props){

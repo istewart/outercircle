@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NewPost from './newPost.jsx';
-import Post from './post.jsx';
+import NewPost from './NewPost.jsx';
+import Post from './Post.jsx';
 
 export default class Feed extends React.Component {
   constructor(props) {

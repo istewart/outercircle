@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Feed from './feed.jsx';
-import Navbar from './navbar.jsx';
-import Stats from './stats.jsx';
+import Feed from './Feed.jsx';
+import Navbar from './Navbar.jsx';
+import Stats from './Stats.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
