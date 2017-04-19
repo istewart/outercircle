@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoginButton from './LoginButton.jsx';
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Navbar extends React.Component {
         <Link to="/">
           <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu"/>
         </Link>
+        <LoginButton/>
       </div>
     );
   }
