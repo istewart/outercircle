@@ -30,12 +30,18 @@ app.post('/post', function(request, response) {
   var sql = 'INSERT INTO post (donor, body, time) \
             VALUES (?, ?, ?)';
   db.query(sql, [donor, body, time], function(error, result) {
+    const id = result.lastInsertId; // todo unused
+
     // TODO: error handling and security and auth and xss and csrf
-    response.json({
-      id: result.lastInsertId,
-      donor: donor,
-      body: body,
-      time: time,
+    sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
+    db.query(sql, [donor], function(error, result) {
+      response.json({
+        name: result.rows[0].name,
+        profile_image: result.rows[0].profile_image,
+        donor: donor,
+        body: body,
+        time: time,
+      });
     });
   });
 });
@@ -118,11 +124,14 @@ function init(callback) {
     console.log('Initialized post table.');
   });
 
-  db.query('INSERT INTO donor (name, email, description, profile_image, cover_image) VALUES (?, ?, ?, ?, ?)',
-  			['Ian Stewart', 'ian_stewart@brown.edu', 'some description', 'profile.jpg', 'cover_image'],
-  			function(error, result) {
-  				console.log('todo');
-  			});
+  db.query('INSERT INTO donor '
+    + '(name, email, description, profile_image, cover_image) '
+    + 'VALUES (?, ?, ?, ?, ?)',
+    ['Ian Stewart', 'ian_stewart@brown.edu', 'some description',
+     'profile.jpg', 'cover_image'],
+    function(error, result) {
+      console.log('todo');
+  });
 
   // wait a second for things to finish then start the server
   setTimeout(callback, 1000);
