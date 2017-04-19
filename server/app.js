@@ -68,6 +68,57 @@ app.get('/posts', function(request, response) {
   });
 });
 
+// record a donation // TODO: security, cookies, auth
+app.post('/donate', function(request, response) {
+  console.log('- Request received /donate');
+  
+  const donor = request.body.donor;
+  const charity = request.body.charity;
+  const category = request.body.category; // todo this should be in charity
+  const amount = request.body.amount; // todo non negative
+  const time = new Date().getTime();
+
+  var sql = 'INSERT INTO donation (donor, charity, category, amount, time) \
+            VALUES (?, ?, ?, ?, ?)';
+  db.query(sql, [donor, charity, category, amount, time], function(error, result) {
+    const id = result.lastInsertId; // todo unused
+    response.sendStatus(200);
+    // // TODO: error handling and security and auth and xss and csrf
+    // sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
+    // db.query(sql, [donor], function(error, result) {
+    //   response.json({
+    //     name: result.rows[0].name,
+    //     profile_image: result.rows[0].profile_image,
+    //     donor: donor,
+    //     body: body,
+    //     time: time,
+    //   });
+    // });
+  });
+});
+
+// retrieve the donations for TODO
+app.get('/donations', function(request, response) {
+  console.log('- Request received /donations:');
+
+  const requester = 'todo';
+  const donor = 'todo';
+  const charity = 'todo';
+
+  var sql = 'SELECT c.name, d.amount, d.category, d.time '
+    + 'FROM donation AS d JOIN charity AS c '
+    + 'ON d.charity = c.id WHERE time >= ?'
+    + 'ORDER BY time DESC';
+  db.query(sql, [0], function(error, result) {
+    if (!result.rowCount) { // TODO: errors, which posts, sorting
+      // todo errors, also auth
+    } else {
+      // return the requested posts
+      response.json(result.rows);
+    }
+  });
+});
+
 // serve the home page on any other request // TODO: this is sketchy
 app.get('*', function(request, response) {
   console.log('- Request received *:');
@@ -122,6 +173,21 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized post table.');
+  });
+
+  sql = 'CREATE TABLE IF NOT EXISTS donation ( \
+    id INTEGER PRIMARY KEY AUTOINCREMENT, \
+    donor INTEGER, \
+    charity INTEGER, \
+    category TEXT, \
+    amount INTEGER, \
+    time INTEGER, \
+    FOREIGN KEY(donor) REFERENCES donor(id), \
+    FOREIGN KEY(charity) REFERENCES charity(id) \
+  );'
+
+  db.query(sql, function(error, result) {
+    console.log('Initialized donation table.');
   });
 
   db.query('INSERT INTO donor '

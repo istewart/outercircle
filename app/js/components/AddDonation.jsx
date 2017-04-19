@@ -7,15 +7,32 @@ export default class AddDonation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
+  handleSubmit(event) { // TODO: security, xss, rendering, errors
     event.preventDefault();
-    // todo
+
+    const data = {
+      donor: 1, // todo
+      charity: 1, // todo
+      category: $('#category').val(),
+      amount: $('#amount').val(),
+    };
+
+    // const feed = this;
+
+    $.post('/donate', data, function(data, status) {
+      $('#name').val('');
+      $('#category').val('');
+      $('#amount').val('');
+      // feed.setState({
+      //   posts: [data].concat(feed.state.posts),
+      // });
+    });
   }
   
   render() {
     return (
       <div className="well well-sm">
-        <form onSubmit={this.handlePost}>
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label for="name">Charity Name:</label>
             <input type="text" className="form-control" id="name"/>
@@ -28,11 +45,19 @@ export default class AddDonation extends React.Component {
             </select>
           </div>
           <div className="form-group">
+            <label for="amount">Amount:</label>
+            <div className="input-group">
+              <div className="input-group-addon">$</div>
+                <input type="number" className="form-control" id="amount"/>
+              <div className="input-group-addon">.00</div>
+            </div>
+          </div>
+          <div className="form-group form-end">
             <button 
               type="submit" 
-              className="btn btn-primary"
+              className="btn btn-primary full-width"
             >
-              Submit
+              Record Donation
             </button>
           </div>
         </form>

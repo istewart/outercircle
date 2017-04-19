@@ -25,7 +25,7 @@ export default class NewPost extends React.Component {
           </div>
           <div className="form-group post-button-container">
             <button 
-              type="submit" 
+              type="submit"
               className="btn btn-primary"
             >
               Post
