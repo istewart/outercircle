@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AddDonation from './AddDonation.jsx';
 import DonorProfile from './DonorProfile.jsx';
 import Feed from './Feed.jsx';
 import Navbar from './Navbar.jsx';
@@ -20,6 +21,7 @@ export default class DonorPage extends React.Component {
           </div>
           <div className="row">
             <div className="col-md-5 col-sm-5 col-sm-push-7">
+              <AddDonation/>
               <Stats/>
             </div>
             <div className="col-md-7 col-sm-7 col-sm-pull-5">
