@@ -237,3 +237,38 @@ span.psw {
 .signup-input-left {
   padding-bottom: 8px;
 }
+
+.search-list {
+    position: absolute;
+    margin-top: 37px;
+    margin-left: 50px;
+    width: 300px;
+    background: #3498db;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.search-list:focus {
+     outline: none;
+ }
+
+.search-list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.search-list li {
+    list-style-type: none;
+    margin: 0;
+    color: white;
+    padding: 10px 20px;
+    /*border-top: 1px solid;*/
+}
+
+.search-list a {
+    text-decoration: none;
+}
+
+.search-list li:hover {
+     background: #2980b9;
+ }
