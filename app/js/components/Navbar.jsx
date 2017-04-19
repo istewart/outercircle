@@ -35,7 +35,6 @@ export default class Navbar extends React.Component {
     }
 
     componentWillMount() {
-        //this.setState({items: this.state.initialItems})
         this.setState({items: []})
     }
 
