@@ -4,25 +4,25 @@ import { Link } from 'react-router-dom';
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      imgsrc : this.props.imgsrc
-    };
   }
   
   render() {
     const time = new Date(this.props.data.time).toLocaleTimeString();
 
     return (
-      <div className="post well well-sm">
+      <div className="well well-sm">
         <div className="post-header">
-          <Link to='/donor/123'>
-            <img src={window.location.origin + "/" + this.state.imgsrc} className="img-rounded donor-thumbnail"/>
+          <Link to={'/donor/' + this.props.data.donor}>
+            <img 
+              src={window.location.origin + "/" + this.props.data.profile_image}
+              className="img-rounded donor-thumbnail"
+            />
           </Link>
           <div className="post-title">
-            <Link to='/donor/123'>
+            <Link to={'/donor/' + this.props.data.donor}>
               <p>{this.props.data.name}</p>
             </Link>
-            <p className="post-time"> {time}</p>
+            <p className="post-time">{time}</p>
           </div>
         </div>
         <span className="post-body">{this.props.data.body}</span>
@@ -30,7 +30,3 @@ export default class Post extends React.Component {
     );
   }
 }
-
-Post.defaultProps = {
-  imgsrc : 'profile.jpg'
-};

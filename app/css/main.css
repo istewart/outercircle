@@ -6,6 +6,14 @@ body {
   background-color: #fff;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.form-end {
+  margin-bottom: 0;
+}
+
 #navbar {
   position: fixed;
   top: 0;
@@ -121,15 +129,16 @@ body {
   align-items: center;
 }
 
-.newPost {
+.post-button-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-bottom: 0;
+  margin-top: -5px;
 }
 
 #newPost {
   resize: none;
-  margin-bottom: 10px;
 }
 
 .stat-graphic {
@@ -142,6 +151,132 @@ body {
   text-align: center;
   overflow: hidden;
 }
+/* Extra styles for the cancel button */
+.cancelbtn {
+    width: auto;
+    padding: 10px 20px;
+    background-color: #f44336;
+}
 
+/* Center the image and position the close button */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
 
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
 
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 25%; /* Could be more or less, depending on screen size */
+    line-height: 20px;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+.no-display {
+  display: none;
+}
+.display {
+  display: block; 
+}
+.form-padding {
+  padding: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.form-padding-top {
+  padding-top: 8px;
+}
+.form-padding-negative {
+  margin-bottom: -8px;
+}
+.icon-color {
+  color: white;
+}
+.checkbox-right {
+  float: right;
+}
+.signup-input-left {
+  padding-bottom: 8px;
+}
+
+.search-list {
+    position: absolute;
+    margin-top: 37px;
+    margin-left: 50px;
+    width: 300px;
+    background: #3498db;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.search-list:focus {
+     outline: none;
+ }
+
+.search-list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.search-list li {
+    list-style-type: none;
+    margin: 0;
+    color: white;
+    padding: 10px 20px;
+    /*border-top: 1px solid;*/
+}
+
+.search-list a {
+    text-decoration: none;
+}
+
+.search-list li:hover {
+     background: #2980b9;
+ }

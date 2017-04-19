@@ -8,9 +8,9 @@ import {
 
 import css from '../css/main.css';
 
-import DonorPage from './components/donorPage.jsx';
-import Home from './components/home.jsx';
-import Charity from './components/charity.jsx';
+import Charity from './components/Charity.jsx';
+import DonorPage from './components/DonorPage.jsx';
+import Home from './components/Home.jsx';
 
 const Routes = () => (
   <BrowserRouter>

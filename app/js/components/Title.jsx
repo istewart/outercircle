@@ -1,5 +1,6 @@
 import React from 'react';
-import Follow from './follow.jsx';
+
+import Follow from './Follow.jsx';
 import IMGheader from './IMGheader.jsx'
 
 export default class Title extends React.Component {

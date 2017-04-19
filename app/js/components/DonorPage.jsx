@@ -1,8 +1,10 @@
-import Feed from './feed.jsx';
-import Navbar from './navbar.jsx';
-import DonorProfile from './donorProfile.jsx';
-import Stats from './stats.jsx';
 import React from 'react';
+
+import AddDonation from './AddDonation.jsx';
+import DonorProfile from './DonorProfile.jsx';
+import Feed from './Feed.jsx';
+import Navbar from './Navbar.jsx';
+import Stats from './Stats.jsx';
 
 export default class DonorPage extends React.Component {
   constructor(props) {
@@ -18,11 +20,12 @@ export default class DonorPage extends React.Component {
             <DonorProfile/>
           </div>
           <div className="row">
-            <div className="col-md-7">
-              <Feed/>
-            </div>
-            <div className="col-md-5">
+            <div className="col-md-5 col-sm-5 col-sm-push-7">
+              <AddDonation/>
               <Stats/>
+            </div>
+            <div className="col-md-7 col-sm-7 col-sm-pull-5">
+              <Feed/>
             </div>
           </div>
         </div>
