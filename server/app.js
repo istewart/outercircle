@@ -199,6 +199,15 @@ function init(callback) {
       console.log('todo');
   });
 
+  db.query('INSERT INTO charity '
+    + '(name, website, description, cover_image) '
+    + 'VALUES (?, ?, ?, ?)',
+    ['OuterCircle', 'http://google.com', 'a charity description',
+     'beach.jpg'],
+    function(error, result) {
+      console.log('todo');
+  });
+
   // wait a second for things to finish then start the server
   setTimeout(callback, 1000);
 }
