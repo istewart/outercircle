@@ -118,6 +118,12 @@ function init(callback) {
     console.log('Initialized post table.');
   });
 
+  db.query('INSERT INTO donor (name, email, description, profile_image, cover_image) VALUES (?, ?, ?, ?, ?)',
+  			['Ian Stewart', 'ian_stewart@brown.edu', 'some description', 'profile.jpg', 'cover_image'],
+  			function(error, result) {
+  				console.log('todo');
+  			});
+
   // wait a second for things to finish then start the server
   setTimeout(callback, 1000);
 }
