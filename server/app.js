@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var anyDB = require('any-db'); // TODO:
 var bodyParser = require('body-parser');
@@ -5,7 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var passport = require('passport');
-LocalStrategy = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var expressSession = require('express-session');
 var bCrypt = require('bcrypt-nodejs');
 var flash = require('connect-flash');
