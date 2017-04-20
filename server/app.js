@@ -19,15 +19,18 @@ app.use(express.static('img'));
 // Use express session and initialize passport
 // TODO: Figure out what flash does
 app.use(flash());
-app.use(expressSession({secret: 'Thisisasecretshhhh'}));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(cookieParser());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(expressSession({secret: 'Thisisasecretshhhh'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 
 
 // set up a connection pool
@@ -183,10 +186,9 @@ passport.use('login', new LocalStrategy({
 },
 	function(req, username, password, done) {
 		// Check if user exists in database
-		var sql = 'SELECT username, password FROM user WHERE username = ?';
+		var sql = 'SELECT * FROM user WHERE username = ?';
 		db.query(sql, [username], function(err, result) {
 			// If there is an error, return using done method
-      console.log(result);
 			if (err) {
 				console.log(err);
 				return done(err);
@@ -195,8 +197,8 @@ passport.use('login', new LocalStrategy({
 				console.log("User doesn't exist")
 				return done(null, false, req.flash('message', 'User Not Found'));
 			}
-			const user = result.rows[0].username;
-			const passwd = result.rows[0].password;
+      const user = result.rows[0];
+			const passwd = user.password;
 			// User exists so need to check if password is right
 			if (!isValidUnhashedPassword(password, passwd)) {
 				console.log("Invalid Password");
@@ -226,24 +228,25 @@ function isValidUnhashedPassword(input, password) {
 	return (input === password);
 }
 
-app.post('/login', passport.authenticate('login', {
-	failureRedirect: '/login',
-}),
-  function(req, res) {
-    res.redirect('/');
-  });
+app.post('/login', 
+  passport.authenticate('login', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+}));
 
 
 passport.serializeUser(function (user, done) {
     console.log('serializing user:', user);
-    done(null, user);
+    done(null, user.id);
 });
 
-passport.deserializeUser(function (username, done) {
-    console.log('deserializing user:', username);
-    done(null, username);
+passport.deserializeUser(function (userID, done) {
+    console.log('deserializing user with ID:', userID);
+    var sql = 'SELECT * FROM user WHERE id = ?';
+    db.query(sql, [userID], function(err, user) {
+      done(err, user);
+    });
 });
-
 
 // initialize the database
 function init(callback) {
