@@ -147,6 +147,54 @@ init(function() {
     console.log('- Server listening on port 8080');
   });
 })
+// Alright now lets handle login with a LocalStrategy
+passport.use('login', new LocalStrategy({
+	passReqToCallback: true
+},
+	function(req, username, password, done) {
+		// Check if user exists in database
+		var sql = 'SELECT username, password FROM user WHERE username = ?';
+		db.query(sql, [username], function(error, result) {
+			// If there is an error, return using done method
+			if (err) {
+				console.log(err);
+				return done(err);
+			}
+			if (result.length === 0) {
+				console.log("User doesn't exist")
+				return done(null, false, req.flash('message', 'User Not Found'));
+			}
+			const user = result.rows[0].username;
+			const passwd = result.rows[0].password;
+			// User exists so need to check if password is right
+			if (!isValidUnhashedPassword(password, passwd)) {
+				console.log("Invalid Password");
+				return done(null, false, req.flash('message', 'Invalid Password'));
+			}
+			// User and password match, return user from done method
+			console.log("Successful Login");
+			return done(null, user);
+		}); 
+
+	}
+));
+
+// This is what we will use to compare hashes
+// TODO: actually figure out how to properly hash password and sign them up
+function isValidPassword(input, password) {
+	return bCrypt.compareSync(password, input);
+}
+// Use this for now since we don't need to worry about security yet
+function isValidUnhashedPassword(input, password) {
+	return (input === password);
+}
+
+app.post('/login', passport.authenticate('login', {
+	successRedirect: '/charity',
+	failureRedirect: '/',
+	failureFlash: true
+}));
+
 
 // initialize the database
 function init(callback) {
@@ -206,6 +254,26 @@ function init(callback) {
     console.log('Initialized donation table.');
   });
 
+
+  sql = 'CREATE TABLE IF NOT EXISTS user ( \
+    id INTEGER PRIMARY KEY AUTOINCREMENT, \
+    username TEXT, \
+    password TEXT, \
+    email TEXT \
+  );'
+
+  db.query('INSERT INTO user '
+    + '(username, password, email) '
+    + 'VALUES (?, ?, ?)',
+    ['Doge', 'suchsecure', 'doggo@pupper.com'],
+    function(error, result) {
+      console.log('Insert Test User');
+  });
+
+  db.query(sql, function(error, result) {
+    console.log('Initialized user table.');
+  });
+  
   db.query('INSERT INTO donor '
     + '(name, email, description, profile_image, cover_image) '
     + 'VALUES (?, ?, ?, ?, ?)',
