@@ -8,11 +8,24 @@ import Title from './Title.jsx';
 export default class Charity extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      title : this.props.title,
-      posts: this.props.posts,
-      headerImg: this.props.headerImg
+    this.state={
+       title:[],
     };
+    this.fetchTitle();
+  }
+
+  fetchTitle(){
+    const charity= this;
+    //this doesn't work
+    // const charityId = window.location.href.split('/').pop();
+
+    // TODO:find a way to send the charity id to server
+    $.get('/title',function(data,status){
+      if(status === 'success'){
+        // we succesfully retrieved title so update state
+        charity.setState({title: data});
+      }
+    })
   }
 
   render(){
