@@ -7,18 +7,25 @@ export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialItems: [
-                "Apples",
-                "Broccoli",
-                "Chicken",
-                "Duck",
-                "Eggs",
-                "Fish",
-                "Granola",
-                "Hash Browns"
-            ],
+            initialItems: [],
             items: []
         }
+        this.getData();
+    }
+
+    getData() {
+        const search = this;
+        $.get('/searchData', function(data, status) {
+            if (status === 'success') {
+                var nameList = [];  // nameList contains name of all charities and donors
+                for(var i = 0; i < data.length; i++) {
+                    nameList[i] = data[i].name;
+                }
+                search.setState({initialItems: nameList});
+            } else {
+                // error handling
+            }
+        });
     }
 
     filterList(event) {

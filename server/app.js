@@ -62,6 +62,21 @@ app.post('/post', function(request, response) {
   });
 });
 
+// retrieve all charities' and donors' name for search
+app.get('/searchData', function(request, response) {
+    console.log('- Request received /searchData:');
+
+    var sql = 'SELECT d.name AS name FROM donor AS d ' +
+        'UNION SELECT c.name AS name FROM charity AS c';
+    db.query(sql, function(error, result) {
+        if (error) {
+            // console.log(error)
+        } else {
+            response.json(result.rows);
+        }
+    });
+});
+
 // retrieve the posts for a feed
 app.get('/posts', function(request, response) {
   console.log('- Request received /posts:');
