@@ -1,13 +1,14 @@
 import React from 'react';
 
 import Home from './Home.jsx';
+import { Redirect } from 'react-router-dom';
 
 export default class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       imgsrc : this.props.imgsrc,
-      loggedin : this.props.loggedIn
+      loggedIn: this.props.loggedIn
     };
   }
   _handleLogin(event) {
@@ -19,15 +20,18 @@ export default class LoginPage extends React.Component {
       };
       
       $.post('/login', data, function(result, status) {
-        if (result == "Authorized") {
+        if (result.isAuth == "authorized") {
           this.setState({loggedIn: true});
+          console.log(result);
         }
-      });
-
+      }.bind(this));
   }
   
   render() {
-    if (!this.state.loggedIn) {
+    if (this.state.loggedIn) {
+      return (<Redirect to="/"/>);
+    }
+    else {
       return (
         <div>
           <form onSubmit={this._handleLogin.bind(this)}>
@@ -54,17 +58,10 @@ export default class LoginPage extends React.Component {
         </div>
       );
     }
-    else {
-      return (
-        <div>
-          <Home/>
-        </div>
-        );
-    }
   }
 }
 
 LoginPage.defaultProps={
   imgsrc:'img_avatar2.png',
-  loggedIn : false
+  loggedIn: false
 };

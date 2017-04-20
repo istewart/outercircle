@@ -82,7 +82,7 @@ app.get('/searchData', function(request, response) {
 });
 
 // retrieve the posts for a feed
-app.get('/posts', function(request, response) {
+app.get('/posts', isLoggedIn, function(request, response) {
   console.log('- Request received /posts:');
 
   const requester = 'todo';
@@ -243,10 +243,10 @@ function isLoggedIn(req, res, next) {
 // app.get('/protected', isLoggedIn, function(req, res) { whatever })
 
 app.post('/login', 
-  passport.authenticate('login', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-}));
+  passport.authenticate('login'), 
+  function (req, res) {
+    res.send({isAuth: "authorized"});
+  });
 
 
 passport.serializeUser(function (user, done) {
