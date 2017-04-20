@@ -214,6 +214,12 @@ passport.use('login', new LocalStrategy({
 function isValidPassword(input, password) {
 	return bCrypt.compareSync(password, input);
 }
+
+// Generates hash using bCrypt
+var createHash = function(password){
+ return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+}
+
 // Use this for now since we don't need to worry about security yet
 function isValidUnhashedPassword(input, password) {
 	return (input === password);
