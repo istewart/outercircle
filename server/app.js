@@ -43,7 +43,7 @@ app.post('/post', function(request, response) {
   const body = request.body.body;
   const time = new Date().getTime();
 
-  var sql = 'INSERT INTO post (donor, body, time) \
+  let sql = 'INSERT INTO post (donor, body, time) \
             VALUES (?, ?, ?)';
   db.query(sql, [donor, body, time], function(error, result) {
     const id = result.lastInsertId; // todo unused
@@ -70,7 +70,7 @@ app.get('/posts', function(request, response) {
   const donor = 'todo';
   const charity = 'todo';
 
-  var sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.body, p.time '
+  let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
     + 'ON p.donor = d.id WHERE time >= ?'
     + 'ORDER BY time DESC';
@@ -83,6 +83,7 @@ app.get('/posts', function(request, response) {
     }
   });
 });
+
 
 // record a donation // TODO: security, cookies, auth
 app.post('/donate', function(request, response) {
@@ -133,6 +134,19 @@ app.get('/donations', function(request, response) {
       response.json(result.rows);
     }
   });
+});
+
+app.get('/title',function (request,response) {
+    // let charityId = request.charityId;
+    let sql= 'SELECT name, website, description, cover_image FROM charity';
+    db.query(sql,function(error, result) {
+        if (!result.rowCount) { // TODO: errors, which posts, sorting
+            // todo errors, also auth
+        } else {
+            // return the requested posts
+            response.json(result.rows[0]);
+        }
+    });
 });
 
 // serve the home page on any other request // TODO: this is sketchy
@@ -211,26 +225,26 @@ passport.deserializeUser(function (username, done) {
 function init(callback) {
   console.log('Initializing database...');
 
-  var sql = 'CREATE TABLE IF NOT EXISTS donor ( \
+  let sql = 'CREATE TABLE IF NOT EXISTS donor ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     name TEXT, \
     email TEXT, \
     description TEXT, \
     profile_image TEXT, \
     cover_image TEXT \
-  );'
+  );';
 
   db.query(sql, function(error, result) {
     console.log('Initialized donor table.');
   });
 
-  var sql = 'CREATE TABLE IF NOT EXISTS charity ( \
+  sql = 'CREATE TABLE IF NOT EXISTS charity ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     name TEXT, \
     website TEXT, \
     description TEXT, \
     cover_image TEXT \
-  );'
+  );';
 
   db.query(sql, function(error, result) {
     console.log('Initialized donor table.');
@@ -244,7 +258,7 @@ function init(callback) {
     time INTEGER, \
     FOREIGN KEY(donor) REFERENCES donor(id), \
     FOREIGN KEY(charity) REFERENCES charity(id) \
-  );'
+  );';
 
   db.query(sql, function(error, result) {
     console.log('Initialized post table.');
@@ -291,7 +305,24 @@ function init(callback) {
     ['Ian Stewart', 'ian_stewart@brown.edu', 'some description',
      'profile.jpg', 'cover_image'],
     function(error, result) {
-      console.log('todo');
+      console.log('sample donor');
+  });
+
+  db.query('INSERT INTO charity '
+    + '(name, website, description, cover_image) '
+    + 'VALUES (?, ?, ?, ?)',
+    ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
+            'beach.jpg'],
+    function(error, result) {
+      console.log('sample charity');
+     });
+
+  db.query('INSERT INTO post '
+    + '(donor, charity, body, time) '
+    + 'VALUES (?, ?, ?, ?)',
+    [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
+     function(error, result) {
+       console.log('sample post');
   });
 
   // wait a second for things to finish then start the server
