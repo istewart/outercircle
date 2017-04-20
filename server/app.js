@@ -186,11 +186,12 @@ passport.use('login', new LocalStrategy({
 		var sql = 'SELECT username, password FROM user WHERE username = ?';
 		db.query(sql, [username], function(err, result) {
 			// If there is an error, return using done method
+      console.log(result);
 			if (err) {
 				console.log(err);
 				return done(err);
 			}
-			if (result.length === 0) {
+			if (result.rows.length === 0) {
 				console.log("User doesn't exist")
 				return done(null, false, req.flash('message', 'User Not Found'));
 			}
@@ -226,10 +227,11 @@ function isValidUnhashedPassword(input, password) {
 }
 
 app.post('/login', passport.authenticate('login', {
-	successRedirect: '/charity',
-	failureRedirect: '/',
-	failureFlash: true
-}));
+	failureRedirect: '/login',
+}),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 
 passport.serializeUser(function (user, done) {
