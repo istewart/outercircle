@@ -154,7 +154,7 @@ passport.use('login', new LocalStrategy({
 	function(req, username, password, done) {
 		// Check if user exists in database
 		var sql = 'SELECT username, password FROM user WHERE username = ?';
-		db.query(sql, [username], function(error, result) {
+		db.query(sql, [username], function(err, result) {
 			// If there is an error, return using done method
 			if (err) {
 				console.log(err);
@@ -194,6 +194,17 @@ app.post('/login', passport.authenticate('login', {
 	failureRedirect: '/',
 	failureFlash: true
 }));
+
+
+passport.serializeUser(function (user, done) {
+    console.log('serializing user:', user);
+    done(null, user);
+});
+
+passport.deserializeUser(function (username, done) {
+    console.log('deserializing user:', username);
+    done(null, username);
+});
 
 
 // initialize the database
