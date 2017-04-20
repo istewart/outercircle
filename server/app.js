@@ -4,14 +4,30 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
+var passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+var expressSession = require('express-session');
+var bCrypt = require('bcrypt-nodejs');
+var flash = require('connect-flash');
+var cookieParser = require('cookie-parser');
+
 // serve static files
 app.use(express.static('dist'));
 app.use(express.static('img'));
+
+// Use express session and initialize passport
+// TODO: Figure out what flash does
+app.use(flash());
+app.use(expressSession({secret: 'Thisisasecretshhhh'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 
 // set up a connection pool
 var db = anyDB.createPool( // TODO: need to transition to postgres
@@ -132,6 +148,54 @@ init(function() {
   });
 })
 
+// Alright now lets handle login with a LocalStrategy
+passport.use('login', new LocalStrategy({
+	passReqToCallback: true
+},
+	function(req, username, password, done) {
+		// Check if user exists in database
+		var sql = 'SELECT username, password FROM user WHERE username = ?';
+		db.query(sql, [username], function(error, result) {
+			// If there is an error, return using done method
+			if (err) {
+				console.log(err);
+				return done(err);
+			}
+			if (result.length === 0) {
+				console.log("User doesn't exist")
+				return done(null, false, req.flash('message', 'User Not Found'));
+			}
+			const user = result.rows[0].username;
+			const passwd = result.rows[0].password;
+			// User exists so need to check if password is right
+			if (!isValidUnhashedPassword(password, passwd)) {
+				console.log("Invalid Password");
+				return done(null, false, req.flash('message', 'Invalid Password'));
+			}
+			// User and password match, return user from done method
+			console.log("Successful Login");
+			return done(null, user);
+		}); 
+
+	}
+));
+
+// This is what we will use to compare hashes
+// TODO: actually figure out how to properly hash password and sign them up
+function isValidPassword(input, password) {
+	return bCrypt.compareSync(password, input);
+}
+// Use this for now since we don't need to worry about security yet
+function isValidUnhashedPassword(input, password) {
+	return (input === password);
+}
+
+app.post('/login', passport.authenticate('login', {
+	successRedirect: '/charity',
+	failureRedirect: '/',
+	failureFlash: true
+}));
+
 // initialize the database
 function init(callback) {
   console.log('Initializing database...');
@@ -197,6 +261,25 @@ function init(callback) {
      'profile.jpg', 'cover_image'],
     function(error, result) {
       console.log('todo');
+  });
+
+  sql = 'CREATE TABLE IF NOT EXISTS user ( \
+    id INTEGER PRIMARY KEY AUTOINCREMENT, \
+    username TEXT, \
+    password TEXT, \
+    email TEXT \
+  );'
+
+  db.query('INSERT INTO user '
+    + '(username, password, email) '
+    + 'VALUES (?, ?, ?)',
+    ['Doge', 'suchsecure', 'doggo@pupper.com'],
+    function(error, result) {
+      console.log('Insert Test User');
+  });
+
+  db.query(sql, function(error, result) {
+    console.log('Initialized user table.');
   });
 
   // wait a second for things to finish then start the server

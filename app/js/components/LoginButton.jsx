@@ -16,6 +16,20 @@ export default class LoginButton extends React.Component {
 		event.preventDefault();
 		this.setState({loginDisplay : false});
 	}
+	_handleLogin(event) {
+		event.preventDefault();
+
+	    const data = {
+	      username: $('#username').val(),
+	      password: $('#password').val()
+	    };
+
+	    $.post('/login', data, function(result, status) {
+	    	console.log(result);
+	    	console.log(status);
+	    });
+
+	}
   
   render() {
   	let style;
@@ -29,7 +43,7 @@ export default class LoginButton extends React.Component {
       	<a href="#" onClick={this._buttonClick.bind(this)}><button className="btn btn-primary">Login</button></a>
 		<div id="id01" className={style}>
 		  
-		  <form className="modal-content animate">
+		  <form className="modal-content animate" onSubmit={this._handleLogin.bind(this)}>
 		    <div className="imgcontainer">
 		      <a href="#" onClick={this._close.bind(this)}><span className="close" title="Close">&times;</span></a>
 		      <img src={window.location.origin + "/" + this.state.imgsrc} alt="Avatar" className="avatar" />
@@ -37,12 +51,12 @@ export default class LoginButton extends React.Component {
 
 		    <div className="form-group form-padding">
 			    <label><b>Username</b></label>
-			    <input className="form-control" type="text" placeholder="Enter Username" name="uname" id="uname" required />
+			    <input className="form-control" id="username" type="text" placeholder="Enter Username" name="uname" id="uname" required />
 
 			    <label><b>Password</b></label>
-			    <input className="form-control" type="password" placeholder="Enter Password" name="passwd" id="passwd" required />
+			    <input className="form-control" id="password" type="password" placeholder="Enter Password" name="passwd" id="passwd" required />
 			    <div className="form-padding-top">
-				    <button className="btn btn-primary">Login</button>
+				    <button className="btn btn-primary" type="submit">Login</button>
 				    <span className="checkbox-right"><input type="checkbox" defaultChecked={false} /> Remember me</span>
 				</div>
 
