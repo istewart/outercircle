@@ -94,7 +94,7 @@ app.get('/posts', isLoggedIn, function(request, response) {
 
   let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
-    + 'ON p.donor = d.id WHERE time >= ?'
+    + 'ON p.donor = d.id WHERE time >= ? '
     + 'ORDER BY time DESC';
   db.query(sql, [0], function(error, result) {
     if (!result.rowCount) { // TODO: errors, which posts, sorting
@@ -146,7 +146,7 @@ app.get('/donations', function(request, response) {
 
   var sql = 'SELECT c.name, d.amount, d.category, d.time '
     + 'FROM donation AS d JOIN charity AS c '
-    + 'ON d.charity = c.id WHERE time >= ?'
+    + 'ON d.charity = c.id WHERE time >= ? '
     + 'ORDER BY time DESC';
   db.query(sql, [0], function(error, result) {
     if (!result.rowCount) { // TODO: errors, which posts, sorting
@@ -165,10 +165,25 @@ app.get('/title',function (request,response) {
         if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
         } else {
-            // return the requested posts
             response.json(result.rows[0]);
         }
     });
+});
+
+app.get('/suggest',function(request,response){
+    let id = request.query.id;
+    let type = request.query.type;
+    let sql= 'SELECT id,name,description,profile_image FROM '
+        +type
+        + ' WHERE id!=? ORDER BY id ASC';
+    db.query(sql,[id],function(error, result) {
+        if (!result.rowCount) { // TODO: errors, which posts, sorting
+            // todo errors, also auth
+        } else {
+            response.json(result.rows);
+        }
+    });
+
 });
 
 // serve the home page on any other request // TODO: this is sketchy
@@ -288,6 +303,14 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized donor table.');
+      db.query('INSERT INTO donor '
+          + '(name, email, description, profile_image, cover_image) '
+          + 'VALUES (?, ?, ?, ?, ?)',
+          ['Ian Stewart', 'ian_stewart@brown.edu', 'some description',
+              'profile.jpg', 'cover_image'],
+          function(error, result) {
+              console.log('sample donor');
+      });
   });
 
   sql = 'CREATE TABLE IF NOT EXISTS charity ( \
@@ -295,11 +318,20 @@ function init(callback) {
     name TEXT, \
     website TEXT, \
     description TEXT, \
-    cover_image TEXT \
+    cover_image TEXT, \
+    profile_image TEXT \
   );';
 
   db.query(sql, function(error, result) {
-    console.log('Initialized donor table.');
+    console.log('Initialized charity table.');
+      db.query('INSERT INTO charity '
+          + '(name, website, description, cover_image, profile_image) '
+          + 'VALUES (?, ?, ?, ?, ?)',
+          ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
+              'beach.jpg','profile2.jpg'],
+          function(error, result) {
+              console.log('sample charity');
+      });
   });
 
   sql = 'CREATE TABLE IF NOT EXISTS post ( \
@@ -314,6 +346,13 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized post table.');
+      db.query('INSERT INTO post '
+          + '(donor, charity, body, time) '
+          + 'VALUES (?, ?, ?, ?)',
+          [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
+          function(error, result) {
+              console.log('sample post');
+      });
   });
 
   sql = 'CREATE TABLE IF NOT EXISTS donation ( \
@@ -339,43 +378,19 @@ function init(callback) {
     email TEXT \
   );'
 
-  db.query('INSERT INTO user '
-    + '(username, password, email) '
-    + 'VALUES (?, ?, ?)',
-    ['Doge', 'suchsecure', 'doggo@pupper.com'],
-    function(error, result) {
-      console.log('Insert Test User');
-  });
-
   db.query(sql, function(error, result) {
     console.log('Initialized user table.');
-  });
-  
-  db.query('INSERT INTO donor '
-    + '(name, email, description, profile_image, cover_image) '
-    + 'VALUES (?, ?, ?, ?, ?)',
-    ['Ian Stewart', 'ian_stewart@brown.edu', 'some description',
-     'profile.jpg', 'cover_image'],
-    function(error, result) {
-      console.log('sample donor');
+      db.query('INSERT INTO user '
+          + '(username, password, email) '
+          + 'VALUES (?, ?, ?)',
+          ['Doge', 'suchsecure', 'doggo@pupper.com'],
+          function(error, result) {
+              console.log('Insert Test User');
+      });
   });
 
-  db.query('INSERT INTO charity '
-    + '(name, website, description, cover_image) '
-    + 'VALUES (?, ?, ?, ?)',
-    ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
-            'beach.jpg'],
-    function(error, result) {
-      console.log('sample charity');
-     });
 
-  db.query('INSERT INTO post '
-    + '(donor, charity, body, time) '
-    + 'VALUES (?, ?, ?, ?)',
-    [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
-     function(error, result) {
-       console.log('sample post');
-  });
+
 
   // wait a second for things to finish then start the server
   setTimeout(callback, 1000);
