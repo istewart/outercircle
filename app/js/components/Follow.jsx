@@ -4,7 +4,7 @@ function FollowButton(props){
   return (
     <button onClick={props.onClick} className="btn btn-info btn-margin">
       <i className="fa fa-user-plus" aria-hidden="true"></i>
-      &nbsp; Follow
+      &nbsp; {props.text}
     </button>
   )
 }
@@ -13,7 +13,7 @@ function UnfollowButton(props){
   return (
   <button onClick={props.onClick} className="btn btn-margin">
     <i className="fa fa-check-circle-o" aria-hidden="true"></i>
-    &nbsp; Followed
+    &nbsp; {props.text}
   </button>
   )
 }
@@ -41,11 +41,11 @@ export default class Follow extends React.Component {
     const isFollow = this.state.isFollow;
     if(isFollow){
       return(
-        <UnfollowButton onClick={this.handleUnfollow} />
+        <UnfollowButton onClick={this.handleUnfollow} text={this.props.truetext} />
       );
     } else{
       return(
-        <FollowButton onClick={this.handleFollow} />
+        <FollowButton onClick={this.handleFollow} text={this.props.falsetext} />
       );
     }
   }
@@ -53,5 +53,7 @@ export default class Follow extends React.Component {
 
 Follow.defaultProps = {
     isFollow: false,
-    isLogin: false
+    isLogin: false,
+    truetext: 'Followed',
+    falsetext: 'Follow'
 };
