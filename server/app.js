@@ -151,12 +151,14 @@ app.get('/donations', function(request, response) {
     + 'ON d.charity = c.id WHERE time >= ? '
     + 'ORDER BY time DESC';
   db.query(sql, [0], function(error, result) {
-    if (!result.rowCount) { // TODO: errors, which posts, sorting
-      // todo errors, also auth
-    } else {
-      // return the requested posts
-      response.json(result.rows);
-    }
+      if(result !== undefined) {
+        if (!result.rowCount) { // TODO: errors, which posts, sorting
+          // todo errors, also auth
+        } else {
+          // return the requested posts
+          response.json(result.rows);
+        }
+      }
   });
 });
 
