@@ -63,7 +63,7 @@ export default class Navbar extends React.Component {
     render() {
     var loginButton = "";
     if (!this.state.loggedIn) {
-        loginButton = <LoginButton/>;
+        loginButton = <Link to="/login"><button className="btn btn-primary">Login</button></Link>;
     }
     return (
       <div id="navbar">
