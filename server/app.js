@@ -69,8 +69,8 @@ app.post('/post', function(request, response) {
 // retrieve charities' and donors' name for search
 app.get('/searchData', function(request, response) {
     console.log('- Request received /searchData:');
-    var sql = 'SELECT d.name AS name, d.id AS id FROM donor AS d WHERE d.name LIKE \'%'+request.query.keyWord+'%\'' +
-        'UNION SELECT c.name AS name, c.id AS id FROM charity AS c WHERE c.name LIKE \'%'+request.query.keyWord+'%\'';
+    var sql = 'SELECT d.name AS name, d.id AS id, \'D\' AS category FROM donor AS d WHERE d.name LIKE \'%'+request.query.keyWord+'%\'' +
+        'UNION SELECT c.name AS name, c.id AS id, \'C\' AS category FROM charity AS c WHERE c.name LIKE \'%'+request.query.keyWord+'%\'';
     db.query(sql, function(error, result) {
         if (error) {
             console.log(error)

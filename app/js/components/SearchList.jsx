@@ -7,7 +7,13 @@ export default class SearchList extends React.Component {
             <ul>
                 {
                     this.props.items.map(function(item) {
-                        return <a href={'charity'}><li key={item}>{item.name+item.id}</li></a>
+                        if(item.category === 'C') {
+                            return <a href={'charity'}><li key={item}>{item.name}</li></a>
+                        }
+                        else if(item.category === 'D') {
+                            return <a href={'donor'}><li key={item}>{item.name}</li></a>
+                        }
+
                         {/*return <a href={'charity/'+item}><li key={item}>{item}</li></a>*/} //use this when to specific page
                     })
                 }
