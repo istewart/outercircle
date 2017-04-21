@@ -58,6 +58,7 @@ body {
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
+  width:100%;
 }
 
 .post-title p {
@@ -280,3 +281,23 @@ span.psw {
 .search-list li:hover {
      background: #2980b9;
  }
+
+.component-header {
+    border: 0;
+    padding: 5px;
+    margin-bottom: 5px;
+    color:#777;
+    font-size: 16px;
+    font-style: italic;
+}
+
+#suggest-list button{
+    width: 40%;
+    height: 40%;
+    padding: 0;
+    font-size: 12px;
+}
+
+.suggest-img{
+    width:60px;
+}
