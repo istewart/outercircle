@@ -6,6 +6,7 @@ import DonorProfile from './DonorProfile.jsx';
 import Feed from './Feed.jsx';
 import Navbar from './Navbar.jsx';
 import Stats from './Stats.jsx';
+import Suggestion from './Suggestion.jsx';
 
 export default class DonorPage extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class DonorPage extends React.Component {
               <AddDonation/>
               <DonationHistory/>
               <Stats/>
+              <Suggestion type="donor"/>
             </div>
             <div className="col-md-7 col-sm-7 col-sm-pull-5">
               <Feed/>

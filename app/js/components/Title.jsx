@@ -19,7 +19,7 @@ export default class Title extends React.Component {
                 <a href={this.props.data.website} target="_blank">
                   <button id="donate" className="btn btn-success btn-margin">Donate</button>
                 </a>
-                  <Follow isFollow={false}/>
+                  <Follow isFollow={false} truetext='Followed' falsetext='Follow'/>
               </div>
             </div>
             <p>{this.props.data.description}</p>

@@ -4,6 +4,7 @@ import Feed from './Feed.jsx';
 import Navbar from './Navbar.jsx';
 import Stats from './Stats.jsx';
 import Title from './Title.jsx';
+import Suggestion from './Suggestion.jsx';
 
 export default class Charity extends React.Component{
   constructor(props){
@@ -39,6 +40,7 @@ export default class Charity extends React.Component{
           <div className="row">
             <div className="col-md-5 col-sm-5 col-sm-push-7">
               <Stats/>
+              <Suggestion type="charity"/>
             </div>
             <div className="col-md-7 col-sm-7 col-sm-pull-5">
               <Feed/>
