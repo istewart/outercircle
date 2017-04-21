@@ -236,16 +236,18 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
 }
 
 // Protected routes could be written like so:
 // app.get('/protected', isLoggedIn, function(req, res) { whatever })
 
 app.post('/login', 
-  passport.authenticate('login'), 
+  passport.authenticate('login', {failWithError: true}),
   function (req, res) {
     res.send({isAuth: "authorized"});
+  }, function (err, req, res, next) {
+    res.status(401).send({isAuth: "unauthorized", message: err + req.flash('message')});
   });
 
 
