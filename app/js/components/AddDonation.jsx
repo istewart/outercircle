@@ -42,6 +42,8 @@ export default class AddDonation extends React.Component {
             <select id="category" className="form-control">
               <option>Education</option>
               <option>Environment</option>
+              <option>Human</option>
+              <option>Health</option>
             </select>
           </div>
           <div className="form-group">

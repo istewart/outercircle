@@ -34,6 +34,8 @@ export default class DonationHistory extends React.Component {
     ); // TODO: this is a hack on amount
 
     return (
+    <div>
+      <header className="component-header">Donation History</header>
       <div className="well well-sm">
         <table className="table table-striped table-hover form-end">
           <thead>
@@ -49,6 +51,7 @@ export default class DonationHistory extends React.Component {
           </tbody>
         </table>
       </div>
+    </div>
     );
   }
 }
