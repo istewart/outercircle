@@ -85,7 +85,10 @@ app.get('/searchData', function(request, response) {
 app.get('/posts', isLoggedIn, function(request, response) {
   console.log('- Request received /posts:');
 
-  const requester = 'todo';
+  const requester = request.user;
+  const username = requester.rows[0].username;
+  console.log("Requester: " + requester);
+  console.log("Username: " + username);
   const donor = 'todo';
   const charity = 'todo';
 
@@ -263,6 +266,12 @@ passport.deserializeUser(function (userID, done) {
       done(err, user);
     });
 });
+
+app.post('/loggedIn', isLoggedIn, function (req, res) {
+    res.send({isAuth: "authorized"});
+  }, function (err, req, res, next) {
+    res.status(401).send({isAuth: "unauthorized", message: err + req.flash('message')});
+  });
 
 // initialize the database
 function init(callback) {

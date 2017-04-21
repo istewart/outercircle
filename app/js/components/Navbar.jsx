@@ -8,9 +8,23 @@ export default class Navbar extends React.Component {
         super(props);
         this.state = {
             initialItems: [],
-            items: []
+            items: [],
+            loggedIn: this.props.loggedIn
         }
         this.getData();
+    }
+    _checkLogin() {
+        $.post('/loggedIn', "", function(data, status) {
+            if (status === 'success' && data.isAuth === "authorized") {
+                this.setState({loggedIn: true});
+                console.log('logged in');
+            }
+            else {
+                this.setState({loggedIn: false});
+                console.log('not logged in');
+                console.log(data);
+            }
+        }.bind(this))
     }
 
     getData() {
@@ -42,10 +56,15 @@ export default class Navbar extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({items: []})
+        this._checkLogin();
+        this.setState({items: []});
     }
 
     render() {
+    var loginButton = "";
+    if (!this.state.loggedIn) {
+        loginButton = <LoginButton/>;
+    }
     return (
       <div id="navbar">
         <Link to="/">
@@ -61,8 +80,12 @@ export default class Navbar extends React.Component {
         <Link to="/">
           <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu"/>
         </Link>
-        <LoginButton/>
+        {loginButton}
       </div>
     )
     }
 }
+
+Navbar.defaultProps={
+    loggedIn: false
+};

@@ -22,7 +22,6 @@ export default class LoginPage extends React.Component {
       $.post('/login', data, function(result, status) {
         if (result.isAuth == "authorized") {
           this.setState({loggedIn: true});
-          console.log(result);
         }
       }.bind(this));
   }
