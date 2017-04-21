@@ -7,11 +7,10 @@ export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialItems: [],
             items: [],
             loggedIn: this.props.loggedIn
         }
-        this.getData();
+        // this.getData();
     }
     _checkLogin() {
         $.post('/loggedIn', "", function(data, status) {
@@ -27,15 +26,19 @@ export default class Navbar extends React.Component {
         }.bind(this))
     }
 
-    getData() {
+    getData(keyWord) {
         const search = this;
-        $.get('/searchData', function(data, status) {
+        console.log(keyWord);
+        $.get('/searchData', {keyWord: keyWord}, function(data, status) {
             if (status === 'success') {
-                var nameList = [];  // nameList contains name of all charities and donors
-                for(var i = 0; i < data.length; i++) {
-                    nameList[i] = data[i].name;
-                }
-                search.setState({initialItems: nameList});
+                // var nameList = [];  // nameList contains name of all charities and donors
+                // for(var i = 0; i < data.length; i++) {
+                //     nameList[i].name = data[i].name;
+                //     nameList[i].id = data[i].id;
+                // }
+                // console.log("data here")
+                //  console.log(data[0]);
+                search.setState({items: data});
             } else {
                 // error handling
             }
@@ -45,10 +48,12 @@ export default class Navbar extends React.Component {
     filterList(event) {
         if(event.target.value !== "") {
             var updatedList = [];
-            var dataList = this.state.initialItems;
-            updatedList = dataList.filter(function(item){
-                return item.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
-            });
+            this.getData(event.target.value.toLowerCase());
+            updatedList = this.state.items;
+            // var dataList = this.state.initialItems;
+            // updatedList = dataList.filter(function(item){
+            //     return item.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+            // });
             this.setState({items: updatedList});
         } else {
             this.setState({items: []});
