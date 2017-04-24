@@ -191,6 +191,39 @@ app.get('/suggest',function(request,response){
 
 });
 
+app.post('/follow', function(request, response) {
+  console.log('- Request received /follow');
+  
+  const donor = request.body.donor;
+  const charity = request.body.charity;
+
+  let sql = 'INSERT INTO following (donor, charity) \
+            VALUES (?, ?)';
+  db.query(sql, [donor, charity], function(error, result) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
+    }
+  });
+});
+
+app.post('/unfollow', function(request, response) {
+  console.log('- Request received /unfollow');
+  
+  const donor = request.body.donor;
+  const charity = request.body.charity;
+
+  let sql = 'DELETE FROM following WHERE donor=? AND charity=?';
+  db.query(sql, [donor, charity], function(error, result) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("(donor " + donor + ", charity " + charity + ") was deleted successfully");
+    }
+  });
+});
+
 // serve the home page on any other request // TODO: this is sketchy
 app.get('*', function(request, response) {
   console.log('- Request received *:');
@@ -339,6 +372,19 @@ function init(callback) {
       });
   });
 
+   sql = 'CREATE TABLE IF NOT EXISTS following ( \
+    donor INTEGER, \
+    charity INTEGER \
+  );'
+
+  db.query(sql, function(error, result) {
+    if (error) {
+      console.log("!!" + error);
+    } else {
+      console.log('Initialized following table.');
+    }
+  });
+
   sql = 'CREATE TABLE IF NOT EXISTS post ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     donor INTEGER, \
@@ -393,7 +439,6 @@ function init(callback) {
               console.log('Insert Test User');
       });
   });
-
 
 
 

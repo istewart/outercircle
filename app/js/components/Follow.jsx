@@ -31,10 +31,24 @@ export default class Follow extends React.Component {
 
   handleFollow(){
     this.setState({isFollow: true});
+
+    const data = {
+      donor: 1,
+      charity: 1,
+    };
+
+    $.post('/follow', data);
   }
 
   handleUnfollow(){
     this.setState({isFollow: false});
+
+    const data = {
+      donor: 1,
+      charity: 1,
+    };
+
+    $.post('/unfollow', data);
   }
 
   render() {
