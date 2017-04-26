@@ -178,17 +178,15 @@ app.get('/title',function (request,response) {
 app.get('/suggest',function(request,response){
     let id = request.query.id;
     let type = request.query.type;
-    let sql= 'SELECT id,name,description,profile_image FROM '
-        +type
-        + ' WHERE id!=? ORDER BY id ASC';
-    db.query(sql,[id],function(error, result) {
+    let sql= 'SELECT id, name, description, profile_image FROM ?' // TODO: not good security
+        + ' WHERE id != ? ORDER BY id ASC';
+    db.query(sql, [id, type], function(error, result) {
         if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
         } else {
             response.json(result.rows);
         }
     });
-
 });
 
 app.post('/follow', function(request, response) {
@@ -214,7 +212,7 @@ app.post('/unfollow', function(request, response) {
   const donor = request.body.donor;
   const charity = request.body.charity;
 
-  let sql = 'DELETE FROM following WHERE donor=? AND charity=?';
+  let sql = 'DELETE FROM following WHERE donor = ? AND charity = ?';
   db.query(sql, [donor, charity], function(error, result) {
     if (error) {
       console.log(error);
@@ -374,7 +372,8 @@ function init(callback) {
 
    sql = 'CREATE TABLE IF NOT EXISTS following ( \
     donor INTEGER, \
-    charity INTEGER \
+    charity INTEGER, \
+    PRIMARY KEY (donor, charity) \
   );'
 
   db.query(sql, function(error, result) {
