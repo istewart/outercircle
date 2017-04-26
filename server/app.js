@@ -82,6 +82,25 @@ app.get('/searchData', function(request, response) {
     });
 });
 
+// retrieve charities' and donors' name for search
+app.get('/checkFollow', isLoggedIn, function(request, response) {
+    //console.log('- Request received /checkFollow:');
+    var sql = 'SELECT charity, donor FROM following WHERE charity = ? AND donor = ?';
+    db.query(sql, [1,1],function(error, result) {
+        if (error) {
+            console.log(error)
+        } else {
+            // console.log(result);
+            if(result.rows.length === 0) {
+                //console.log(result.rows);
+                response.json('false');
+            } else {
+                response.json('true');
+            }
+        }
+    });
+});
+
 // retrieve the posts for a feed
 app.get('/posts', isLoggedIn, function(request, response) {
   console.log('- Request received /posts:');

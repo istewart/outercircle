@@ -21,12 +21,28 @@ function UnfollowButton(props){
 export default class Follow extends React.Component {
   constructor(props) {
     super(props);
+    this.checkFollow();
     this.state = {
       isFollow : this.props.isFollow,
       isLogin : this.props.isLogin
     };
     this.handleFollow = this.handleFollow.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
+  }
+
+  checkFollow(){
+    const  follow = this;
+      $.get('/checkFollow', function(data, status) {
+          if (status === 'success') {
+              if(data === 'true') {
+                  follow.setState({isFollow: true});
+              } else {
+                  follow.setState({isFollow: false});
+              }
+          } else {
+              // todo error handling
+          }
+      });
   }
 
   handleFollow(){
@@ -66,8 +82,8 @@ export default class Follow extends React.Component {
 }
 
 Follow.defaultProps = {
-    isFollow: false,
-    isLogin: false,
+    // isFollow: false,
+    // isLogin: false,
     truetext: 'Followed',
     falsetext: 'Follow'
 };
