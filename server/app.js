@@ -82,7 +82,7 @@ app.get('/searchData', function(request, response) {
     });
 });
 
-// retrieve charities' and donors' name for search
+// check whether a user has followed a certain user or charity
 app.get('/checkFollow', isLoggedIn, function(request, response) {
     //console.log('- Request received /checkFollow:');
     var sql = 'SELECT charity, donor FROM following WHERE charity = ? AND donor = ?';
@@ -92,7 +92,6 @@ app.get('/checkFollow', isLoggedIn, function(request, response) {
         } else {
             // console.log(result);
             if(result.rows.length === 0) {
-                //console.log(result.rows);
                 response.json('false');
             } else {
                 response.json('true');
