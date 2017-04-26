@@ -178,9 +178,10 @@ app.get('/title',function (request,response) {
 app.get('/suggest',function(request,response){
     let id = request.query.id;
     let type = request.query.type;
-    let sql= 'SELECT id, name, description, profile_image FROM ?' // TODO: not good security
+    let sql= 'SELECT id, name, description, profile_image FROM donor' // TODO: not good security
         + ' WHERE id != ? ORDER BY id ASC';
-    db.query(sql, [id, type], function(error, result) {
+    db.query(sql, [id], function(error, result) {
+        console.log(error);
         if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
         } else {
