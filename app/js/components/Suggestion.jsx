@@ -44,7 +44,7 @@ export default class Suggestion extends React.Component {
         return (
             <div>
                 <header className="component-header">{title}</header>
-                <ul className="list-group" id="suggest-list">
+                <ul className="list-group suggest-list">
                     {renderedSuggestions}
                 </ul>
             </div>

@@ -291,7 +291,7 @@ span.psw {
     font-style: italic;
 }
 
-#suggest-list button{
+.suggest-list button{
     width: 40%;
     height: 40%;
     padding: 0;

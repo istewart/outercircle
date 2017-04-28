@@ -15,7 +15,7 @@ export default class Post extends React.Component {
           <Link to={'/donor/' + this.props.data.donor}>
             <img 
               src={window.location.origin + "/" + this.props.data.profile_image}
-              className="img-rounded donor-thumbnail"
+              className="img-rounded donor-thumbnail" alt="profile image"
             />
           </Link>
           <div className="post-title">

@@ -68,7 +68,7 @@ export default class Navbar extends React.Component {
     render() {
     var loginButton = "";
     if (!this.state.loggedIn) {
-        loginButton = <Link to="/login"><button className="btn btn-primary">Login</button></Link>;
+        loginButton = <Link to="/login" className="btn btn-primary">Login</Link>;
     }
     return (
       <div id="navbar">
@@ -83,7 +83,7 @@ export default class Navbar extends React.Component {
         />
         <SearchList items={this.state.items}/>
         <Link to="/">
-          <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu"/>
+          <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
         {loginButton}
       </div>

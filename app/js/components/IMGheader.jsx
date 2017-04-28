@@ -8,7 +8,7 @@ export default class IMGheader extends React.Component {
   render() {
     return (
       <div className="center-block row headerIMGContainer">
-      	<img src={window.location.origin + "/" + this.props.imgsrc} className="headerIMG"/>
+      	<img src={window.location.origin + "/" + this.props.imgsrc} className="headerIMG" alt="Header image"/>
       </div>
     );
   }

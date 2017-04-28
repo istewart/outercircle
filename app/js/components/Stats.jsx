@@ -18,7 +18,7 @@ export default class Stats extends React.Component{
           {renderedStats}
         </ul>
         <div className="well well-sm stat-graphic-container">
-          <img src={window.location.origin + "/" + this.props.imgsrc} className="stat-graphic"/>
+          <img src={window.location.origin + "/" + this.props.imgsrc} className="stat-graphic" alt="Stats image"/>
         </div>
       </div>
     </div>

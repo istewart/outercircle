@@ -22,6 +22,7 @@ export default class Similar extends React.Component {
                  <img
                    src={window.location.origin + "/" + this.props.data.profile_image}
                    className="img-rounded donor-thumbnail suggest-img"
+                   alt="profile image"
                  />
               </Link>
               <div className="post-title">

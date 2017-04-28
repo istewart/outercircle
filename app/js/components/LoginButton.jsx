@@ -40,7 +40,7 @@ export default class LoginButton extends React.Component {
   	}
     return (
       <div>
-      	<a href="#" onClick={this._buttonClick.bind(this)}><button className="btn btn-primary">Login</button></a>
+      	<a href="#" className="btn btn-primary" onClick={this._buttonClick.bind(this)}>Login</a>
 		<div id="id01" className={style}>
 		  
 		  <form className="modal-content animate" onSubmit={this._handleLogin.bind(this)}>

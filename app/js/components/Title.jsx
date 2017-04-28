@@ -16,8 +16,8 @@ export default class Title extends React.Component {
             <div className="charity-header">
               <h3>{this.props.data.name}</h3>
               <div className="charity-buttons">
-                <a href={this.props.data.website} target="_blank">
-                  <button id="donate" className="btn btn-success btn-margin">Donate</button>
+                <a href={this.props.data.website} target="_blank" id="donate" className="btn btn-success btn-margin">
+                  Donate
                 </a>
                   <Follow isFollow={false} truetext='Followed' falsetext='Follow'/>
               </div>
