@@ -8,9 +8,9 @@ var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressSession = require('express-session');
-var bCrypt = require('bcrypt-nodejs');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
+var genHash = require('sha256');
 
 // serve static files
 app.use(express.static('dist'));
@@ -273,7 +273,7 @@ passport.use('login', new LocalStrategy({
       const user = result.rows[0];
 			const passwd = user.password;
 			// User exists so need to check if password is right
-			if (!isValidUnhashedPassword(password, passwd)) {
+			if (!isValidPassword(password, passwd)) {
 				console.log("Invalid Password");
 				return done(null, false, req.flash('message', 'Invalid Password'));
 			}
@@ -285,15 +285,45 @@ passport.use('login', new LocalStrategy({
 	}
 ));
 
+app.post('/signup', function(request, response) {
+  var username = request.body.username;
+  var password = request.body.password;
+  var email = request.email;
+  var sql = 'SELECT * FROM user WHERE username = ?';
+  db.query(sql, [username], function(err, result) {
+    // If there is an error, return using done method
+    if (err) {
+      console.log(err);
+      return done(err);
+    }
+    // User doesn't exist so can continue with signup
+    if (result.rows.length === 0) {
+      var passwd = createHash(password);
+      sql = 'INSERT INTO user (username, password, email) VALUES (?, ?, ?)';
+      db.query(sql,
+          [username, passwd, email],
+          function(error, result) {
+            console.log('Inserted User: ' + username + ", With password hash: " + passwd);
+            response.send({signup: "success"});
+          });
+    }
+    // User exists so need to let user know
+    else {
+      console.log('username is already defined')
+    }
+  });
+});
 // This is what we will use to compare hashes
 // TODO: actually figure out how to properly hash password and sign them up
 function isValidPassword(input, password) {
-	return bCrypt.compareSync(password, input);
+  console.log("input: " + createHash(input));
+  console.log("password: " + password);
+	return (password === createHash(input))
 }
 
-// Generates hash using bCrypt
+// Generates hash using SHA-256
 var createHash = function(password){
- return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+ return genHash(password);
 }
 
 // Use this for now since we don't need to worry about security yet
@@ -440,7 +470,7 @@ function init(callback) {
   });
 
 
-  sql = 'CREATE TABLE IF NOT EXISTS user ( \
+  sql = 'CREATE TABLE user ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     username TEXT, \
     password TEXT, \
@@ -449,14 +479,17 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized user table.');
-      db.query('INSERT INTO user '
+  });
+
+  /*
+  db.query('INSERT INTO user '
           + '(username, password, email) '
           + 'VALUES (?, ?, ?)',
           ['Doge', 'suchsecure', 'doggo@pupper.com'],
           function(error, result) {
               console.log('Insert Test User');
       });
-  });
+  */
 
 
 
