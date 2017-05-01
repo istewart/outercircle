@@ -54,6 +54,7 @@ export default class LoginPage extends React.Component {
               </div>
             </div>
           </form>
+          Or <a href={window.location.origin + "/signup"}><button className="btn btn-primary">Sign Up</button></a>
         </div>
       );
     }
