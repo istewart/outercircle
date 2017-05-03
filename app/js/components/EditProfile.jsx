@@ -3,7 +3,11 @@ import React from 'react';
 export default class EditProfile extends React.Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {editProfile : false};
+	    this.state = {
+	    	editProfile : false,
+	    	header: "FIX THIS TO USE THE STATE PASSED IN BY PROPS",
+	    	description: "SAME AS HEADER"
+	    };
   	}
   	
 
@@ -22,7 +26,7 @@ export default class EditProfile extends React.Component {
 		const data = {
 	      donor: 1,
 	      header: $("#donorHeader").val(),
-	      profile: $("#donorProfile").val()
+	      profile: $("#donorDescription").val()
 	    };
 
     	$.post('/editProfile', data);
@@ -42,8 +46,8 @@ export default class EditProfile extends React.Component {
 				<div className={style}>
 					<div class="modal-content animate">
 						<div class="modal-body">
-							<input classname="form-control" id="donorHeader" type="text" placeholder="MAKE THIS BE WHAT IT USED TO BE"/>
-							<input classname="form-control" id="donorProfile" type="text" placeholder="MAKE THIS BE WHAT IT USED TO BE"/>
+							<input className="form-control" id="donorHeader" type="text" value={this.state.header}/>
+							<input className="form-control" id="donorDescription" type="text" value={this.state.description}/>
 						</div>
 						<div class="modal-footer">
 							<button className="btn btn-primary" onClick={this._close.bind(this)}>cancel</button>

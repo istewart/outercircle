@@ -1,6 +1,6 @@
 import React from 'react';
 
-import IMGheader from './IMGheader.jsx';
+import ImageHeader from './ImageHeader.jsx';
 import EditProfile from './EditProfile.jsx';
 
 
@@ -38,7 +38,7 @@ export default class DonorProfile extends React.Component {
                     <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
                     <div className="donorInfo panel panel-default">
                         <div className="donorIntroduction panel-body">
-                            <EditProfile className="pull-right"/>
+                            <EditProfile className="pull-right" header={this.state.name} description={this.state.description}/>
                             <h2>{this.state.name}</h2>
                             <p>{this.state.description}</p>
                         </div>
