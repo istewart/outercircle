@@ -34,7 +34,7 @@ export default class DonorProfile extends React.Component {
         if (this.state.donor == null) {
             return (
                 <div>
-                    <ImageHeader/>
+                    <ImageHeader name={this.state.name} cover_image={this.state.cover_image}/>
                     <div className="donor-header">
                         <img 
                             src={window.location.origin + "/" + this.state.profile_image} 
@@ -58,7 +58,7 @@ export default class DonorProfile extends React.Component {
         } else {
             return (
                 <div>
-                    <ImageHeader/>
+                    <ImageHeader name={this.state.name} cover_image={this.state.cover_image}/>
                     <div className="donor-header">
                         <img 
                             src={window.location.origin + "/" + this.state.profile_image} 
