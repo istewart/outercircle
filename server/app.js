@@ -429,8 +429,8 @@ function init(callback) {
       db.query('INSERT INTO donor '
           + '(name, email, description, profile_image, cover_image) '
           + 'VALUES (?, ?, ?, ?, ?)',
-          ['Ian Stewart', 'ian_stewart@brown.edu', 'some description',
-              'profile.jpg', 'cover_image'],
+          ['Ian Stewart', 'ian_stewart@brown.edu', 'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.',
+              'profile.jpg', 'beach.jpg'],
           function(error, result) {
               console.log('sample donor');
       });

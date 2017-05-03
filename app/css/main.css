@@ -90,18 +90,13 @@ body {
   margin-right: 20px;
 }
 
-.donorInfo {
+.donor-info {
   height: 200px;
   overflow: hidden;
   flex-grow: 1;
 }
 
-.donorIntroduction {
-  height: 160px;
-  overflow: hidden;
-}
-
-.donorToolbar{
+.donor-toolbar {
   text-align: right;
 }
 
