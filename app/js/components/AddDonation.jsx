@@ -11,7 +11,7 @@ export default class AddDonation extends React.Component {
     event.preventDefault();
 
     const data = {
-      donor: 1, // todo
+      donor: this.props.donor,
       charity: 1, // todo
       category: $('#category').val(),
       amount: $('#amount').val(),
@@ -34,11 +34,11 @@ export default class AddDonation extends React.Component {
       <div className="well well-sm">
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label for="name">Charity Name:</label>
+            <label htmlFor="name">Charity Name:</label>
             <input type="text" className="form-control" id="name"/>
           </div>
           <div className="form-group">
-            <label for="category">Category:</label>
+            <label htmlFor="category">Category:</label>
             <select id="category" className="form-control">
               <option>Education</option>
               <option>Environment</option>
@@ -47,7 +47,7 @@ export default class AddDonation extends React.Component {
             </select>
           </div>
           <div className="form-group">
-            <label for="amount">Amount:</label>
+            <label htmlFor="amount">Amount:</label>
             <div className="input-group">
               <div className="input-group-addon">$</div>
                 <input type="number" className="form-control" id="amount"/>

@@ -127,6 +127,27 @@ app.get('/posts', isLoggedIn, function(request, response) {
   });
 });
 
+// retrieve the data for a donor
+app.get('/donor/:id', function(request, response) {
+  console.log('- Request received /donor/:id:');
+
+  const requester = 'todo';
+  const donor = request.params.id;
+
+  var sql = 'SELECT d.name, d.description, d.profile_image, d.cover_image '
+    + 'FROM donor AS d '
+    + 'WHERE d.id = ?';
+  db.query(sql, [donor], function(error, result) {
+      if(result !== undefined) {
+        if (!result.rowCount == 1) { // TODO: errors, which posts, sorting
+          // todo errors, also auth
+        } else {
+          // return the requested donor information
+          response.json(result.rows[0]);
+        }
+      }
+  });
+});
 
 // record a donation // TODO: security, cookies, auth
 app.post('/donate', function(request, response) {
@@ -158,18 +179,18 @@ app.post('/donate', function(request, response) {
 });
 
 // retrieve the donations for TODO
-app.get('/donations', function(request, response) {
+app.get('/donations/:id', function(request, response) {
   console.log('- Request received /donations:');
 
   const requester = 'todo';
-  const donor = 'todo';
+  const donor = request.params.id;
   const charity = 'todo';
 
   var sql = 'SELECT c.name, d.amount, d.category, d.time '
     + 'FROM donation AS d JOIN charity AS c '
-    + 'ON d.charity = c.id WHERE time >= ? '
+    + 'ON d.charity = c.id WHERE d.donor = ? '
     + 'ORDER BY time DESC';
-  db.query(sql, [0], function(error, result) {
+  db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
         if (!result.rowCount) { // TODO: errors, which posts, sorting
           // todo errors, also auth

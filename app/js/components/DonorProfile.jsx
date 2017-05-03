@@ -5,9 +5,27 @@ import IMGheader from './IMGheader.jsx';
 export default class DonorProfile extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            imgsrc : this.props.imgsrc
-        };
+
+        this.state = {};
+
+        this.fetchData = this.fetchData.bind(this);
+        this.fetchData();
+    }
+
+    fetchData() {
+        $.get('/donor/' + this.props.donor, function(data, status) {
+          if (status === 'success') {
+            // we succesfully retrieved some data so update state
+            this.setState({
+                name: data.name,
+                description: data.description,
+                profile_image: data.profile_image,
+                cover_image: data.cover_image,
+            });
+          } else {
+            // todo error handling
+          }
+        }.bind(this));
     }
 
     render() {
@@ -15,15 +33,11 @@ export default class DonorProfile extends React.Component {
             <div>
                 <IMGheader/>
                 <div className="row donor-header">
-                    <img src={window.location.origin + "/" + this.state.imgsrc} alt="TODO's Profile Picture" className="img-thumbnail"/>
+                    <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
                     <div className="donorInfo panel panel-default">
                         <div className="donorIntroduction panel-body">
-                            <h2>I am a donor</h2>
-                            <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a dui dignissim, rutrum felis ac, congue erat.
-                            Mauris volutpat ut nibh ut dictum. Curabitur vulputate facilisis nulla sed sodales. Maecenas mollis a est vel fringilla.
-                            Fusce tristique risus id ante rutrum, in suscipit nulla venenatis.
-                            </p>
+                            <h2>{this.state.name}</h2>
+                            <p>{this.state.description}</p>
                         </div>
                         <div className="donorToolbar">
                             <span className="glyphicon glyphicon-user"></span>
@@ -37,7 +51,3 @@ export default class DonorProfile extends React.Component {
         );
     }
 }
-
-DonorProfile.defaultProps = {
-    imgsrc : 'test2.png'
-};

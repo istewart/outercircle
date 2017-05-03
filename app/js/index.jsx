@@ -18,7 +18,7 @@ const Routes = () => (
   <BrowserRouter>
     <div>
       <Route exact path='/' component={Home}/>
-      <Route path='/donor' component={DonorPage}/>
+      <Route path='/donor/:id' component={DonorPage}/>
       <Route path='/charity' component={Charity}/>
       <Route path='/login' component={LoginPage}/>
       <Route path='/signup' component={SignupPage}/>
