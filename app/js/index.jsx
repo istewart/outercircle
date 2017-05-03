@@ -8,7 +8,7 @@ import {
 
 import css from '../css/main.css';
 
-import Charity from './components/Charity.jsx';
+import CharityPage from './components/CharityPage.jsx';
 import DonorPage from './components/DonorPage.jsx';
 import Home from './components/Home.jsx';
 import LoginPage from './components/LoginPage.jsx';
@@ -18,8 +18,8 @@ const Routes = () => (
   <BrowserRouter>
     <div>
       <Route exact path='/' component={Home}/>
-      <Route path='/donor' component={DonorPage}/>
-      <Route path='/charity' component={Charity}/>
+      <Route path='/donor/:id' component={DonorPage}/>
+      <Route path='/charity' component={CharityPage}/>
       <Route path='/login' component={LoginPage}/>
       <Route path='/signup' component={SignupPage}/>
     </div>

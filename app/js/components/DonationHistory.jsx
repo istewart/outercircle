@@ -4,6 +4,7 @@ export default class DonationHistory extends React.Component {
   constructor(props) {
     super(props);
 
+
     this.state = {
       donations: [],
     };
@@ -13,7 +14,7 @@ export default class DonationHistory extends React.Component {
   fetchDonations() {
     const history = this;
 
-    $.get('/donations', function(data, status) {
+    $.get('/donations/' + this.props.donor, function(data, status) {
       if (status === 'success') {
         // we succesfully retrieved some donations so update state
         history.setState({donations: data});
@@ -34,24 +35,24 @@ export default class DonationHistory extends React.Component {
     ); // TODO: this is a hack on amount
 
     return (
-    <div>
-      <header className="component-header">Donation History</header>
-      <div className="well well-sm">
-        <table className="table table-striped table-hover form-end">
-          <thead>
-            <tr>
-              <th>Charity</th>
-              <th>Amount</th>
-              <th>Category</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {renderedDonations}
-          </tbody>
-        </table>
+      <div>
+        <header className="component-header">Donation History</header>
+        <div className="well well-sm">
+          <table className="table table-striped table-hover form-end">
+            <thead>
+              <tr>
+                <th>Charity</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {renderedDonations}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
     );
   }
 }

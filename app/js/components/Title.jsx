@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Follow from './Follow.jsx';
-import IMGheader from './IMGheader.jsx'
+import ImageHeader from './ImageHeader.jsx'
 
 export default class Title extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class Title extends React.Component {
   render() {
     return (
       <div>
-          <IMGheader imgsrc={this.props.data.cover_image}/>
+          <ImageHeader imgsrc={this.props.data.cover_image}/>
           <div className="well charity-title center-block">
             <div className="charity-header">
               <h3>{this.props.data.name}</h3>

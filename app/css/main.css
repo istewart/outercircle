@@ -6,6 +6,10 @@ body {
   background-color: #fff;
 }
 
+.center-block {
+  float: none;
+}
+
 .full-width {
   width: 100%;
 }
@@ -89,6 +93,7 @@ body {
 .donorInfo {
   height: 200px;
   overflow: hidden;
+  flex-grow: 1;
 }
 
 .donorIntroduction {

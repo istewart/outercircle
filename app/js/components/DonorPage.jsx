@@ -11,24 +11,27 @@ import Suggestion from './Suggestion.jsx';
 export default class DonorPage extends React.Component {
   constructor(props) {
     super(props);
+    this.id = this.props.match.params.id;
   }
   
   render() {
     return (
       <div>
         <Navbar/>
-        <div id="main" className="center-block col-md-9">
+        <div id="main">
           <div className="row">
-            <DonorProfile/>
+            <div className="col-sm-10 col-sm-offset-1">
+              <DonorProfile donor={this.id}/>
+            </div>
           </div>
           <div className="row">
-            <div className="col-md-5 col-sm-5 col-sm-push-7">
-              <AddDonation/>
-              <DonationHistory/>
-              <Stats/>
-              <Suggestion type="donor"/>
+            <div className="col-sm-4 col-sm-push-6 col-sm-offset-1">
+              <AddDonation donor={this.id}/>
+              <DonationHistory donor={this.id}/>
+              <Stats donor={this.id}/>
+              <Suggestion type="donor" donor={this.id}/>
             </div>
-            <div className="col-md-7 col-sm-7 col-sm-pull-5">
+            <div className="col-sm-6 col-sm-pull-4">
               <Feed/>
             </div>
           </div>
