@@ -5,7 +5,6 @@ import ImageHeader from './ImageHeader.jsx';
 export default class DonorProfile extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {};
 
         this.fetchData = this.fetchData.bind(this);
@@ -32,18 +31,21 @@ export default class DonorProfile extends React.Component {
         return (
             <div>
                 <ImageHeader/>
-                <div className="row donor-header">
-                    <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
-                    <div className="donorInfo panel panel-default">
-                        <div className="donorIntroduction panel-body">
+                <div className="donor-header">
+                    <img 
+                        src={window.location.origin + "/" + this.state.profile_image} 
+                        alt={this.state.name + "'s Profile Picture"} 
+                        className="img-thumbnail"
+                    />
+                    <div className="donor-info panel panel-default">
+                        <div className="panel-body">
                             <h2>{this.state.name}</h2>
                             <p>{this.state.description}</p>
-                        </div>
-                        <div className="donorToolbar">
-                            <span className="glyphicon glyphicon-user"></span>
-                            <span> 350 connections </span>
-                            <span><a href="#">view</a></span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <p className="donor-toolbar">
+                                <span className="glyphicon glyphicon-user"></span>
+                                <span> 350 connections </span>
+                                <span><a href="#">view</a></span>
+                            </p>
                         </div>
                     </div>
                 </div>

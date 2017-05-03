@@ -6,7 +6,7 @@ import Stats from './Stats.jsx';
 import Title from './Title.jsx';
 import Suggestion from './Suggestion.jsx';
 
-export default class Charity extends React.Component{
+export default class CharityPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
