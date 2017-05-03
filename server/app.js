@@ -225,6 +225,25 @@ app.post('/follow', function(request, response) {
   });
 });
 
+app.post('/editProfile', function(request, response) {
+  console.log('- Request received /editProfile');
+  
+  const donor = request.body.donor;
+  const header = request.body.header;
+  const profile = request.body.profile;
+
+  console.log(header + " " + donor + " " + profile);
+  // let sql = 'INSERT INTO following (donor, charity) \
+  //           VALUES (?, ?)';
+  // db.query(sql, [donor, charity], function(error, result) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
+  //   }
+  // });
+});
+
 app.post('/unfollow', function(request, response) {
   console.log('- Request received /unfollow');
   

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import IMGheader from './IMGheader.jsx';
+import EditProfile from './EditProfile.jsx';
 
 export default class DonorProfile extends React.Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export default class DonorProfile extends React.Component {
                     <img src={window.location.origin + "/" + this.state.imgsrc} alt="TODO's Profile Picture" className="img-thumbnail"/>
                     <div className="donorInfo panel panel-default">
                         <div className="donorIntroduction panel-body">
+                            <EditProfile className="pull-right"/>
                             <h2>I am a donor</h2>
                             <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a dui dignissim, rutrum felis ac, congue erat.
