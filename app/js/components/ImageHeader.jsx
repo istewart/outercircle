@@ -8,12 +8,12 @@ export default class IMGheader extends React.Component {
   render() {
     return (
       <div className="center-block row headerIMGContainer">
-      	<img src={window.location.origin + "/" + this.props.imgsrc} className="headerIMG" alt="Header image"/>
+      	<img 
+          src={window.location.origin + "/" + this.props.cover_image}
+          className="headerIMG" 
+          alt={this.props.name + "'s Cover Photo"}
+        />
       </div>
     );
   }
 }
-
-IMGheader.defaultProps={
-  imgsrc:'beach.jpg'
-};

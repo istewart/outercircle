@@ -32,7 +32,10 @@ export default class DonorProfile extends React.Component {
     render() {
         return (
             <div>
-                <ImageHeader/>
+                <ImageHeader 
+                    name={this.state.name}
+                    cover_image={this.state.cover_image}
+                />
                 <div className="donor-header">
                     <img 
                         src={window.location.origin + "/" + this.state.profile_image} 
