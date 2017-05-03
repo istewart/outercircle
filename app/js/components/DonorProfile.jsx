@@ -1,6 +1,8 @@
 import React from 'react';
 
 import ImageHeader from './ImageHeader.jsx';
+import EditProfile from './EditProfile.jsx';
+
 
 export default class DonorProfile extends React.Component {
     constructor(props) {
@@ -39,6 +41,7 @@ export default class DonorProfile extends React.Component {
                     />
                     <div className="donor-info panel panel-default">
                         <div className="panel-body">
+                            <EditProfile className="pull-right" header={this.state.name} description={this.state.description}/>
                             <h2>{this.state.name}</h2>
                             <p>{this.state.description}</p>
                             <p className="donor-toolbar">
