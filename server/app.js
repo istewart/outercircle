@@ -250,19 +250,17 @@ app.post('/editProfile', function(request, response) {
   console.log('- Request received /editProfile');
   
   const donor = request.body.donor;
-  const header = request.body.header;
-  const profile = request.body.profile;
+  const name = request.body.name;
+  const description = request.body.description;
 
-  console.log(header + " " + donor + " " + profile);
-  // let sql = 'INSERT INTO following (donor, charity) \
-  //           VALUES (?, ?)';
-  // db.query(sql, [donor, charity], function(error, result) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
-  //   }
-  // });
+  let sql = 'UPDATE donor SET name = ?, description = ? WHERE id = ?';
+  db.query(sql, [name, description, donor], function(error, result) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("donor " + donor + " updated their name to " + name + " and description to " + description);
+    }
+  });
 });
 
 app.post('/unfollow', function(request, response) {

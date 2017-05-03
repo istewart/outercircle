@@ -19,6 +19,7 @@ export default class DonorProfile extends React.Component {
           if (status === 'success') {
             // we succesfully retrieved some data so update state
             this.setState({
+                donor: this.props.donor,
                 name: data.name,
                 description: data.description,
                 profile_image: data.profile_image,
@@ -31,26 +32,49 @@ export default class DonorProfile extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <ImageHeader/>
-                <div className="row donor-header">
-                    <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
-                    <div className="donorInfo panel panel-default">
-                        <div className="donorIntroduction panel-body">
-                            <EditProfile className="pull-right" header={this.state.name} description={this.state.description}/>
-                            <h2>{this.state.name}</h2>
-                            <p>{this.state.description}</p>
-                        </div>
-                        <div className="donorToolbar">
-                            <span className="glyphicon glyphicon-user"></span>
-                            <span> 350 connections </span>
-                            <span><a href="#">view</a></span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        if (this.state.donor == null) {
+            return (
+                <div>
+                    <ImageHeader/>
+                    <div className="row donor-header">
+                        <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
+                        <div className="donorInfo panel panel-default">
+                            <div className="donorIntroduction panel-body">
+                                <h2>{this.state.name}</h2>
+                                <p>{this.state.description}</p>
+                            </div>
+                            <div className="donorToolbar">
+                                <span className="glyphicon glyphicon-user"></span>
+                                <span> 350 connections </span>
+                                <span><a href="#">view</a></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div>
+                    <ImageHeader/>
+                    <div className="row donor-header">
+                        <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
+                        <div className="donorInfo panel panel-default">
+                            <div className="donorIntroduction panel-body">
+                                <EditProfile className="pull-right" donor={this.state.donor} name={this.state.name} description={this.state.description}/>
+                                <h2>{this.state.name}</h2>
+                                <p>{this.state.description}</p>
+                            </div>
+                            <div className="donorToolbar">
+                                <span className="glyphicon glyphicon-user"></span>
+                                <span> 350 connections </span>
+                                <span><a href="#">view</a></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
     }
 }
