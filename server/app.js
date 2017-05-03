@@ -265,7 +265,7 @@ app.post('/unfollow', function(request, response) {
 // serve the home page on any other request // TODO: this is sketchy
 app.get('*', function(request, response) {
   console.log('- Request received *:');
-  response.sendFile('feed.html', {root : 'dist'}); // TODO: again here
+  response.sendFile('index.html', {root : 'dist'}); // TODO: again here
 });
 
 // initialize the database the web server

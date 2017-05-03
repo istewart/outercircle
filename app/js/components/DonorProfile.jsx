@@ -1,6 +1,6 @@
 import React from 'react';
 
-import IMGheader from './IMGheader.jsx';
+import ImageHeader from './ImageHeader.jsx';
 
 export default class DonorProfile extends React.Component {
     constructor(props) {
@@ -31,7 +31,7 @@ export default class DonorProfile extends React.Component {
     render() {
         return (
             <div>
-                <IMGheader/>
+                <ImageHeader/>
                 <div className="row donor-header">
                     <img src={window.location.origin + "/" + this.state.profile_image} alt="TODO's Profile Picture" className="img-thumbnail"/>
                     <div className="donorInfo panel panel-default">

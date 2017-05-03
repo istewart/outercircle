@@ -17,9 +17,9 @@ module.exports = {
     ]
   },
   plugins: [new HtmlWebpackPlugin({
-    filename: 'feed.html',
+    filename: 'index.html',
     inject: 'body',
     title:  'OuterCircle',
-    template: path.join(__dirname, '/app/html/feed.html'),
+    template: path.join(__dirname, '/app/html/index.html'),
   })]
 };
