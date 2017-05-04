@@ -8,7 +8,7 @@ export default class DonorProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-
+        this.changeItem = this.changeItem.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.fetchData();
     }
@@ -17,7 +17,6 @@ export default class DonorProfile extends React.Component {
         $.get('/donor/' + this.props.donor + '/data', function(data, status) {
           if (status === 'success') {
             // we succesfully retrieved some data so update state
-              console.log("SGJDGSJ")
             this.setState({
                 donor: this.props.donor,
                 name: data.name,
@@ -29,6 +28,13 @@ export default class DonorProfile extends React.Component {
             // todo error handling
           }
         }.bind(this));
+    }
+
+    changeItem(item) {
+        this.setState({
+            name: item.name,
+            description: item.description
+        });
     }
 
     render() {
@@ -68,7 +74,7 @@ export default class DonorProfile extends React.Component {
                         />
                         <div className="donor-info panel panel-default">
                             <div className="panel-body">
-                                <EditProfile className="pull-right" donor={this.state.donor} name={this.state.name} description={this.state.description}/>
+                                <EditProfile className="pull-right" donor={this.state.donor} name={this.state.name} description={this.state.description} changeItem={this.changeItem}/>
                                 <h2>{this.state.name}</h2>
                                 <p>{this.state.description}</p>
                                 <p className="donor-toolbar">

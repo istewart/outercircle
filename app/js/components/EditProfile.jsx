@@ -30,7 +30,8 @@ export default class EditProfile extends React.Component {
 	      description: $("#donorDescription").val()
 	    };
 
-    	$.post('/editProfile', data);
+		this.props.changeItem(data);
+        $.post('/editProfile', data);
 	}
 
 	render() {
