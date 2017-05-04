@@ -5,31 +5,46 @@ export default class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signup: false
+      signup: false,
+      wrongUsername: false,
+      wrongPassword: false
     };
   }
 
   _handleSignup(event) {
       event.preventDefault();
       const data = {
-        username: $('#username').val(),
+        username: $('#email').val(),
         password: $('#password').val(),
         confirmPassword: $('#confirmPassword').val(),
-        email: $('#email').val()
+        firstname: $('#firstname').val(),
+        lastname: $('#lastname').val()
       };
+      this.setState({wrongUsername: false});
       if (data.confirmPassword == data.password) {
+        this.setState({wrongPassword: false});
         $.post('/signup', data, function(result, status) {
           if (result.signup == "success") {
             this.setState({signup: true});
           }
+          else {
+            this.setState({wrongUsername: true});
+          }
         }.bind(this));
       }
       else {
-        alert('passwords did not match');
+        this.setState({wrongPassword: true});
       }
   }
   
   render() {
+    var alert = "";
+    if (this.state.wrongUsername) {
+      alert = <div className='alert alert-danger'><strong>Error</strong> Username already exists</div>;
+    }
+    else if (this.state.wrongPassword) {
+      alert = <div className='alert alert-danger'><strong>Error</strong> Passwords don't match</div>;
+    }
     if (this.state.signup) {
       return (<Redirect to="/login"/>);
     }
@@ -43,9 +58,17 @@ export default class Signup extends React.Component {
         </div>
         <div>
           <form onSubmit={this._handleSignup.bind(this)}>
+          <br/>
+            {alert}
             <div className="form-group form-padding">
-              <label><b>Username</b></label>
-              <input className="form-control" id="username" type="text" placeholder="Enter Username" name="uname" required />
+              <label><b>Email</b></label>
+              <input className="form-control" id="email" type="text" placeholder="Enter Email" name="email" required />
+
+              <label><b>First Name</b></label>
+              <input className="form-control" id="firstname" type="text" placeholder="First Name" name="passwd" required />
+
+              <label><b>Last Name</b></label>
+              <input className="form-control" id="lastname" type="text" placeholder="Last Name" name="passwd" required />
 
               <label><b>Password</b></label>
               <input className="form-control" id="password" type="password" placeholder="Enter Password" name="passwd" required />
@@ -65,5 +88,7 @@ export default class Signup extends React.Component {
 }
 
 Signup.defaultProps={
-  signup: false
+  signup: false,
+  wrongUsername: false,
+  wrongPassword: false
 };

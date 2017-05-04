@@ -39,7 +39,7 @@ export default class LoginPage extends React.Component {
             </div>
 
             <div className="form-group form-padding">
-              <label><b>Username</b></label>
+              <label><b>Email</b></label>
               <input className="form-control" id="username" type="text" placeholder="Enter Username" name="uname" required />
 
               <label><b>Password</b></label>

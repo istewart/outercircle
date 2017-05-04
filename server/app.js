@@ -326,7 +326,8 @@ passport.use('login', new LocalStrategy({
 app.post('/signup', function(request, response) {
   var username = request.body.username;
   var password = request.body.password;
-  var email = request.email;
+  var firstname = request.body.firstname;
+  var lastname = request.body.lastname;
   var sql = 'SELECT * FROM user WHERE username = ?';
   db.query(sql, [username], function(err, result) {
     // If there is an error, return using done method
@@ -337,16 +338,18 @@ app.post('/signup', function(request, response) {
     // User doesn't exist so can continue with signup
     if (result.rows.length === 0) {
       var passwd = createHash(password);
-      sql = 'INSERT INTO user (username, password, email) VALUES (?, ?, ?)';
+      sql = 'INSERT INTO user (username, password, firstname, lastname) VALUES (?, ?, ?, ?)';
       db.query(sql,
-          [username, passwd, email],
+          [username, passwd, firstname, lastname],
           function(error, result) {
             console.log('Inserted User: ' + username + ", With password hash: " + passwd);
+            console.log('First name: ' + firstname + ", Lastname: " + lastname);
             response.send({signup: "success"});
           });
     }
     // User exists so need to let user know
     else {
+      response.send({signup: "failure"});
       console.log('username is already defined')
     }
   });
@@ -512,7 +515,8 @@ function init(callback) {
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     username TEXT, \
     password TEXT, \
-    email TEXT \
+    firstname TEXT, \
+    lastname TEXT \
   );'
 
   db.query(sql, function(error, result) {
