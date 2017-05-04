@@ -56,6 +56,7 @@ app.post('/post', function(request, response) {
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
     db.query(sql, [donor], function(error, result) {
       response.json({
+        id: id,
         name: result.rows[0].name,
         profile_image: result.rows[0].profile_image,
         donor: donor,
@@ -111,7 +112,7 @@ app.get('/posts', isLoggedIn, function(request, response) {
   const donor = 'todo';
   const charity = 'todo';
 
-  let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.body, p.time '
+  let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
     + 'ON p.donor = d.id WHERE time >= ? '
     + 'ORDER BY time DESC';
@@ -133,18 +134,19 @@ app.get('/donor/:id', function(request, response) {
 
   const requester = 'todo';
   const donor = request.params.id;
-
   var sql = 'SELECT d.name, d.description, d.profile_image, d.cover_image '
     + 'FROM donor AS d '
     + 'WHERE d.id = ?';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
-        if (!result.rowCount == 1) { // TODO: errors, which posts, sorting
+        if (!result.rowCount === 1) { // TODO: errors, which posts, sorting
           // todo errors, also auth
         } else {
           // return the requested donor information
           response.json(result.rows[0]);
         }
+      } else{
+         console.log("fetch donor profile failed!")
       }
   });
 });
@@ -281,7 +283,7 @@ app.post('/unfollow', function(request, response) {
 
 // serve the home page on any other request // TODO: this is sketchy
 app.get('*', function(request, response) {
-  console.log('- Request received *:');
+  // console.log('- Request received *:');
   response.sendFile('index.html', {root : 'dist'}); // TODO: again here
 });
 
@@ -418,6 +420,7 @@ app.post('/loggedIn', isLoggedIn, function (req, res) {
 
 app.post('/logout', isLoggedIn, function(req, res) {
   req.logout();
+  res.redirect('/');
 });
 
 // initialize the database

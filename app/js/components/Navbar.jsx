@@ -10,6 +10,7 @@ export default class Navbar extends React.Component {
             items: [],
             loggedIn: this.props.loggedIn
         }
+        this._logout = this._logout.bind(this);
         // this.getData();
     }
     _checkLogin() {
@@ -21,15 +22,15 @@ export default class Navbar extends React.Component {
             else {
                 this.setState({loggedIn: false});
                 console.log('not logged in');
-                console.log(data);
             }
         }.bind(this))
     }
     _logout() {
+        const navbar = this;
         $.post('/logout', "", function(data, status) {
             if (status === 'success') {
                 console.log('logged out');
-                this.setState({loggedIn: false});
+                navbar.setState({loggedIn: false});
             }
         })
     }
@@ -79,7 +80,7 @@ export default class Navbar extends React.Component {
         loginButton = <Link to="/login" className="btn btn-primary">Login</Link>;
     }
     else {
-        loginButton = <button className="btn btn-primary" onClick={this._logout.bind(this)}>Logout</button>
+        loginButton = <button className="btn btn-primary" onClick={this._logout}>Logout</button>
     }
     return (
       <div id="navbar">
