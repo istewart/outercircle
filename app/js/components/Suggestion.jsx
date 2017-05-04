@@ -1,6 +1,8 @@
 import React from 'react';
 import Similar from './Similar.jsx';
 
+const MAX_SUGGESTIONS = 3;
+
 export default class Suggestion extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +21,7 @@ export default class Suggestion extends React.Component {
         };
         $.get('/suggest', dat, function (data, status) {
             if (status === 'success') {
-                suggest.setState({suggestions: data});
+                suggest.setState({suggestions: data.slice(0, MAX_SUGGESTIONS)});
             } else {
                 // todo error handling
             }
@@ -27,7 +29,7 @@ export default class Suggestion extends React.Component {
     }
 
     render() {
-        const t= this.props.type;
+        const t = this.props.type;
         const renderedSuggestions = this.state.suggestions.map((suggestion) =>
             <li className="list-group-item">
                 <Similar data={suggestion} type={t}/>

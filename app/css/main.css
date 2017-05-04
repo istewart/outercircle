@@ -92,7 +92,7 @@ body {
 
 .donor-info {
   height: 200px;
-  overflow: hidden;
+  overflow: auto; /* TODO: THIS IS A HACK*/;
   flex-grow: 1;
 }
 
