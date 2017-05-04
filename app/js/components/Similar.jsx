@@ -18,7 +18,7 @@ export default class Similar extends React.Component {
         return (
           <div>
             <div className="post-header">
-              <Link to={'/'+this.props.type+'/' + this.props.data.name}>
+              <Link to={'/'+this.props.type+'/' + this.props.data.id}>
                  <img
                    src={window.location.origin + "/" + this.props.data.profile_image}
                    className="img-rounded donor-thumbnail suggest-img"
@@ -26,7 +26,7 @@ export default class Similar extends React.Component {
                  />
               </Link>
               <div className="post-title">
-                <Link to={'/'+this.props.type+'/' + this.props.data.name}>
+                <Link to={'/'+this.props.type+'/' + this.props.data.id}>
                   <p>{this.props.data.name}</p>
                 </Link>
                 <p className="post-time">{this.props.data.description.substring(0,35)}</p>

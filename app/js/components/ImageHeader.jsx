@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class IMGheader extends React.Component {
+export default class ImageHeader extends React.Component {
   constructor(props) {
     super(props);
   }

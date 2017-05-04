@@ -11,7 +11,7 @@ export default class Title extends React.Component {
   render() {
     return (
       <div>
-          <ImageHeader imgsrc={this.props.data.cover_image}/>
+          <ImageHeader name={this.props.data.name} cover_image={this.props.data.cover_image}/>
           <div className="well charity-title center-block">
             <div className="charity-header">
               <h3>{this.props.data.name}</h3>
