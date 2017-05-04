@@ -14,9 +14,10 @@ export default class DonorProfile extends React.Component {
     }
 
     fetchData() {
-        $.get('/donor/' + this.props.donor, function(data, status) {
+        $.get('/donor/' + this.props.donor + '/data', function(data, status) {
           if (status === 'success') {
             // we succesfully retrieved some data so update state
+              console.log("SGJDGSJ")
             this.setState({
                 donor: this.props.donor,
                 name: data.name,

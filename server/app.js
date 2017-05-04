@@ -129,7 +129,7 @@ app.get('/posts', isLoggedIn, function(request, response) {
 });
 
 // retrieve the data for a donor
-app.get('/donor/:id', function(request, response) {
+app.get('/donor/:id/data', function(request, response) {
   console.log('- Request received /donor/:id:');
 
   const requester = 'todo';

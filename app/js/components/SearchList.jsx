@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class SearchList extends React.Component {
     render(){
@@ -8,10 +9,10 @@ export default class SearchList extends React.Component {
                 {
                     this.props.items.map(function(item) {
                         if(item.category === 'C') {
-                            return <a href={'http://localhost:8080/charity'}><li key={item}>{item.name}</li></a>
+                            return <Link to={'/charity/' + item.id}><li key={item}>{item.name}</li></Link>
                         }
                         else if(item.category === 'D') {
-                            return <a href={'http://localhost:8080/donor'}><li key={item}>{item.name}</li></a>
+                            return <Link to={'/donor/' + item.id}><li key={item}>{item.name}</li></Link>
                         }
 
                         {/*return <a href={'charity/'+item}><li key={item}>{item}</li></a>*/} //use this when to specific page
