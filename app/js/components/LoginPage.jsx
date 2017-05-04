@@ -8,7 +8,8 @@ export default class LoginPage extends React.Component {
     super(props);
     this.state = {
       imgsrc : this.props.imgsrc,
-      loggedIn: this.props.loggedIn
+      loggedIn: this.props.loggedIn,
+      loginFailed: this.props.loginFailed
     };
   }
   _handleLogin(event) {
@@ -20,13 +21,20 @@ export default class LoginPage extends React.Component {
       };
       
       $.post('/login', data, function(result, status) {
+        console.log(status);
         if (result.isAuth == "authorized") {
           this.setState({loggedIn: true});
         }
+      }.bind(this)).fail(function(){
+        this.setState({loginFailed: true});
       }.bind(this));
   }
   
   render() {
+    var alert = "";
+    if (this.state.loginFailed) {
+      alert = <div className='alert alert-danger'><strong>Error</strong> Username or password incorrect</div>;
+    }
     if (this.state.loggedIn) {
       return (<Redirect to="/"/>);
     }
@@ -37,7 +45,7 @@ export default class LoginPage extends React.Component {
             <div className="imgcontainer">
               <img src={window.location.origin + "/" + this.state.imgsrc} alt="Avatar" className="avatar" />
             </div>
-
+            {alert}
             <div className="form-group form-padding">
               <label><b>Email</b></label>
               <input className="form-control" id="username" type="text" placeholder="Enter Username" name="uname" required />
@@ -63,5 +71,6 @@ export default class LoginPage extends React.Component {
 
 LoginPage.defaultProps={
   imgsrc:'img_avatar2.png',
-  loggedIn: false
+  loggedIn: false,
+  loginFailed: false
 };

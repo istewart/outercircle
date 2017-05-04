@@ -391,7 +391,8 @@ app.post('/login',
   function (req, res) {
     res.send({isAuth: "authorized"});
   }, function (err, req, res, next) {
-    res.status(401).send({isAuth: "unauthorized", message: err + req.flash('message')});
+    res.status(401);
+    res.send({isAuth: "unauthorized"});
   });
 
 
@@ -411,8 +412,13 @@ passport.deserializeUser(function (userID, done) {
 app.post('/loggedIn', isLoggedIn, function (req, res) {
     res.send({isAuth: "authorized"});
   }, function (err, req, res, next) {
-    res.status(401).send({isAuth: "unauthorized", message: err + req.flash('message')});
+    res.status(401);
+    res.send({isAuth: "unauthorized"});
   });
+
+app.post('/logout', isLoggedIn, function(req, res) {
+  req.logout();
+});
 
 // initialize the database
 function init(callback) {
