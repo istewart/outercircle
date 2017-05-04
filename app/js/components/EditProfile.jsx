@@ -10,7 +10,6 @@ export default class EditProfile extends React.Component {
 	    	description: this.props.description
 	    };
   	}
-  	
 
   	_buttonClick(event) {
   		event.preventDefault();

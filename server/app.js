@@ -68,11 +68,28 @@ app.post('/post', function(request, response) {
 });
 
 // retrieve charities' and donors' name for search
-app.get('/searchData', function(request, response) {
+app.get('/searchDataShorted', function(request, response) {
     console.log('- Request received /searchData:');
     var sql = 'SELECT d.name AS name, d.id AS id, \'D\' AS category FROM donor AS d WHERE d.name LIKE ?' +
-        'UNION SELECT c.name AS name, c.id AS id, \'C\' AS category FROM charity AS c WHERE c.name LIKE ?';
-    console.log(sql)
+        'UNION SELECT c.name AS name, c.id AS id, \'C\' AS category FROM charity AS c WHERE c.name LIKE ?' +
+        'LIMIT 5';
+    // console.log(sql)
+    db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
+        if (error) {
+            console.log(error)
+        } else {
+            // console.log(result);
+            response.json(result.rows);
+        }
+    });
+});
+
+// retrieve charities' and donors' name for search
+app.get('/searchData', function(request, response) {
+    console.log('- Request received /searchData:');
+    var sql = 'SELECT d.name AS name, d.id AS id, d.profile_image AS profile, \'D\' AS category FROM donor AS d WHERE d.name LIKE ?' +
+        'UNION SELECT c.name AS name, c.id AS id, c.profile_image AS profile, \'C\' AS category FROM charity AS c WHERE c.name LIKE ?';
+    // console.log(sql)
     db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
             console.log(error)

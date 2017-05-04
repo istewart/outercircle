@@ -301,3 +301,9 @@ span.psw {
 .suggest-img{
     width:60px;
 }
+
+.search-container {
+    margin-top: 50px;
+    padding-top: 0;
+    width:80%;
+}

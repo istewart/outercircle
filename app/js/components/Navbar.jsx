@@ -8,6 +8,7 @@ export default class Navbar extends React.Component {
         super(props);
         this.state = {
             items: [],
+            keyWord:'',
             loggedIn: this.props.loggedIn
         }
         this._logout = this._logout.bind(this);
@@ -37,17 +38,10 @@ export default class Navbar extends React.Component {
 
     getData(keyWord) {
         const search = this;
-        console.log(keyWord);
-        $.get('/searchData', {keyWord: keyWord}, function(data, status) {
+        // console.log(keyWord);
+        $.get('/searchDataShorted', {keyWord: keyWord}, function(data, status) {
             if (status === 'success') {
-                // var nameList = [];  // nameList contains name of all charities and donors
-                // for(var i = 0; i < data.length; i++) {
-                //     nameList[i].name = data[i].name;
-                //     nameList[i].id = data[i].id;
-                // }
-                // console.log("data here")
-                //  console.log(data[0]);
-                search.setState({items: data});
+                search.setState({items: data, keyWord: keyWord});
             } else {
                 // error handling
             }
@@ -93,7 +87,7 @@ export default class Navbar extends React.Component {
           placeholder="Search"
           onChange={this.filterList.bind(this)}
         />
-        <SearchList items={this.state.items}/>
+        <SearchList items={this.state.items} keyWord={this.state.keyWord}/>
         <Link to="/">
           <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
