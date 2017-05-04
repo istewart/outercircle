@@ -30,6 +30,7 @@ export default class Feed extends React.Component {
 
   handlePost() { // TODO: security, xss, rendering, errors
     const data = {
+      id: 1,
       donor: 1,
       charity: 1,
       body: $('#newPost').val()
@@ -47,7 +48,7 @@ export default class Feed extends React.Component {
 
   render() {
     const renderedPosts = this.state.posts.map((post) =>
-      <Post data={post}/>
+      <Post data={post} key={post.id}/>
     );
 
     return (

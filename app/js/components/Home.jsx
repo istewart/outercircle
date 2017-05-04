@@ -25,7 +25,6 @@ export default class Home extends React.Component {
         else {
             this.setState({loggedIn: false});
             console.log('not logged in');
-            console.log(data);
         }
     }.bind(this));
   }

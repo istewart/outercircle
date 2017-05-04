@@ -7,7 +7,7 @@ export default class Stats extends React.Component{
 
   render() {
     const renderedStats = this.props.data.map((fact) =>
-      <li>{fact}</li>
+      <li key={fact.id}>{fact.body}</li>
     );
 
     return (
@@ -27,6 +27,6 @@ export default class Stats extends React.Component{
 }
 
 Stats.defaultProps = {
-  data: ["378 puppies rescued", "9384 veterinary visits made", "173 adoptions"],
+  data: [{id:1, body:"378 puppies rescued"}, {id:2,body:"9384 veterinary visits made"}, {id:3,body:"173 adoptions"}],
   imgsrc: 'chart.jpg'
 };

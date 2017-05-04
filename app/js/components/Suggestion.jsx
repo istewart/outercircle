@@ -31,7 +31,7 @@ export default class Suggestion extends React.Component {
     render() {
         const t = this.props.type;
         const renderedSuggestions = this.state.suggestions.map((suggestion) =>
-            <li className="list-group-item">
+            <li className="list-group-item" key={suggestion.id}>
                 <Similar data={suggestion} type={t}/>
             </li>
         );
