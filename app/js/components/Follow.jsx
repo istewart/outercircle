@@ -2,7 +2,7 @@ import React from 'react';
 
 function FollowButton(props){
   return (
-    <button onClick={props.onClick} className="btn btn-info btn-margin">
+    <button onClick={props.onClick} className="btn btn-info">
       <i className="fa fa-user-plus" aria-hidden="true"></i>
       &nbsp; {props.text}
     </button>
@@ -11,7 +11,7 @@ function FollowButton(props){
 
 function UnfollowButton(props){
   return (
-  <button onClick={props.onClick} className="btn btn-margin">
+  <button onClick={props.onClick} className="btn">
     <i className="fa fa-check-circle-o" aria-hidden="true"></i>
     &nbsp; {props.text}
   </button>

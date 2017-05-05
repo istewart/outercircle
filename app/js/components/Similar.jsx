@@ -29,7 +29,7 @@ export default class Similar extends React.Component {
                 <Link to={'/'+this.props.type+'/' + this.props.data.id}>
                   <p>{this.props.data.name}</p>
                 </Link>
-                <p className="post-time">{this.props.data.description.substring(0,35)}</p>
+                <p className="post-time">{this.props.data.description.substring(0,33)}</p>
                 {btn}
               </div>
             </div>
