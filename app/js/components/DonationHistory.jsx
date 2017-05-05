@@ -37,7 +37,7 @@ export default class DonationHistory extends React.Component {
     return (
       <div>
         <header className="component-header">Donation History</header>
-        <div className="well well-sm">
+        <div className="well well-sm shadow-box">
           <table className="table table-striped table-hover form-end">
             <thead>
               <tr>

@@ -37,7 +37,7 @@ export default class CharityProfile extends React.Component {
           name={this.state.name} 
           cover_image={this.state.cover_image}
         />
-        <div className="well charity-title center-block">
+        <div className="well charity-title center-block shadow-box">
           <div className="charity-header">
             <h3>{this.state.name}</h3>
             <div className="charity-buttons">

@@ -13,7 +13,7 @@ export default class Stats extends React.Component{
     return (
     <div>
       <header className="component-header">Stats</header>
-      <div className="well well-sm">
+      <div className="well well-sm shadow-box">
         <ul>
           {renderedStats}
         </ul>

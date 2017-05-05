@@ -14,7 +14,6 @@ export default class SuggestDonor extends React.Component {
 
     fetchSuggestDonor() {
         const suggest = this;
-        console.log("id:"+suggest.props.id);
 
         $.get('/suggestDonor', {id:suggest.props.id}, function (data, status) {
             if (status === 'success') {
@@ -35,7 +34,7 @@ export default class SuggestDonor extends React.Component {
         return (
             <div>
                 <header className="component-header">People you may know</header>
-                <ul className="list-group suggest-list">
+                <ul className="list-group suggest-list shadow-box">
                     {renderedSuggestions}
                 </ul>
             </div>

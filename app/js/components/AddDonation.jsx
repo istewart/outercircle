@@ -31,7 +31,7 @@ export default class AddDonation extends React.Component {
   
   render() {
     return (
-      <div className="well well-sm">
+      <div className="well well-sm shadow-box">
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Charity Name:</label>

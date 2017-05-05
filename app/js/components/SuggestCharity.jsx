@@ -34,7 +34,7 @@ export default class SuggestCharity extends React.Component {
         return (
             <div>
                 <header className="component-header">People also views</header>
-                <ul className="list-group suggest-list">
+                <ul className="list-group suggest-list shadow-box">
                     {renderedSuggestions}
                 </ul>
             </div>
