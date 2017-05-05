@@ -6,12 +6,11 @@ export default class SearchList extends React.Component {
         super(props);
     }
 
-    // handleClick(){
-    //     $.post('/search', this.props.items);
-    // }
-
     render(){
         const list = this;
+        var All = "";
+        console.log(list.props.asd);
+        if(list.props.asd === true) { All = <Link to={'/search/' + list.props.keyWord}><li className="allRes">{'See all results for '+list.props.keyWord}</li></Link>; }
         if(list.props.items.length !== 0) {
             return (
                 <div className="search-list">
@@ -25,10 +24,8 @@ export default class SearchList extends React.Component {
                                     return <Link to={'/donor/' + item.id}><li key={item}>{item.name}</li></Link>
                                 }
                             })
-                        },
-                        {
-                            <Link to={'/search/' + list.props.keyWord}><li>{'more...'}</li></Link>
                         }
+                        {All}
                     </ul>
                 </div>
             )

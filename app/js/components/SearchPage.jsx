@@ -8,10 +8,12 @@ export default class SearchPage extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            res:[],
+            donor: [],
+            charity: [],
             keyWord: this.props.match.params.keyWord
         };
         // console.log(this.state.keyWord);
+        console.log(this.props.location.pathname);
         this.search(this.state.keyWord);
     }
 
@@ -20,14 +22,11 @@ export default class SearchPage extends React.Component{
         // console.log(keyWord);
         $.get('/searchData', {keyWord: keyWord}, function(data, status) {
             if (status === 'success') {
-                // var nameList = [];  // nameList contains name of all charities and donors
-                // for(var i = 0; i < data.length; i++) {
-                //     nameList[i].name = data[i].name;
-                //     nameList[i].id = data[i].id;
-                // }
-                console.log("data here")
-                 console.log(data[0]);
-                search.setState({res: data});
+                var donor = data.filter((item) => (item.category === 'D'));
+                var charity = data.filter((item) => (item.category === 'C'));
+                // console.log("data here")
+                //  console.log(data[0]);
+                search.setState({donor: donor, charity: charity});
             } else {
                 // error handling
             }
@@ -35,17 +34,27 @@ export default class SearchPage extends React.Component{
     }
 
     render(){
-        const renderedSearch = this.state.res.map((item) =>
+        const renderedDonor = this.state.donor.map((item) =>
+            <SearchItem data={item}/>
+        );
+
+        const renderedCharity = this.state.charity.map((item) =>
             <SearchItem data={item}/>
         );
 
         return (
             <div>
                 <Navbar/>
-                <div id="main" className="center-block col-md-9">
-                    <div className="row">
-                        <div className="well search-container center-block">
-                            {renderedSearch}
+                <div className="row">
+                    <div className="search-container-all">
+                        <h2>Search Result</h2>
+                        <div className="well search-container col-lg-4 col-md-4">
+                            <p>Charities</p>
+                            {renderedCharity}
+                        </div>
+                        <div className="well search-container col-lg-4 col-md-4">
+                            <p>Donors</p>
+                            {renderedDonor}
                         </div>
                     </div>
                 </div>

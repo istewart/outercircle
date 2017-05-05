@@ -257,9 +257,8 @@ span.psw {
     margin-top: 37px;
     margin-left: 50px;
     width: 300px;
-    background: #3498db;
+    background: white;
     border-radius: 5px;
-    border: 1px solid;
 }
 
 .search-list:focus {
@@ -269,14 +268,16 @@ span.psw {
 .search-list ul {
     margin: 0;
     padding: 0;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .search-list li {
     list-style-type: none;
     margin: 0;
-    color: white;
+    color: black;
     padding: 10px 20px;
-    /*border-top: 1px solid;*/
+    border-radius: 5px;
 }
 
 .search-list a {
@@ -284,7 +285,7 @@ span.psw {
 }
 
 .search-list li:hover {
-     background: #2980b9;
+    background: lightblue;
  }
 
 .component-header {
@@ -307,8 +308,21 @@ span.psw {
     width:60px;
 }
 
+.search-head {
+    width: 80%;
+    height: 100px;
+}
+
+.search-container-all {
+    margin-top: 70px;
+}
+
+.search-list .allRes {
+    border-radius: 5px;
+    color:deepskyblue;
+}
+
 .search-container {
-    margin-top: 50px;
-    padding-top: 0;
-    width:80%;
+    margin-left: 20px;
+    float: left;
 }

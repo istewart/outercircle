@@ -9,7 +9,7 @@ export default class Navbar extends React.Component {
         this.state = {
             items: [],
             keyWord:'',
-            loggedIn: this.props.loggedIn
+            loggedIn: this.props.loggedIn,
         }
         this._logout = this._logout.bind(this);
         // this.getData();
@@ -70,11 +70,15 @@ export default class Navbar extends React.Component {
 
     render() {
     var loginButton = "";
+    var showAllSearch = <SearchList items={this.state.items} keyWord={this.state.keyWord} asd={true}/>;;
     if (!this.state.loggedIn) {
         loginButton = <Link to="/login" className="btn btn-primary">Login</Link>;
     }
     else {
-        loginButton = <button className="btn btn-primary" onClick={this._logout}>Logout</button>
+        loginButton = <button className="btn btn-primary" onClick={this._logout}>Logout</button>;
+    }
+    if(window.location.pathname.includes('/search/')) {
+        showAllSearch = <SearchList items={this.state.items} keyWord={this.state.keyWord} asd={false}/>;
     }
     return (
       <div id="navbar">
@@ -87,7 +91,7 @@ export default class Navbar extends React.Component {
           placeholder="Search"
           onChange={this.filterList.bind(this)}
         />
-        <SearchList items={this.state.items} keyWord={this.state.keyWord}/>
+        {showAllSearch}
         <Link to="/">
           <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
