@@ -4,7 +4,7 @@ import Feed from './Feed.jsx';
 import Navbar from './Navbar.jsx';
 import Stats from './Stats.jsx';
 import CharityProfile from './CharityProfile.jsx';
-import Suggestion from './Suggestion.jsx';
+import SuggestCharity from './SuggestCharity.jsx';
 
 export default class CharityPage extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class CharityPage extends React.Component {
           <div className="row">
             <div className="col-sm-4 col-sm-push-6 col-sm-offset-1">
               <Stats/>
-              <Suggestion type="charity"/>
+              <SuggestCharity charity={this.id}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
               <Feed/>

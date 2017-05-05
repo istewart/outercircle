@@ -3,7 +3,8 @@ import { Redirect } from 'react-router-dom';
 
 import Feed from './Feed.jsx';
 import Navbar from './Navbar.jsx';
-import Suggestion from './Suggestion.jsx';
+import SuggestDonor from './SuggestDonor.jsx';
+import SuggestCharity from './SuggestCharity.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -39,8 +40,8 @@ export default class Home extends React.Component {
           <Navbar/>
           <div id="main" className="center-block">
               <div className="col-md-4 col-sm-4 col-sm-push-7">
-                  <Suggestion type="donor"/>
-                  <Suggestion type="charity"/>
+                  <SuggestDonor donor="1"/>
+                  <SuggestCharity charity="1"/>
               </div>
               <div className="col-md-6 col-sm-6 col-sm-pull-3">
                   <Feed/>
