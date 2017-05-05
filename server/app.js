@@ -221,16 +221,21 @@ app.get('/donations/:id', function(request, response) {
   });
 });
 
-app.get('/title',function (request,response) {
-    // let charityId = request.charityId;
-    let sql= 'SELECT name, website, description, cover_image FROM charity';
-    db.query(sql,function(error, result) {
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
-            // todo errors, also auth
-        } else {
-            response.json(result.rows[0]);
-        }
-    });
+// retrieve data about a charity
+app.get('/charity/:id/data', function(request,response) {
+  console.log('- Request received /charity/:id/data:');
+
+  const id = request.params.id;
+
+  let sql = 'SELECT name, website, description, cover_image '
+          + 'FROM charity WHERE id = ?;';
+  db.query(sql, [id], function(error, result) {
+    if (!result.rowCount == 1) { // TODO: errors, which posts, sorting
+      // todo errors, also auth
+    } else {
+      response.json(result.rows[0]);
+    }
+  });
 });
 
 app.get('/suggest',function(request,response){
