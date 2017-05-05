@@ -3,23 +3,19 @@ import Similar from './Similar.jsx';
 
 const MAX_SUGGESTIONS = 3;
 
-export default class Suggestion extends React.Component {
+export default class SuggestCharity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             suggestions:[],
         };
-        this.fetchSuggest();
+        this.fetchSuggestCharity();
     }
 
-    fetchSuggest() {
+    fetchSuggestCharity() {
         const suggest = this;
 
-        let dat={
-            id: suggest.props.id,
-            type: suggest.props.type
-        };
-        $.get('/suggest', dat, function (data, status) {
+        $.get('/suggestCharity', {id:suggest.props.charity}, function (data, status) {
             if (status === 'success') {
                 suggest.setState({suggestions: data.slice(0, MAX_SUGGESTIONS)});
             } else {
@@ -29,23 +25,15 @@ export default class Suggestion extends React.Component {
     }
 
     render() {
-        const t = this.props.type;
         const renderedSuggestions = this.state.suggestions.map((suggestion) =>
             <li className="list-group-item" key={suggestion.id}>
-                <Similar data={suggestion} type={t}/>
+                <Similar data={suggestion} type="charity"/>
             </li>
         );
 
-        let title="";
-        if(this.props.type === "charity") {
-            title = 'People also views';
-        }
-        else{
-            title = 'People you may know';
-        }
         return (
             <div>
-                <header className="component-header">{title}</header>
+                <header className="component-header">People also views</header>
                 <ul className="list-group suggest-list">
                     {renderedSuggestions}
                 </ul>
@@ -54,7 +42,6 @@ export default class Suggestion extends React.Component {
     }
 }
 
-Suggestion.defaultProps = {
-    id : 1,
-    type : "charity"
+SuggestCharity.defaultProps = {
+    charity : 1,
 };
