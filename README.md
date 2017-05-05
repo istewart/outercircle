@@ -36,8 +36,8 @@ Navigation:
 ===========
 
 Going to http://localhost:8080/ will take you to the main newsfeed.
-Going to http://localhost:8080/donor will take you to a sample donor page.
-Going to http://localhost:8080/charity will take you to a sample charity page
+Going to http://localhost:8080/donor/1 will take you to a sample donor page.
+Going to http://localhost:8080/charity/1 will take you to a sample charity page
 Going to http://localhost:8080/login will take you to the login page
 
-If you are not logged in, you will be automatically redirected to /login
+If you are not logged in, you will be automatically redirected to /login.

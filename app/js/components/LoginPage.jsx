@@ -40,29 +40,61 @@ export default class LoginPage extends React.Component {
     }
     else {
       return (
-        <div>
-          <form onSubmit={this._handleLogin.bind(this)}>
-            <div className="imgcontainer">
-              <img src={window.location.origin + "/" + this.state.imgsrc} alt="Avatar" className="avatar" />
-            </div>
-            {alert}
-            <div className="form-group form-padding">
-              <label><b>Email</b></label>
-              <input className="form-control" id="username" type="text" placeholder="Enter Username" name="uname" required />
-
-              <label><b>Password</b></label>
-              <input className="form-control" id="password" type="password" placeholder="Enter Password" name="passwd" required />
-              <div className="form-padding-top">
-                <button className="btn btn-primary" type="submit">Login</button>
-                <span className="checkbox-right"><input type="checkbox" defaultChecked={false} /> Remember me</span>
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3">
+            <form onSubmit={this._handleLogin.bind(this)}>
+              <div className="imgcontainer">
+                <img src={window.location.origin + "/" + this.state.imgsrc} alt="Avatar" className="avatar" />
               </div>
-
-              <div className="form-padding-top form-padding-negative">
-                <span className="psw">Forgot <a href="#">password?</a></span>
+              {alert}
+              <div className="form-group">
+                <label htmlFor="username">Email:</label>
+                <input 
+                  className="form-control"
+                  id="username"
+                  type="text"
+                  placeholder="Username"
+                  name="uname"
+                  required
+                />
               </div>
-            </div>
-          </form>
-          Or <a href={window.location.origin + "/signup"}><button className="btn btn-primary">Sign Up</button></a>
+              <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input
+                  className="form-control"
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  name="passwd"
+                  required
+                />
+              </div>
+              <div className="form-group space-between">
+                <button className="btn btn-primary" type="submit">
+                  Login
+                </button>
+                <div className="checkbox">
+                  <label>
+                    <input type="checkbox" defaultChecked={false}/>
+                    Remember Me
+                  </label>
+                </div>
+              </div>
+              <div className="form-group space-between">
+                <p>
+                  Forgot <a href="#">password</a>?
+                </p>
+                <p>
+                  Or <a 
+                    href={window.location.origin + "/signup"}
+                    className="btn btn-primary"
+                  >
+                    Sign Up
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>    
         </div>
       );
     }
