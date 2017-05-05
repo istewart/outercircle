@@ -46,9 +46,9 @@ export default class DonorProfile extends React.Component {
                         <img 
                             src={window.location.origin + "/" + this.state.profile_image} 
                             alt={this.state.name + "'s Profile Picture"} 
-                            className="img-thumbnail"
+                            className="img-thumbnail shadow-box"
                         />
-                        <div className="donor-info panel panel-default">
+                        <div className="donor-info panel panel-default shadow-box">
                             <div className="panel-body">
                                 <h2>{this.state.name}</h2>
                                 <p>{this.state.description}</p>
@@ -70,11 +70,12 @@ export default class DonorProfile extends React.Component {
                         <img 
                             src={window.location.origin + "/" + this.state.profile_image} 
                             alt={this.state.name + "'s Profile Picture"} 
-                            className="img-thumbnail"
+                            className="img-thumbnail shadow-box"
                         />
-                        <div className="donor-info panel panel-default">
-                            <div className="panel-body">
-                                <EditProfile className="pull-right" donor={this.state.donor} name={this.state.name} description={this.state.description} changeItem={this.changeItem}/>
+                        <div className="donor-info panel panel-default shadow-box">
+                            <EditProfile className="pull-right" donor={this.state.donor} name={this.state.name} description={this.state.description} changeItem={this.changeItem}/>
+                            <div className="panel-body" id="donor-profile">
+
                                 <h2>{this.state.name}</h2>
                                 <p>{this.state.description}</p>
                                 <p className="donor-toolbar">

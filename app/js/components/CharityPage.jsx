@@ -18,7 +18,7 @@ export default class CharityPage extends React.Component {
         <Navbar/>
         <div id="main">
           <div className="row">
-            <div className="col-sm-10 col-sm-offset-1">
+            <div className="container">
               <CharityProfile charity={this.id}/>
             </div>
           </div>

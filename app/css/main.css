@@ -2,6 +2,10 @@ body {
   background-color: #eee;
 }
 
+.shadow-box{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .well {
   background-color: #fff;
 }
@@ -54,9 +58,6 @@ body {
   float: none;
 }
 
-.donor-thumbnail {
-  margin-right: 10px;
-}
 
 .post-header {
   display: flex;
@@ -97,15 +98,20 @@ post-title a>p{
 }
 
 .img-thumbnail {
-  height: 200px;
-  width: 200px;
+  height: 180px;
+  width: 180px;
   margin-right: 20px;
 }
 
 .donor-info {
-  height: 200px;
+  height: 180px;
   overflow: auto; /* TODO: THIS IS A HACK*/;
   flex-grow: 1;
+  margin-left:5%;
+  padding: 10px 10px 10px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .donor-toolbar {
@@ -124,6 +130,20 @@ post-title a>p{
   display: flex;
   justify-content: space-between;
   margin-top: -100px;
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#donor-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.donor-thumbnail {
+    margin-right: 10px;
 }
 
 .btn-margin{
@@ -133,7 +153,8 @@ post-title a>p{
 .charity-title {
   margin-top: -100px;
   padding-top: 0;
-  width:80%;
+  width:70%;
+  padding-bottom: 0;
 }
 
 .charity-header {
@@ -300,8 +321,9 @@ span.psw {
     padding: 5px;
     margin-bottom: 5px;
     color:#777;
-    font-size: 16px;
-    font-style: italic;
+    font-size: 1.125em;
+    color: white;
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
 }
 
 .suggest-list li{
