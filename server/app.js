@@ -143,7 +143,7 @@ app.get('/posts', isLoggedIn, function(request, response) {
 
 // retrieve the data for a donor
 app.get('/donor/:id/data', function(request, response) {
-  console.log('- Request received /donor/:id:');
+  console.log('- Request received /donor/:id:/data');
 
   const requester = 'todo';
   const donor = request.params.id;
@@ -160,6 +160,35 @@ app.get('/donor/:id/data', function(request, response) {
         }
       } else{
          console.log("fetch donor profile failed!")
+      }
+  });
+});
+
+// retrieve the stats for a donor
+app.get('/donor/:id/stats', function(request, response) {
+  console.log('- Request received /donor/:id:/stats');
+
+  const requester = 'todo';
+  const donor = request.params.id;
+  var sql = 'SELECT category, SUM(amount) AS amount '
+    + 'FROM donation '
+    + 'WHERE donor = ? GROUP BY category ORDER BY category;';
+  db.query(sql, [donor], function(error, result) {
+      if(result !== undefined) {
+        if (!result.rowCount) { // TODO: errors, which posts, sorting
+          // todo errors, also auth
+        } else {
+          // return the requested donation information
+          const labels = result.rows.map((row) => row.category);
+          const data = result.rows.map((row) => row.amount);
+
+          response.json({
+            labels: labels,
+            data: data,
+          });
+        }
+      } else{
+         console.log("fetch donor stats failed!")
       }
   });
 });

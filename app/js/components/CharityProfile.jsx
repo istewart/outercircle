@@ -13,7 +13,6 @@ export default class CharityProfile extends React.Component {
   }
 
   fetchData() {
-    console.log(this.props.charity);
     $.get('/charity/' + this.props.charity + '/data', function(data, status) {
       if (status === 'success') {
         // we succesfully retrieved some data so update state
