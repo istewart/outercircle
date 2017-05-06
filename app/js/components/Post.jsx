@@ -25,6 +25,7 @@ export default class Post extends React.Component {
             <p className="post-time">{time}</p>
           </div>
         </div>
+        <br/>
         <span className="post-body">{this.props.data.body}</span>
       </div>
     );
