@@ -76,7 +76,7 @@ app.get('/searchDataShorted', function(request, response) {
     // console.log(sql)
     db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
-            console.log(error)
+            console.log("Search error: "+error)
         } else {
             // console.log(result);
             response.json(result.rows);
@@ -92,9 +92,8 @@ app.get('/searchData', function(request, response) {
     // console.log(sql)
     db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
-            console.log(error)
+            console.log("Search error: "+error)
         } else {
-            // console.log(result);
             response.json(result.rows);
         }
     });
@@ -106,9 +105,8 @@ app.get('/checkFollow', isLoggedIn, function(request, response) {
     var sql = 'SELECT charity, donor FROM following WHERE charity = ? AND donor = ?';
     db.query(sql, [1,1],function(error, result) {
         if (error) {
-            console.log(error)
+            console.log("Check follow error: "+error)
         } else {
-            // console.log(result);
             if(result.rows.length === 0) {
                 response.json('false');
             } else {
@@ -124,8 +122,6 @@ app.get('/posts', isLoggedIn, function(request, response) {
 
   const requester = request.user;
   const username = requester.rows[0].username;
-  console.log("Requester: " + requester);
-  console.log("Username: " + username);
   const donor = 'todo';
   const charity = 'todo';
 
@@ -242,9 +238,10 @@ app.get('/suggestDonor',function(request,response){
     let sql= 'SELECT id, name, description, profile_image FROM donor' // TODO: not good security
         + ' WHERE id != ? ORDER BY id ASC';
     db.query(sql, [request.query.id], function(error, result) {
-        console.log(error);
+
         if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
+            console.log(error);
         } else {
             response.json(result.rows);
         }
@@ -255,8 +252,10 @@ app.get('/suggestCharity',function(request,response){
     let sql= 'SELECT id, name, description, profile_image FROM Charity' // TODO: not good security
         + ' WHERE id != ? ORDER BY id ASC';
     db.query(sql, [request.query.id], function(error, result) {
-        console.log(error);
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
+        if(error){
+            console.log("Fetch suggestion error: "+error);
+        }
+        else if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
         } else {
             response.json(result.rows);
@@ -445,7 +444,7 @@ passport.deserializeUser(function (userID, done) {
 });
 
 app.post('/loggedIn', isLoggedIn, function (req, res) {
-    res.send({isAuth: "authorized"});
+    res.send({isAuth: "authorized",userId:req.user.id});
   }, function (err, req, res, next) {
     res.status(401);
     res.send({isAuth: "unauthorized"});
