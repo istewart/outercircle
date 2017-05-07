@@ -18,7 +18,7 @@ export default class SuggestDonor extends React.Component {
         console.log("donor:"+suggest.props.donor+",id:"+suggest.props.id);
         $.get('/suggestDonor', {donor:suggest.props.donor}, function (data, status) {
             if (status === 'success') {
-                suggest.setState({suggestions: data.slice(0, MAX_SUGGESTIONS).filter((e)=>e.id!==suggest.props.id)});
+                suggest.setState({suggestions: data.filter((e)=>e.id!==suggest.props.id).slice(0, MAX_SUGGESTIONS)});
             } else {
                 // todo error handling
             }

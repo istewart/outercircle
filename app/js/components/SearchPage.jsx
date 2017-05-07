@@ -47,7 +47,8 @@ export default class SearchPage extends React.Component{
                 <Navbar/>
                 <div className="row">
                     <div className="search-container-all">
-                        <h2>Search Result</h2>
+                        <h3>Search results for: {this.state.keyWord}</h3>
+                        <br/>
                         <div className="well search-container col-lg-4 col-md-4">
                             <p>Charities</p>
                             {renderedCharity}

@@ -25,7 +25,7 @@ As a shortcut after making changes, you can also run:
 
 Which will clean dist, run build, and start the server.
 
-Sign In
+Sign In:
 ========
 
 IMPORTANT FOR USE OF THE APPLICATION: You must first log in to see many of the features of the application. Either navigate to http://localhost/login or click the login button.
@@ -41,3 +41,19 @@ Going to http://localhost:8080/charity/1 will take you to a sample charity page
 Going to http://localhost:8080/login will take you to the login page
 
 If you are not logged in, you will be automatically redirected to /login.
+
+Host:
+=====
+
+To host OuterCircle on AWS, first launch an AWS EC2 instance using the MEAN Stack by Bitnami and using an SSH key you have access to. Then SSH to that instance using:
+
+    ssh -i path/to/ssh/key.pem bitnami@<public ip>
+
+Next, install OuterCircle using:
+
+    git clone https://github.com/istewart/outercircle.git
+    cd outercircle
+    chmod 700 run.sh
+    ./run.sh
+
+You can then access the OuterCircle website at <public ip>.
