@@ -11,8 +11,7 @@ export default class Home extends React.Component {
     super(props);
 
     this.state = {
-      loggedIn: true,
-        userId:0
+      loggedIn: true
     };
 
     this.checkLogin();
@@ -45,7 +44,7 @@ export default class Home extends React.Component {
                   <SuggestCharity charity={this.state.userId}/>
               </div>
               <div className="col-md-6 col-sm-6 col-sm-pull-3">
-                  <Feed/>
+                  <Feed donor={this.state.userId}/>
               </div>
           </div>
         </div>
