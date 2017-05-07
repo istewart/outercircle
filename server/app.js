@@ -344,7 +344,7 @@ app.post('/unfollow', function(request, response) {
 
 app.post('/addCharity', isLoggedIn, function(req, res) {
   console.log('request received to add charity');
-  if (req.user.rows[0].username === "admin@outercircle.com") {
+  if (req.user.rows[0].email === "admin@outercircle.com") {
     let sql = 'INSERT INTO charity '
             + '(name, website, description, cover_image, profile_image) '
             + 'VALUES (?, ?, ?, ?, ?)';
@@ -503,7 +503,7 @@ app.post('/loggedIn', isLoggedIn, function (req, res) {
   });
 
 app.post('/loggedInAdmin', isLoggedIn, function (req, res) {
-    if (req.user.rows[0].username === "admin@outercircle.com") {
+    if (req.user.rows[0].email === "admin@outercircle.com") {
       res.send({isAuth: "authorized"});
     }
     else {
