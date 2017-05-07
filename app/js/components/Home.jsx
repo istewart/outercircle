@@ -11,8 +11,7 @@ export default class Home extends React.Component {
     super(props);
 
     this.state = {
-      loggedIn: true,
-        userId:0
+      loggedIn: true
     };
 
     this.checkLogin();
@@ -22,7 +21,7 @@ export default class Home extends React.Component {
     $.post('/loggedIn', "", function(data, status) {
         if (status === 'success' && data.isAuth === "authorized") {
             this.setState({loggedIn: true,userId:data.userId});
-            console.log('logged in, user id is'+data.userId);
+            console.log('logged in, user id is '+data.userId);
         }
         else {
             this.setState({loggedIn: false});
@@ -41,11 +40,11 @@ export default class Home extends React.Component {
           <Navbar/>
           <div id="main" className="center-block">
               <div className="col-md-4 col-sm-4 col-sm-push-7">
-                  <SuggestDonor donor={this.state.userId}/>
+                  <SuggestDonor id={this.state.userId}/>
                   <SuggestCharity charity={this.state.userId}/>
               </div>
               <div className="col-md-6 col-sm-6 col-sm-pull-3">
-                  <Feed/>
+                  <Feed donor={this.state.userId}/>
               </div>
           </div>
         </div>

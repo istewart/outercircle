@@ -266,7 +266,7 @@ app.get('/charity/:id/data', function(request,response) {
 app.get('/suggestDonor',function(request,response){
     let sql= 'SELECT id, name, description, profile_image FROM donor' // TODO: not good security
         + ' WHERE id != ? ORDER BY id ASC';
-    db.query(sql, [request.query.id], function(error, result) {
+    db.query(sql, [request.query.donor], function(error, result) {
 
         if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
@@ -380,10 +380,11 @@ init(function() {
 // Alright now lets handle login with a LocalStrategy
 passport.use('login', new LocalStrategy({
 	passReqToCallback: true
-},
-	function(req, username, password, done) {
+}, function(req, username, password, done) {
 		// Check if user exists in database
-		var sql = 'SELECT * FROM user WHERE username = ?';
+		var sql = 'SELECT * FROM donor WHERE email = ?';
+    console.log("SQL request: "+ username);
+    console.log("Pass: " + password);
 		db.query(sql, [username], function(err, result) {
 			// If there is an error, return using done method
 			if (err) {
@@ -414,7 +415,7 @@ app.post('/signup', function(request, response) {
   var password = request.body.password;
   var firstname = request.body.firstname;
   var lastname = request.body.lastname;
-  var sql = 'SELECT * FROM user WHERE username = ?';
+  var sql = 'SELECT * FROM donor WHERE email = ?';
   db.query(sql, [username], function(err, result) {
     // If there is an error, return using done method
     if (err) {
@@ -424,12 +425,12 @@ app.post('/signup', function(request, response) {
     // User doesn't exist so can continue with signup
     if (result.rows.length === 0) {
       var passwd = createHash(password);
-      sql = 'INSERT INTO user (username, password, firstname, lastname) VALUES (?, ?, ?, ?)';
+      sql = 'INSERT INTO donor (email, name, password) VALUES (?, ?, ?)';
       db.query(sql,
-          [username, passwd, firstname, lastname],
+          [username, firstname + lastname, passwd],
           function(error, result) {
-            console.log('Inserted User: ' + username + ", With password hash: " + passwd);
-            console.log('First name: ' + firstname + ", Lastname: " + lastname);
+            console.log('Inserted donor: ' + username + ", With password hash: " + passwd);
+            console.log('Name: ' + firstname + " " + lastname);
             response.send({signup: "success"});
           });
     }
@@ -488,14 +489,14 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (userID, done) {
     console.log('deserializing user with ID:', userID);
-    var sql = 'SELECT * FROM user WHERE id = ?';
+    var sql = 'SELECT * FROM donor WHERE id = ?';
     db.query(sql, [userID], function(err, user) {
       done(err, user);
     });
 });
 
 app.post('/loggedIn', isLoggedIn, function (req, res) {
-    res.send({isAuth: "authorized",userId:req.user.id});
+    res.send({isAuth: "authorized",userId:req.user.rows[0].id});
   }, function (err, req, res, next) {
     res.status(401);
     res.send({isAuth: "unauthorized"});
@@ -525,8 +526,9 @@ function init(callback) {
 
   let sql = 'CREATE TABLE IF NOT EXISTS donor ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
-    name TEXT, \
     email TEXT, \
+    name TEXT, \
+    password TEXT, \
     description TEXT, \
     profile_image TEXT, \
     cover_image TEXT \
@@ -535,9 +537,9 @@ function init(callback) {
   db.query(sql, function(error, result) {
     console.log('Initialized donor table.');
       db.query('INSERT INTO donor '
-          + '(name, email, description, profile_image, cover_image) '
-          + 'VALUES (?, ?, ?, ?, ?)',
-          ['Ian Stewart', 'ian_stewart@brown.edu', 'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.',
+          + '(name, email, password, description, profile_image, cover_image) '
+          + 'VALUES (?, ?, ?, ?, ?, ?)',
+          ['Ian Stewart', 'ian_stewart@brown.edu', 'pass', 'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.',
               'profile.jpg', 'beach.jpg'],
           function(error, result) {
               console.log('sample donor');
@@ -616,17 +618,17 @@ function init(callback) {
   });
 
 
-  sql = 'CREATE TABLE user ( \
-    id INTEGER PRIMARY KEY AUTOINCREMENT, \
-    username TEXT, \
-    password TEXT, \
-    firstname TEXT, \
-    lastname TEXT \
-  );'
+  // sql = 'CREATE TABLE user ( \
+  //   id INTEGER PRIMARY KEY AUTOINCREMENT, \
+  //   username TEXT, \
+  //   password TEXT, \
+  //   firstname TEXT, \
+  //   lastname TEXT \
+  // );'
 
-  db.query(sql, function(error, result) {
-    console.log('Initialized user table.');
-  });
+  // db.query(sql, function(error, result) {
+  //   console.log('Initialized user table.');
+  // });
 
   /*
   db.query('INSERT INTO user '
