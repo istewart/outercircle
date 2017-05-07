@@ -54,7 +54,7 @@ export default class DonorPage extends React.Component {
               {add}
               <DonorStats donor={this.donor}/>
               <DonationHistory donor={this.donor} id={this.state.userId}/>
-              <SuggestDonor donor={this.donor} id={this.state.userId}/>
+              <SuggestDonor donor={this.donor} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
               <Feed id={this.state.id} type="donor"/>
