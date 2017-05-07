@@ -27,7 +27,7 @@ export default class SuggestCharity extends React.Component {
     render() {
         const renderedSuggestions = this.state.suggestions.map((suggestion) =>
             <li className="list-group-item" key={suggestion.id}>
-                <Similar data={suggestion} type="charity"/>
+                <Similar data={suggestion} type="charity" user={this.props.user}/>
             </li>
         );
 

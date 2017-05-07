@@ -42,8 +42,8 @@ export default class Home extends React.Component {
           <div id="main" className="center-block">
               <div className="col-md-4 col-sm-4 col-sm-push-7">
               <h1>{this.state.userId}</h1>
-                  <SuggestDonor id={this.state.userId}/>
-                  <SuggestCharity id={this.state.userId}/>
+                  <SuggestDonor user={this.state.userId}/>
+                  <SuggestCharity user={this.state.userId}/>
               </div>
               <div className="col-md-6 col-sm-6 col-sm-pull-3">
                   <Feed donor={this.state.userId}/>
