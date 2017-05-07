@@ -12,24 +12,25 @@ export default class DonorPage extends React.Component {
   constructor(props) {
     super(props);
       this.donor = this.props.match.params.id;
-      this.state={
-          userId: 0,
-      }
+      this.state = {
+        loggedIn: true
+      };
+
     this.checkLogin();
   }
 
-    checkLogin() {
-        $.post('/loggedIn', "", function(data, status) {
-            if (status === 'success' && data.isAuth === "authorized") {
-                this.setState({userId:data.userId});
-                console.log('logged in, user id is'+data.userId);
-            }
-            else {
-                this.setState({loggedIn: false});
-                console.log('not logged in');
-            }
-        }.bind(this));
-    }
+  checkLogin() {
+    $.post('/loggedIn', "", function(data, status) {
+        if (status === 'success' && data.isAuth === "authorized") {
+            this.setState({loggedIn: true, userId:data.userId});
+            console.log('logged in, user id is '+data.userId);
+        }
+        else {
+            this.setState({loggedIn: false});
+            console.log('not logged in');
+        }
+    }.bind(this));
+  }
 
   render() {
     let add = {};
@@ -38,6 +39,7 @@ export default class DonorPage extends React.Component {
     } else{
       add = <br/>;
     }
+
     return (
       <div>
         <Navbar/>
