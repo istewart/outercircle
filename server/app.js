@@ -295,7 +295,7 @@ app.get('/suggestCharity',function(request,response){
 app.post('/follow', function(request, response) {
   console.log('- Request received /follow');
   
-  const donor = request.body.donor;
+  const donor = request.body.user;
   const charity = request.body.charity;
 
   let sql = 'INSERT INTO following (donor, charity) \
@@ -307,6 +307,23 @@ app.post('/follow', function(request, response) {
       console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
     }
   });
+});
+
+app.post('/connect', function(request, response) {
+    console.log('- Request received /connect');
+
+    const user = request.body.user;
+    const donor = request.body.donor;
+
+    let sql = 'INSERT INTO connection (donor, charity) \
+            VALUES (?, ?)';
+    db.query(sql, [donor, charity], function(error, result) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
+        }
+    });
 });
 
 app.post('/editProfile', function(request, response) {

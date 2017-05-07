@@ -11,9 +11,9 @@ export default class Similar extends React.Component {
     render() {
         let btn = {};
         if(this.props.type==="charity")
-            btn = <Follow isFollow={false} truetext='Followed' falsetext='Follow' charity={this.props.data.id} user={this.props.user}/>;
+            btn = <Follow isFollow={false} truetext='Followed' falsetext='Follow' id={this.props.data.id} user={this.props.user}/>;
         else
-            btn = <Follow isFollow={false} truetext='Connected' falsetext='Connect' charity={this.props.data.id} user={this.props.user}/>;
+            btn = <Follow isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.data.id} user={this.props.user}/>;
 
         return (
           <div>
