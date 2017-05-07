@@ -62,7 +62,7 @@ export default class Signup extends React.Component {
             {alert}
             <div className="form-group form-padding">
               <label><b>Email</b></label>
-              <input className="form-control" id="email" type="text" placeholder="Enter Email" name="email" required />
+              <input className="form-control" id="email" type="email" placeholder="Enter Email" name="email" required />
 
               <label><b>First Name</b></label>
               <input className="form-control" id="firstname" type="text" placeholder="First Name" name="passwd" required />

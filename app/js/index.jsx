@@ -14,6 +14,7 @@ import Home from './components/Home.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import SearchPage from './components/SearchPage.jsx';
 import SignupPage from './components/SignupPage.jsx';
+import AddCharityPage from './components/AddCharityPage.jsx';
 
 const Routes = () => (
   <BrowserRouter>
@@ -24,6 +25,7 @@ const Routes = () => (
       <Route path='/login' component={LoginPage}/>
       <Route path='/signup' component={SignupPage}/>
       <Route path='/search/:keyWord' component={SearchPage}/>
+      <Route path='/adminPortal' component={AddCharityPage}/>
     </div>
   </BrowserRouter>
 );

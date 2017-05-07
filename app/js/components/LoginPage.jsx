@@ -52,7 +52,7 @@ export default class LoginPage extends React.Component {
                 <input 
                   className="form-control"
                   id="username"
-                  type="text"
+                  type="email"
                   placeholder="Username"
                   name="uname"
                   required
