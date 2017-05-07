@@ -404,7 +404,7 @@ app.post('/signup', function(request, response) {
       var passwd = createHash(password);
       sql = 'INSERT INTO donor (email, name, password) VALUES (?, ?, ?)';
       db.query(sql,
-          [username, firstname + lastname, passwd],
+          [username, firstname + " " + lastname, passwd],
           function(error, result) {
             console.log('Inserted donor: ' + username + ", With password hash: " + passwd);
             console.log('Name: ' + firstname + " " + lastname);
