@@ -473,7 +473,7 @@ passport.deserializeUser(function (userID, done) {
 });
 
 app.post('/loggedIn', isLoggedIn, function (req, res) {
-    res.send({isAuth: "authorized",userId:req.user.id});
+    res.send({isAuth: "authorized",userId:req.user.rows[0].id});
   }, function (err, req, res, next) {
     res.status(401);
     res.send({isAuth: "unauthorized"});

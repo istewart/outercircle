@@ -10,6 +10,7 @@ export default class CharityProfile extends React.Component {
 
     this.fetchData = this.fetchData.bind(this);
     this.fetchData();
+    console.log(this.props.user+" "+this.props.charity)
   }
 
   fetchData() {
@@ -51,6 +52,8 @@ export default class CharityProfile extends React.Component {
                   isFollow={false} 
                   truetext='Followed' 
                   falsetext='Follow'
+                  charity={this.props.charity}
+                  user={this.props.user}
                 />
             </div>
           </div>
