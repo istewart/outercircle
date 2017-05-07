@@ -35,6 +35,7 @@ export default class Home extends React.Component {
     if (!this.state.loggedIn) {
       return (<Redirect to="/login"/>);
     } else {
+      console.log("Home" + this.state.userId);
       return (
         <div>
           <Navbar/>
