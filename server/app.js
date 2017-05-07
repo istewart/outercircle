@@ -315,9 +315,9 @@ app.post('/connect', function(request, response) {
     const user = request.body.user;
     const donor = request.body.donor;
 
-    let sql = 'INSERT INTO connection (donor, charity) \
+    let sql = 'INSERT INTO connection (user, donor) \
             VALUES (?, ?)';
-    db.query(sql, [donor, charity], function(error, result) {
+    db.query(sql, [user, donor], function(error, result) {
         if (error) {
             console.log(error);
         } else {
@@ -597,6 +597,20 @@ function init(callback) {
       console.log('Initialized following table.');
     }
   });
+
+    sql = 'CREATE TABLE IF NOT EXISTS connection ( \
+    user INTEGER, \
+    donor INTEGER, \
+    PRIMARY KEY (user, donor) \
+  );'
+
+    db.query(sql, function(error, result) {
+        if (error) {
+            console.log("!!" + error);
+        } else {
+            console.log('Initialized connection table.');
+        }
+    });
 
   sql = 'CREATE TABLE IF NOT EXISTS post ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
