@@ -52,7 +52,7 @@ export default class CharityProfile extends React.Component {
                   isFollow={false} 
                   truetext='Followed' 
                   falsetext='Follow'
-                  charity={this.props.charity}
+                  id={this.props.charity}
                   user={this.props.user}
                 />
             </div>
