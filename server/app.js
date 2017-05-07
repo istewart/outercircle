@@ -321,7 +321,7 @@ app.post('/connect', function(request, response) {
         if (error) {
             console.log(error);
         } else {
-            console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
+            console.log("(user " + user + ", donor " + donor + ") was added successfully");
         }
     });
 });
