@@ -43,7 +43,7 @@ export default class CharityPage extends React.Component {
           <div className="row">
             <div className="col-sm-4 col-sm-push-6 col-sm-offset-1">
               <Stats/>
-              <SuggestCharity charity={this.id}/>
+              <SuggestCharity charity={this.id} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
               <Feed/>
