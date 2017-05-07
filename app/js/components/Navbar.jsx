@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import LoginButton from './LoginButton.jsx';
 import SearchList from './SearchList.jsx';
 
@@ -10,6 +11,7 @@ export default class Navbar extends React.Component {
             items: [],
             keyWord:'',
             loggedIn: this.props.loggedIn,
+            logout: false
         }
         this._logout = this._logout.bind(this);
         // this.getData();
@@ -31,7 +33,7 @@ export default class Navbar extends React.Component {
         $.post('/logout', "", function(data, status) {
             if (status === 'success') {
                 console.log('logged out');
-                navbar.setState({loggedIn: false});
+                navbar.setState({loggedIn: false, logout: true});
             }
         })
     }
@@ -70,7 +72,11 @@ export default class Navbar extends React.Component {
 
     render() {
     var loginButton = "";
-    var showAllSearch = <SearchList items={this.state.items} keyWord={this.state.keyWord} asd={true}/>;;
+    var logoutRedirect = "";
+    var showAllSearch = <SearchList items={this.state.items} keyWord={this.state.keyWord} asd={true}/>;
+    if (this.state.logout) {
+        logoutRedirect = <Redirect to="/login"/>;
+    }
     if (!this.state.loggedIn) {
         loginButton = <Link to="/login" className="btn btn-primary">Login</Link>;
     }
@@ -85,6 +91,7 @@ export default class Navbar extends React.Component {
         <Link to="/">
           <div id="logo"></div>
         </Link>
+        {logoutRedirect}
         <input id="search"
           className="form-control"
           type="text"

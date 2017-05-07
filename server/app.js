@@ -342,6 +342,29 @@ app.post('/unfollow', function(request, response) {
   });
 });
 
+app.post('/addCharity', isLoggedIn, function(req, res) {
+  console.log('request received to add charity');
+  if (req.user.rows[0].username === "admin@outercircle.com") {
+    let sql = 'INSERT INTO charity '
+            + '(name, website, description, cover_image, profile_image) '
+            + 'VALUES (?, ?, ?, ?, ?)';
+    var name = req.body.name;
+    var website = req.body.website;
+    var description = req.body.description;
+    db.query(sql,
+            [name, website, description, 'beach.jpg','profile2.jpg'],
+            function(error, result) {
+                console.log('added charity ' + name);
+                res.send({added: 'success'});
+        });
+  }
+  else {
+    console.log("request denied");
+    res.status(401);
+    res.send({isAuth: "unauthorized"});
+  }
+});
+
 // serve the home page on any other request // TODO: this is sketchy
 app.get('*', function(request, response) {
   // console.log('- Request received *:');
@@ -413,12 +436,11 @@ app.post('/signup', function(request, response) {
     // User exists so need to let user know
     else {
       response.send({signup: "failure"});
-      console.log('username is already defined')
+      console.log('username is already defined');
     }
   });
 });
 // This is what we will use to compare hashes
-// TODO: actually figure out how to properly hash password and sign them up
 function isValidPassword(input, password) {
   console.log("input: " + createHash(input));
   console.log("password: " + password);
@@ -474,6 +496,19 @@ passport.deserializeUser(function (userID, done) {
 
 app.post('/loggedIn', isLoggedIn, function (req, res) {
     res.send({isAuth: "authorized",userId:req.user.id});
+  }, function (err, req, res, next) {
+    res.status(401);
+    res.send({isAuth: "unauthorized"});
+  });
+
+app.post('/loggedInAdmin', isLoggedIn, function (req, res) {
+    if (req.user.rows[0].username === "admin@outercircle.com") {
+      res.send({isAuth: "authorized"});
+    }
+    else {
+      res.status(401);
+      res.send({isAuth: "unauthorized"});
+    }
   }, function (err, req, res, next) {
     res.status(401);
     res.send({isAuth: "unauthorized"});
