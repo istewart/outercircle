@@ -536,9 +536,9 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized donor table.');
-      db.query('INSERT INTO donor '
+      db.query('IF NOT EXISTS ( INSERT INTO donor '
           + '(name, email, password, description, profile_image, cover_image) '
-          + 'VALUES (?, ?, ?, ?, ?, ?)',
+          + 'VALUES (?, ?, ?, ?, ?, ?) )',
           ['Ian Stewart', 'ian_stewart@brown.edu', 'pass', 'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.',
               'profile.jpg', 'beach.jpg'],
           function(error, result) {
@@ -557,9 +557,9 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized charity table.');
-      db.query('INSERT INTO charity '
+      db.query('IF NOT EXISTS (INSERT INTO charity '
           + '(name, website, description, cover_image, profile_image) '
-          + 'VALUES (?, ?, ?, ?, ?)',
+          + 'VALUES (?, ?, ?, ?, ?) )',
           ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
               'beach.jpg','profile2.jpg'],
           function(error, result) {
@@ -593,9 +593,9 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized post table.');
-      db.query('INSERT INTO post '
+      db.query('IF NOT EXISTS ( INSERT INTO post '
           + '(donor, charity, body, time) '
-          + 'VALUES (?, ?, ?, ?)',
+          + 'VALUES (?, ?, ?, ?) )',
           [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
           function(error, result) {
               console.log('sample post');
