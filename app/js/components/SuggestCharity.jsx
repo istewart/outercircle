@@ -15,7 +15,7 @@ export default class SuggestCharity extends React.Component {
     fetchSuggestCharity() {
         const suggest = this;
 
-        $.get('/suggestCharity', {id:suggest.props.charity}, function (data, status) {
+        $.get('/suggestCharity', {id:suggest.props.id}, function (data, status) {
             if (status === 'success') {
                 suggest.setState({suggestions: data.slice(0, MAX_SUGGESTIONS)});
             } else {
@@ -43,5 +43,5 @@ export default class SuggestCharity extends React.Component {
 }
 
 SuggestCharity.defaultProps = {
-    charity : 1,
+    charity : 0,
 };
