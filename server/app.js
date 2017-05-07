@@ -266,7 +266,7 @@ app.get('/charity/:id/data', function(request,response) {
 app.get('/suggestDonor',function(request,response){
     let sql= 'SELECT id, name, description, profile_image FROM donor' // TODO: not good security
         + ' WHERE id != ? ORDER BY id ASC';
-    db.query(sql, [request.query.id], function(error, result) {
+    db.query(sql, [request.query.donor], function(error, result) {
 
         if (!result.rowCount) { // TODO: errors, which posts, sorting
             // todo errors, also auth
@@ -474,7 +474,7 @@ passport.deserializeUser(function (userID, done) {
 });
 
 app.post('/loggedIn', isLoggedIn, function (req, res) {
-    res.send({isAuth: "authorized", userId:req.user.id});
+    res.send({isAuth: "authorized",userId:req.user.rows[0].id});
   }, function (err, req, res, next) {
     res.status(401);
     res.send({isAuth: "unauthorized"});

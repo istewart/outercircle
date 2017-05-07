@@ -15,9 +15,10 @@ export default class SuggestDonor extends React.Component {
     fetchSuggestDonor() {
         const suggest = this;
 
-        $.get('/suggestDonor', {id:suggest.props.id}, function (data, status) {
+        console.log("donor:"+suggest.props.donor+",id:"+suggest.props.id);
+        $.get('/suggestDonor', {donor:suggest.props.donor}, function (data, status) {
             if (status === 'success') {
-                suggest.setState({suggestions: data.slice(0, MAX_SUGGESTIONS)});
+                suggest.setState({suggestions: data.slice(0, MAX_SUGGESTIONS).filter((e)=>e.id!==suggest.props.id)});
             } else {
                 // todo error handling
             }
@@ -27,7 +28,7 @@ export default class SuggestDonor extends React.Component {
     render() {
         const renderedSuggestions = this.state.suggestions.map((suggestion) =>
             <li className="list-group-item" key={suggestion.id}>
-                <Similar data={suggestion} type="donor"/>
+                        <Similar data={suggestion} type="donor"/>
             </li>
         );
 
@@ -44,4 +45,5 @@ export default class SuggestDonor extends React.Component {
 
 SuggestDonor.defaultProps = {
     id : 1,
+    donor:0
 };

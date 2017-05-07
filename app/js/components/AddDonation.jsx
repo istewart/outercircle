@@ -11,7 +11,7 @@ export default class AddDonation extends React.Component {
     event.preventDefault();
 
     const data = {
-      donor: this.props.donor,
+      donor: this.props.userId,
       charity: 1, // todo
       category: $('#category').val(),
       amount: $('#amount').val(),
