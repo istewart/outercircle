@@ -57,3 +57,8 @@ Next, install OuterCircle using:
     ./run.sh
 
 You can then access the OuterCircle website at <public ip>.
+
+Administrator:
+==============
+
+Administrator is admin@outercircle.org. If the user doesn't exist you can add it with whatever password you want. After logging in as admin@outercircle.org go to /adminPortal to add charities.
