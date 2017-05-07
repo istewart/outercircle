@@ -278,8 +278,8 @@ app.get('/suggestDonor',function(request,response){
 });
 
 app.get('/suggestCharity',function(request,response){
-    let sql= 'SELECT id, name, description, profile_image FROM Charity' // TODO: not good security
-        + ' WHERE id != ? ORDER BY id ASC';
+    let sql= 'SELECT id, name, description, profile_image FROM charity' // TODO: not good security
+        + ' WHERE id NOT IN (SELECT charity from following WHERE donor=?) ORDER BY id ASC';
     db.query(sql, [request.query.id], function(error, result) {
         if(error){
             console.log("Fetch suggestion error: "+error);
