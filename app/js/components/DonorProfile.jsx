@@ -11,6 +11,7 @@ export default class DonorProfile extends React.Component {
         this.changeItem = this.changeItem.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.fetchData();
+        this.checkLogin();
     }
 
     fetchData() {
@@ -30,6 +31,17 @@ export default class DonorProfile extends React.Component {
         }.bind(this));
     }
 
+    checkLogin() {
+        $.post('/loggedIn', "", function(data, status) {
+            if (status === 'success' && data.isAuth === "authorized") {
+                this.setState({loggedIn: true, userId:data.userId});
+            }
+            else {
+                this.setState({loggedIn: false});
+            }
+        }.bind(this));
+      }
+
     changeItem(item) {
         this.setState({
             name: item.name,
@@ -38,7 +50,7 @@ export default class DonorProfile extends React.Component {
     }
 
     render() {
-        if (this.state.donor == null) {
+        if (this.state.donor == null || this.state.loggedIn != true || this.state.userId != this.state.donor) {
             return (
                 <div>
                     <ImageHeader name={this.state.name} cover_image={this.state.cover_image}/>
