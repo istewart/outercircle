@@ -49,7 +49,7 @@ export default class Follow extends React.Component {
   handleFollow(){
     const  follow = this;
     follow.setState({isFollow: true});
-    if(follow.truetext==="Followed"){
+    if(follow.props.truetext==="Followed"){
         const data= {
             user: follow.props.user,
             charity: follow.props.id,
