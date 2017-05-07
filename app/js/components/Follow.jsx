@@ -24,7 +24,8 @@ export default class Follow extends React.Component {
     this.checkFollow();
     this.state = {
       isFollow : this.props.isFollow,
-      isLogin : this.props.isLogin
+      isLogin : this.props.isLogin,
+      useId: -1,
     };
     this.handleFollow = this.handleFollow.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
@@ -46,11 +47,11 @@ export default class Follow extends React.Component {
   }
 
   handleFollow(){
-    this.setState({isFollow: true});
-
+    const  follow = this;
+    follow.setState({isFollow: true});
     const data = {
-      donor: 1,
-      charity: 1,
+      donor: this.props.user,
+      charity: this.props.charity,
     };
 
     $.post('/follow', data);
@@ -60,8 +61,8 @@ export default class Follow extends React.Component {
     this.setState({isFollow: false});
 
     const data = {
-      donor: 1,
-      charity: 1,
+        donor: this.props.user,
+        charity: this.props.charity,
     };
 
     $.post('/unfollow', data);

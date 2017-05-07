@@ -10,6 +10,24 @@ export default class CharityPage extends React.Component {
   constructor(props) {
     super(props);
     this.id = this.props.match.params.id;
+    this.state = {
+        loggedIn: true,
+        userId:0
+    };
+    this.checkLogin();
+  }
+
+  checkLogin() {
+      $.post('/loggedIn', "", function(data, status) {
+          if (status === 'success' && data.isAuth === "authorized") {
+              this.setState({loggedIn: true,userId:data.userId});
+              console.log('logged in, user id is'+data.userId);
+          }
+          else {
+              this.setState({loggedIn: false});
+              console.log('not logged in');
+          }
+      }.bind(this));
   }
 
   render(){
@@ -19,7 +37,7 @@ export default class CharityPage extends React.Component {
         <div id="main">
           <div className="row">
             <div className="container">
-              <CharityProfile charity={this.id}/>
+              <CharityProfile charity={this.id} user={this.state.userId}/>
             </div>
           </div>
           <div className="row">

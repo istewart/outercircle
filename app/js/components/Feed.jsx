@@ -9,6 +9,7 @@ export default class Feed extends React.Component {
 
     this.state = {
       posts: [],
+      donor: this.props.donor
     };
     this.fetchPosts();
 
@@ -30,7 +31,6 @@ export default class Feed extends React.Component {
 
   handlePost() { // TODO: security, xss, rendering, errors
     const data = {
-      id: 1,
       donor: 1,
       charity: 1,
       body: $('#newPost').val()

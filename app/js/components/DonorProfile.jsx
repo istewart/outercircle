@@ -18,7 +18,6 @@ export default class DonorProfile extends React.Component {
           if (status === 'success') {
             // we succesfully retrieved some data so update state
             this.setState({
-                donor: this.props.donor,
                 name: data.name,
                 description: data.description,
                 profile_image: data.profile_image,
@@ -38,7 +37,7 @@ export default class DonorProfile extends React.Component {
     }
 
     render() {
-        if (this.state.donor == null) {
+        if (this.props.userId != this.props.donor) {
             return (
                 <div>
                     <ImageHeader name={this.state.name} cover_image={this.state.cover_image}/>
