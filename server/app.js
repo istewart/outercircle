@@ -515,15 +515,16 @@ app.post('/signup', function(request, response) {
     // User doesn't exist so can continue with signup
     if (result.rows.length === 0) {
       var passwd = createHash(password);
-      sql = 'INSERT INTO donor (email, name, password) VALUES (?, ?, ?)';
+      sql = 'INSERT INTO donor (email, name, password, description, profile_image, cover_image) VALUES (?, ?, ?, ?, ?, ?)';
       db.query(sql,
-          [username, firstname + " " + lastname, passwd],
+          [username, firstname + " " + lastname, passwd, "Update profile to give a donor description", "default_profile.jpg", "beach.jpg"],
           function(error, result) {
             console.log('Inserted donor: ' + username + ", With password hash: " + passwd);
             console.log('Name: ' + firstname + " " + lastname);
             response.send({signup: "success"});
           });
     }
+
     // User exists so need to let user know
     else {
       response.send({signup: "failure"});
