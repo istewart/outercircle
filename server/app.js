@@ -268,13 +268,16 @@ app.post('/donate', function(request, response) {
     // response.sendStatus(200);
     // TODO: error handling and security and auth and xss and csrf
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [Donor], function(error, result) {
-      response.json({
-        name: result.rows[0].name,
-        amount:Amount,
-        category: Category,
-        time: time,
-      });
+    db.query(sql, [donor], function(error, result) {
+      if (isPublic) {
+        response.json({
+          name: result.rows[0].name,
+          amount: amount,
+          time: time,
+        });
+      } else {
+        response.sendStatus(200);
+      }
     });
   });
 });
