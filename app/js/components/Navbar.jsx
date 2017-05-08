@@ -93,7 +93,7 @@ export default class Navbar extends React.Component {
         />
         {showAllSearch}
         <Link to={"/donor/"+this.state.user}>
-          <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu" alt="profile image"/>
+          <img src={window.location.origin + "/profile.jpg"} className="img-rounded profile-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
         {loginButton}
       </div>
