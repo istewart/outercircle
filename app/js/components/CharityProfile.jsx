@@ -9,16 +9,18 @@ export default class CharityProfile extends React.Component {
     this.state = {};
 
     this.fetchData = this.fetchData.bind(this);
-    this.fetchData();
-    console.log(this.props.user+" "+this.props.charity)
+    this.fetchData(this.props.charity);
   }
 
-  fetchData() {
-    $.get('/charity/' + this.props.charity + '/data', function(data, status) {
+    componentWillReceiveProps(nextProps) {
+        this.fetchData(nextProps.charity);
+    }
+
+  fetchData(Charity) {
+    $.get('/charity/' + Charity + '/data', function(data, status) {
       if (status === 'success') {
         // we succesfully retrieved some data so update state
         this.setState({
-          charity: this.props.charity,
           name: data.name,
           website: data.website,
           description: data.description,
@@ -31,6 +33,7 @@ export default class CharityProfile extends React.Component {
   }
 
   render() {
+    console.log(this.props.user+" "+this.state.charity);
     return (
       <div>
         <ImageHeader 

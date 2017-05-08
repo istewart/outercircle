@@ -30,6 +30,7 @@ export default class CharityPage extends React.Component {
 
   render(){
     const Id = parseInt(this.props.match.params.id);
+    console.log("Charity id: "+Id);
 
     return (
       <div>
@@ -37,13 +38,13 @@ export default class CharityPage extends React.Component {
         <div id="main">
           <div className="row">
             <div className="container">
-              <CharityProfile charity={this.id} user={this.state.userId}/>
+              <CharityProfile charity={Id} user={this.state.userId}/>
             </div>
           </div>
           <div className="row">
             <div className="col-sm-4 col-sm-push-6 col-sm-offset-1">
               <Stats/>
-              <SuggestCharity charity={this.id} user={this.state.userId}/>
+              <SuggestCharity charity={Id} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
               <Feed charity={Id} type="charity"/>
