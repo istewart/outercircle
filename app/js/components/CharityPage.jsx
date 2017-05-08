@@ -9,7 +9,7 @@ import SuggestCharity from './SuggestCharity.jsx';
 export default class CharityPage extends React.Component {
   constructor(props) {
     super(props);
-    this.id = this.props.match.params.id;
+    this.id = parseInt(this.props.match.params.id);
     this.state = {
         loggedIn: true,
         userId:0
