@@ -234,18 +234,21 @@ app.get('/donor/:id/stats', function(request, response) {
   const requester = 'todo';
   const donor = request.params.id;
 
-  var sql = 'SELECT SUM(amount) AS amount '
-    + 'FROM donation '
-    + 'WHERE donor = ? ;';
+  var sql = 'SELECT c.category, SUM(d.amount) AS amount '
+      + 'FROM donation AS d JOIN charity AS c ON d.charity = c.id '
+      + 'WHERE d.donor = ? GROUP BY c.category ORDER BY c.category;';
   db.query(sql, [donor], function(error, result) {
-      if(result !== undefined) {
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
-          // todo errors, also auth
-            response.end();
-        } else {
-          // return the requested donation information
-          const labels = result.rows.map((row) => row.category);
-          const data = result.rows.map((row) => row.amount);
+    if(result !== undefined) {
+      if (!result.rowCount) { // TODO: errors, which posts, sorting
+        // todo errors, also auth
+        response.json({
+          labels: [],
+          data: [],
+        });
+      } else {
+        // return the requested donation information
+        const labels = result.rows.map((row) => row.category);
+        const data = result.rows.map((row) => row.amount);
 
         response.json({
           labels: labels,
@@ -257,7 +260,7 @@ app.get('/donor/:id/stats', function(request, response) {
       response.json({
         labels: [],
         data: [],
-      })
+      });
     }
   });
 });
@@ -301,9 +304,9 @@ app.get('/donations/:id', function(request, response) {
   const donor = request.params.id;
   const charity = 'todo ';
 
-  var sql = 'SELECT c.name, d.id, d.amount, d.time '
+  var sql = 'SELECT c.name, d.id, d.amount, d.time, c.category '
     + 'FROM donation AS d JOIN charity AS c '
-    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = 1 '
+    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = \'true\' '
     + 'ORDER BY time DESC;';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
