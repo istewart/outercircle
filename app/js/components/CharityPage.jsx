@@ -9,10 +9,8 @@ import SuggestCharity from './SuggestCharity.jsx';
 export default class CharityPage extends React.Component {
   constructor(props) {
     super(props);
-    this.id = parseInt(this.props.match.params.id);
     this.state = {
         loggedIn: true,
-        userId:0
     };
     this.checkLogin();
   }
@@ -31,6 +29,8 @@ export default class CharityPage extends React.Component {
   }
 
   render(){
+    const Id = parseInt(this.props.match.params.id);
+
     return (
       <div>
         <Navbar/>
@@ -46,7 +46,7 @@ export default class CharityPage extends React.Component {
               <SuggestCharity charity={this.id} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
-              <Feed/>
+              <Feed charity={Id} type="charity"/>
             </div>
           </div>
         </div>

@@ -132,20 +132,19 @@ app.get('/checkConnect', isLoggedIn, function(request, response) {
     });
 });
 
-// retrieve the posts for a feed
-app.get('/posts', isLoggedIn, function(request, response) {
-  console.log('- Request received /posts:');
+// retrieve the posts for feed on homepage
+app.get('/homeposts', isLoggedIn, function(request, response) {
+  console.log('- Request received /homeposts:');
 
-  const requester = request.user;
-  const username = requester.rows[0].username;
-  const donor = 'todo';
-  const charity = 'todo';
-
+  const User = request.query.user; //ToDo:security check
+  console.log("User id: "+User);
   let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
-    + 'ON p.donor = d.id WHERE time >= ? '
-    + 'ORDER BY time DESC';
-  db.query(sql, [0], function(error, result) {
+    + 'ON p.donor = d.id WHERE p.donor IN '
+    + '(SELECT donor FROM connection '
+    + 'WHERE user = ?) OR p.charity IN (SELECT charity FROM '
+    + 'following WHERE donor = ?) ORDER BY time DESC';
+  db.query(sql, [User,User], function(error, result) {
       if(result !== undefined) {
           if (!result.rowCount) { // TODO: errors, which posts, sorting
               // todo errors, also auth
@@ -155,6 +154,48 @@ app.get('/posts', isLoggedIn, function(request, response) {
           }
       }
   });
+});
+
+// retrieve the posts for feed on donorpage
+app.get('/donorposts', isLoggedIn, function(request, response) {
+    console.log('- Request received /donorposts:');
+
+    const Donor = request.query.donor; //ToDo:security check
+     console.log("Donor id: "+Donor);
+    let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
+        + 'FROM post AS p JOIN donor AS d '
+        + 'ON p.donor = d.id WHERE p.donor = ? ORDER BY time DESC';
+    db.query(sql, [Donor], function(error, result) {
+        if(result !== undefined) {
+            if (!result.rowCount) { // TODO: errors, which posts, sorting
+                // todo errors, also auth
+            } else {
+                // return the requested posts
+                response.json(result.rows);
+            }
+        }
+    });
+});
+
+// retrieve the posts for feed on charitypage
+app.get('/charityposts', isLoggedIn, function(request, response) {
+    console.log('- Request received /charityposts:');
+
+    const Charity = request.query.charity; //ToDo:security check
+
+    let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
+        + 'FROM post AS p JOIN donor AS d '
+        + 'ON p.donor = d.id WHERE p.charity = ? ORDER BY time DESC';
+    db.query(sql, [Charity], function(error, result) {
+        if(result !== undefined) {
+            if (!result.rowCount) { // TODO: errors, which posts, sorting
+                // todo errors, also auth
+            } else {
+                // return the requested posts
+                response.json(result.rows);
+            }
+        }
+    });
 });
 
 // retrieve the data for a donor

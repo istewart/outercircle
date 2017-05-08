@@ -44,7 +44,7 @@ export default class Home extends React.Component {
                   <SuggestCharity user={this.state.userId}/>
               </div>
               <div className="col-md-6 col-sm-6 col-sm-pull-3">
-                  <Feed donor={this.state.userId}/>
+                  <Feed user={this.state.userId} type="home"/>
               </div>
           </div>
         </div>

@@ -10,28 +10,54 @@ export default class Feed extends React.Component {
     this.state = {
       posts: [],
     };
-    this.fetchPosts();
+    this.fetchPosts(this.props.type,this.props.user);
 
     this.handlePost = this.handlePost.bind(this);
   }
 
-  fetchPosts() {
-    const feed = this;
+  componentWillReceiveProps(nextProps) {
+    this.fetchPosts(nextProps.type,nextProps.user);
+  }
 
-    $.get('/posts', function(data, status) {
-      if (status === 'success') {
-        // we succesfully retrieved some posts so update state
-        feed.setState({posts: data});
-      } else {
-        // todo error handling
-      }
-    });
+  fetchPosts(type,User) {
+    const feed = this;
+    if(type==="home"){
+        console.log("User id: "+User);
+        $.get('/homeposts', {user:User}, function(data, status) {
+            if (status === 'success') {
+                // we succesfully retrieved some posts so update state
+                feed.setState({posts: data});
+            } else {
+                // todo error handling
+            }
+        });
+    } else if(type==="donor"){
+        console.log("donor: "+feed.props.donor);
+        $.get('/donorposts', {donor:feed.props.donor}, function(data, status) {
+            if (status === 'success') {
+                // we succesfully retrieved some posts so update state
+                feed.setState({posts: data});
+            } else {
+                // todo error handling
+            }
+        });
+    } else{
+        $.get('/charityposts', {charity:feed.props.charity}, function(data, status) {
+            if (status === 'success') {
+                // we succesfully retrieved some posts so update state
+                feed.setState({posts: data});
+            } else {
+                // todo error handling
+            }
+        });
+    }
+
   }
 
   handlePost() { // TODO: security, xss, rendering, errors
     const data = {
-      donor: this.props.donor,
-      charity: 1,
+      donor: this.props.user,
+      charity: this.props.charity,
       body: $('#newPost').val()
     };
 
@@ -57,4 +83,10 @@ export default class Feed extends React.Component {
       </div>
     );
   }
+}
+
+Feed.defaultProps = {
+   user:0,
+   donor:0,
+   charity: 0
 }
