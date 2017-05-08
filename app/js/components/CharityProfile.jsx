@@ -12,9 +12,9 @@ export default class CharityProfile extends React.Component {
     this.fetchData(this.props.charity);
   }
 
-    componentWillReceiveProps(nextProps) {
-        this.fetchData(nextProps.charity);
-    }
+  componentWillReceiveProps(nextProps) {
+      this.fetchData(nextProps.charity);
+  }
 
   fetchData(Charity) {
     $.get('/charity/' + Charity + '/data', function(data, status) {

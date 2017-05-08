@@ -256,13 +256,13 @@ app.post('/donate', function(request, response) {
   
   const donor = request.body.donor;
   const charity = request.body.charity;
-  const category = request.body.category; // todo this should be in charity
+  const isPublic = request.body.isPublic; // todo this should be in charity
   const amount = request.body.amount; // todo non negative
   const time = new Date().getTime();
 
-  var sql = 'INSERT INTO donation (donor, charity, category, amount, time) \
+  var sql = 'INSERT INTO donation (donor, charity, amount, time, isPublic) \
             VALUES (?, ?, ?, ?, ?)';
-  db.query(sql, [donor, charity, category, amount, time], function(error, result) {
+  db.query(sql, [donor, charity, amount, time, isPublic], function(error, result) {
     const id = result.lastInsertId; // todo unused
     response.sendStatus(200);
     // // TODO: error handling and security and auth and xss and csrf
@@ -281,24 +281,30 @@ app.post('/donate', function(request, response) {
 
 // retrieve the donations for TODO
 app.get('/donations/:id', function(request, response) {
-  console.log('- Request received /donations:');
+  console.log('- Request received /donations/:id:');
 
   const requester = 'todo';
   const donor = request.params.id;
   const charity = 'todo';
 
-  var sql = 'SELECT c.name, d.amount, d.category, d.time '
+  var sql = 'SELECT c.name, d.amount, d.time '
     + 'FROM donation AS d JOIN charity AS c '
-    + 'ON d.charity = c.id WHERE d.donor = ? '
-    + 'ORDER BY time DESC';
+    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = \'true\' '
+    + 'ORDER BY time DESC;';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
         if (!result.rowCount) { // TODO: errors, which posts, sorting
           // todo errors, also auth
+          response.json([]);
         } else {
           // return the requested posts
+          console.log('found donations ' + result.rows);
           response.json(result.rows);
         }
+      } else {
+        console.log('error in donations: ');
+        console.log(error);
+        response.json([]);
       }
   });
 });
@@ -463,7 +469,7 @@ app.get('*', function(request, response) {
 
 // initialize the database the web server
 init(function() {
-  app.listen(8080, function(){
+  app.listen(8081, function(){
     console.log('- Server listening on port 8080');
   });
 })
@@ -578,7 +584,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (userID, done) {
-    console.log('deserializing user with ID:', userID);
+    // console.log('deserializing user with ID:', userID);
     var sql = 'SELECT * FROM donor WHERE id = ?';
     db.query(sql, [userID], function(err, user) {
       done(err, user);
@@ -710,9 +716,9 @@ function init(callback) {
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
     donor INTEGER, \
     charity INTEGER, \
-    category TEXT, \
     amount INTEGER, \
     time INTEGER, \
+    isPublic BOOLEAN, \
     FOREIGN KEY(donor) REFERENCES donor(id), \
     FOREIGN KEY(charity) REFERENCES charity(id) \
   );'

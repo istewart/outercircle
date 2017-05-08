@@ -3,7 +3,6 @@ import React from 'react';
 export default class AddDonation extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -13,16 +12,17 @@ export default class AddDonation extends React.Component {
     const data = {
       donor: this.props.userId,
       charity: 1, // todo
-      category: $('#category').val(),
+      category: 'TODO: ADD THIS TO CHARITY',
       amount: $('#amount').val(),
+      isPublic: $('#public').val() == 'Public',
     };
 
     // const feed = this;
 
     $.post('/donate', data, function(data, status) {
       $('#name').val('');
-      $('#category').val('');
       $('#amount').val('');
+      $('#public').val('Public');
       // feed.setState({
       //   posts: [data].concat(feed.state.posts),
       // });
@@ -38,12 +38,10 @@ export default class AddDonation extends React.Component {
             <input type="text" className="form-control" id="name"/>
           </div>
           <div className="form-group">
-            <label htmlFor="category">Category:</label>
-            <select id="category" className="form-control">
-              <option>Education</option>
-              <option>Environment</option>
-              <option>Human</option>
-              <option>Health</option>
+            <label htmlFor="public">Privacy:</label>
+            <select id="public" className="form-control">
+              <option>Public</option>
+              <option>Private</option>
             </select>
           </div>
           <div className="form-group">
