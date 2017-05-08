@@ -8,18 +8,25 @@ export default class DonationHistory extends React.Component {
     this.state = {
       donations: [],
     };
-    this.fetchDonations(this.props.donor);
+    this.fetchDonations();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.fetchDonations(nextProps.donor);
-  }
+    componentWillReceiveProps(nextProps) {
+        console.log("last: "+nextProps.last);
+        if(nextProps.last!==""){
+            this.setState({
+                donations:[nextProps.last].concat(this.state.donations)
+            });
+        }
+    }
 
-  fetchDonations(donor) {
-    $.get('/donations/' + donor, function(data, status) {
+  fetchDonations() {
+    const history = this;
+
+    $.get('/donations/' + this.props.donor, function(data, status) {
       if (status === 'success') {
         // we succesfully retrieved some donations so update state
-        this.setState({donations: data});
+        history.setState({donations: data});
       } else {
         // todo error handling
       }
@@ -30,7 +37,7 @@ export default class DonationHistory extends React.Component {
     var renderedDonations;
     if (this.state.donations.length) {
       renderedDonations = this.state.donations.map((donation) =>
-        <tr>
+        <tr key={donation.id}>
           <td>{donation.name}</td>
           <td>{"$" + donation.amount + ".00"}</td>
           <td>{donation.category}</td>
