@@ -16,7 +16,7 @@ export default class Feed extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchPosts(nextProps.type,nextProps.user);
+    this.fetchPosts(nextProps.type, nextProps.user);
   }
 
   fetchPosts(type,User) {

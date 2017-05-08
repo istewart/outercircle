@@ -18,10 +18,10 @@ export default class SearchList extends React.Component {
                         {
                             list.props.items.map(function(item) {
                                 if(item.category === 'C') {
-                                    return <Link to={'/charity/' + item.id}><li key={item}>{item.name}</li></Link>
+                                    return <Link to={'/charity/' + item.id} key={item.id}><li>{item.name}</li></Link>
                                 }
                                 else if(item.category === 'D') {
-                                    return <Link to={'/donor/' + item.id}><li key={item}>{item.name}</li></Link>
+                                    return <Link to={'/donor/' + item.id} key={item.id}><li>{item.name}</li></Link>
                                 }
                             })
                         }
