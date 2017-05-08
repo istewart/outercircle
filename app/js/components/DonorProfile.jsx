@@ -43,36 +43,38 @@ export default class DonorProfile extends React.Component {
     }
 
     render() {
-        let edit = "";
-        if (this.props.donor === this.props.id) {
+        let edit = <br/>;
+        let connect = <Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/>;
+        if (this.props.donor === this.props.user) {
             edit = <EditProfile className="pull-right" donor={this.props.donor} name={this.state.name} description={this.state.description} changeItem={this.changeItem}/>;
-        } else {
-            return (
-            <div>
-                <ImageHeader name={this.state.name} cover_image={this.state.cover_image}/>
-                <div className="donor-header">
-                    <img
-                        src={window.location.origin + "/" + this.state.profile_image}
-                        alt={this.state.name + "'s Profile Picture"}
-                        className="img-thumbnail shadow-box"
-                    />
-                    <div className="donor-info panel panel-default shadow-box">
-                        {edit}
-                        <div className="panel-body" id="donor-profile">
-                            <h3>{this.state.name}</h3>
-                            <p>{this.state.description}</p>
-                            <p className="donor-toolbar">
-                                <Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/>
-                                {/*<span className="glyphicon glyphicon-user"></span>*/}
-                                {/*<span> 350 connections </span>*/}
-                                {/*<span><a href="#">view</a></span>*/}
-                            </p>
-                        </div>
+            connect = <br/>;
+        }
+
+        return (
+        <div>
+            <ImageHeader name={this.state.name} cover_image={this.state.cover_image}/>
+            <div className="donor-header">
+                <img
+                    src={window.location.origin + "/" + this.state.profile_image}
+                    alt={this.state.name + "'s Profile Picture"}
+                    className="img-thumbnail shadow-box"
+                />
+                <div className="donor-info panel panel-default shadow-box">
+                    {edit}
+                    <div className="panel-body" id="donor-profile">
+                        <h3>{this.state.name}</h3>
+                        <p>{this.state.description}</p>
+                        <p className="donor-toolbar">
+                            {connect}
+                            {/*<span className="glyphicon glyphicon-user"></span>*/}
+                            {/*<span> 350 connections </span>*/}
+                            {/*<span><a href="#">view</a></span>*/}
+                        </p>
                     </div>
                 </div>
             </div>
-            );
-        }
+        </div>
+        );
     }
 }
 
