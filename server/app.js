@@ -170,6 +170,7 @@ app.get('/donorposts', isLoggedIn, function(request, response) {
         if(result !== undefined) {
             if (!result.rowCount) { // TODO: errors, which posts, sorting
                 // todo errors, also auth
+                response.json([]);
             } else {
                 // return the requested posts
                 response.json(result.rows);
@@ -191,6 +192,7 @@ app.get('/charityposts', isLoggedIn, function(request, response) {
         if(result !== undefined) {
             if (!result.rowCount) { // TODO: errors, which posts, sorting
                 // todo errors, also auth
+                response.json([]);
             } else {
                 // return the requested posts
                 response.json(result.rows);
