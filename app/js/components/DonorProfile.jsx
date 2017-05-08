@@ -44,7 +44,7 @@ export default class DonorProfile extends React.Component {
 
     render() {
         let edit = "";
-        if (this.props.donor == this.props.id) {
+        if (this.props.donor === this.props.id) {
             edit = <EditProfile className="pull-right" donor={this.props.donor} name={this.state.name} description={this.state.description} changeItem={this.changeItem}/>;
         } else {
             return (
