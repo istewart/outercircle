@@ -233,17 +233,19 @@ app.get('/donor/:id/stats', function(request, response) {
 
   const requester = 'todo';
   const donor = request.params.id;
-  var sql = 'SELECT c.category, SUM(d.amount) AS amount '
-    + 'FROM donation AS d JOIN charity AS c ON d.charity = c.id '
-    + 'WHERE d.donor = ? GROUP BY c.category ORDER BY c.category;';
+
+  var sql = 'SELECT SUM(amount) AS amount '
+    + 'FROM donation '
+    + 'WHERE donor = ? ;';
   db.query(sql, [donor], function(error, result) {
-    if (result !== undefined) {
-      if (!result.rowCount) { // TODO: errors, which posts, sorting
-        // todo errors, also auth
-      } else {
-        // return the requested donation information
-        const labels = result.rows.map((row) => row.category);
-        const data = result.rows.map((row) => row.amount);
+      if(result !== undefined) {
+        if (!result.rowCount) { // TODO: errors, which posts, sorting
+          // todo errors, also auth
+            response.end();
+        } else {
+          // return the requested donation information
+          const labels = result.rows.map((row) => row.category);
+          const data = result.rows.map((row) => row.amount);
 
         response.json({
           labels: labels,
@@ -276,8 +278,8 @@ app.post('/donate', function(request, response) {
     const id = result.lastInsertId; // todo unused
     // response.sendStatus(200);
     // TODO: error handling and security and auth and xss and csrf
-    sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [donor], function(error, result) {
+    sql = 'SELECT name FROM charity WHERE id = ?';
+    db.query(sql, [charity], function(error, result) {
       if (isPublic) {
         response.json({
           name: result.rows[0].name,
@@ -297,11 +299,11 @@ app.get('/donations/:id', function(request, response) {
 
   const requester = 'todo';
   const donor = request.params.id;
-  const charity = 'todo';
+  const charity = 'todo ';
 
-  var sql = 'SELECT c.name, d.amount, d.time, c.category '
+  var sql = 'SELECT c.name, d.id, d.amount, d.time '
     + 'FROM donation AS d JOIN charity AS c '
-    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = \'true\' '
+    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = 1 '
     + 'ORDER BY time DESC;';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
@@ -448,6 +450,7 @@ app.post('/editProfile', function(request, response) {
       console.log("donor " + donor + " updated their name to " + name + " and description to " + description);
     }
   });
+  response.end();
 });
 
 app.post('/addCharity', isLoggedIn, function(req, res) {

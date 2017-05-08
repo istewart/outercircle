@@ -10,6 +10,10 @@ export default class DonorStats extends React.Component{
     this.fetchData();
   }
 
+    componentWillReceiveProps(nextProps) {
+        this.fetchData();
+    }
+
   // retrieve and update donor statistics
   fetchData() {
     $.get('/donor/' + this.props.donor + '/stats', function(data, status) {
