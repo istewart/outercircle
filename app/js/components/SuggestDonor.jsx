@@ -14,7 +14,6 @@ export default class SuggestDonor extends React.Component {
 
     fetchSuggestDonor() {
         const suggest = this;
-        console.log("donor: "+suggest.props.charity+" id: "+suggest.props.id);
 
         $.get('/suggestDonor', {donor:suggest.props.donor}, function (data, status) {
             if (status === 'success') {

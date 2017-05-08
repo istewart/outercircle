@@ -342,6 +342,38 @@ app.post('/connect', function(request, response) {
     });
 });
 
+app.post('/unfollow', function(request, response) {
+    console.log('- Request received /unfollow');
+
+    const donor = request.body.user;
+    const charity = request.body.charity;
+
+    let sql = 'DELETE FROM following WHERE donor = ? AND charity = ?';
+    db.query(sql, [donor, charity], function(error, result) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("(donor " + donor + ", charity " + charity + ") was deleted successfully");
+        }
+    });
+});
+
+app.post('/unconnect', function(request, response) {
+    console.log('- Request received /unconnect');
+
+    const user = request.body.user;
+    const donor = request.body.donor;
+
+    let sql = 'DELETE FROM connection WHERE user = ? AND donor = ?';
+    db.query(sql, [user, donor], function(error, result) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("(user " + user + ", donor " + donor + ") was deleted successfully");
+        }
+    });
+});
+
 app.post('/editProfile', function(request, response) {
   console.log('- Request received /editProfile');
   
@@ -355,22 +387,6 @@ app.post('/editProfile', function(request, response) {
       console.log(error);
     } else {
       console.log("donor " + donor + " updated their name to " + name + " and description to " + description);
-    }
-  });
-});
-
-app.post('/unfollow', function(request, response) {
-  console.log('- Request received /unfollow');
-  
-  const donor = request.body.donor;
-  const charity = request.body.charity;
-
-  let sql = 'DELETE FROM following WHERE donor = ? AND charity = ?';
-  db.query(sql, [donor, charity], function(error, result) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("(donor " + donor + ", charity " + charity + ") was deleted successfully");
     }
   });
 });

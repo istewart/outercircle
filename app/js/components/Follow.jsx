@@ -25,17 +25,20 @@ export default class Follow extends React.Component {
       isFollow : this.props.isFollow,
       isLogin : this.props.isLogin,
     };
-    this.checkFollow();
+    this.checkFollow(this.props.user);
     this.handleFollow = this.handleFollow.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
-  checkFollow(){
+  componentWillReceiveProps(nextProps) {
+        this.checkFollow(nextProps.user);
+  }
+
+  checkFollow(User){
     const follow = this;
-    console.log(follow.props.user);
       if(follow.props.truetext==="Followed") {
           const data= {
-              user: follow.props.user,
+              user: User,
               charity: follow.props.id,
           };
           $.get('/checkFollow',data, function (data, status) {
@@ -51,7 +54,7 @@ export default class Follow extends React.Component {
           });
       } else{
           const data = {
-              user: follow.props.user,
+              user: User,
               donor: follow.props.id,
           };
           // console.log("CheckFollow: "+data.user+" "+data.donor);
@@ -72,35 +75,38 @@ export default class Follow extends React.Component {
   }
 
   handleFollow(){
-    const follow = this;
-    follow.setState({isFollow: true});
-    if(follow.props.truetext==="Followed"){
+    this.setState({isFollow: true});
+    if(this.props.truetext==="Followed"){
         const data= {
-            user: follow.props.user,
-            charity: follow.props.id,
+            user: this.props.user,
+            charity: this.props.id,
         };
         $.post('/follow', data);
     } else{
         const data = {
-            user: follow.props.user,
-            donor: follow.props.id,
+            user: this.props.user,
+            donor: this.props.id,
         }
         $.post('/connect', data);
     }
 
-
-
   }
 
   handleUnfollow(){
-    this.setState({isFollow: false});
-
-    const data = {
-        donor: this.props.user,
-        charity: this.props.charity,
-    };
-
-    $.post('/unfollow', data);
+      this.setState({isFollow: false});
+      if(this.props.truetext==="Followed"){
+          const data= {
+              user: this.props.user,
+              charity: this.props.id,
+          };
+          $.post('/unfollow', data);
+      } else{
+          const data = {
+              user: this.props.user,
+              donor: this.props.id,
+          }
+          $.post('/unconnect', data);
+      }
   }
 
   render() {
