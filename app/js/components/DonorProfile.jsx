@@ -55,13 +55,13 @@ export default class DonorProfile extends React.Component {
                     <div className="donor-info panel panel-default shadow-box">
                         {edit}
                         <div className="panel-body" id="donor-profile">
-
-                            <h2>{this.state.name}<span><Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/></span></h2>
+                            <h2>{this.state.name}</h2>
                             <p>{this.state.description}</p>
                             <p className="donor-toolbar">
-                                <span className="glyphicon glyphicon-user"></span>
-                                <span> 350 connections </span>
-                                <span><a href="#">view</a></span>
+                                <Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/>
+                                {/*<span className="glyphicon glyphicon-user"></span>*/}
+                                {/*<span> 350 connections </span>*/}
+                                {/*<span><a href="#">view</a></span>*/}
                             </p>
                         </div>
                     </div>

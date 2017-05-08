@@ -54,8 +54,11 @@ export default class Follow extends React.Component {
               user: follow.props.user,
               donor: follow.props.id,
           };
+          // console.log("CheckFollow: "+data.user+" "+data.donor);
           $.get('/checkConnect',data, function (data, status) {
               if (status === 'success') {
+
+                  // console.log("checkFollowResult:"+data);
                   if (data === 'true') {
                       follow.setState({isFollow: true});
                   } else {

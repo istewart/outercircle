@@ -364,3 +364,9 @@ span.psw {
 .friendsButton {
     align-items: right;
 }
+
+.donor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

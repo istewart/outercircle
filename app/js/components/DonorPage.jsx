@@ -13,7 +13,8 @@ export default class DonorPage extends React.Component {
     super(props);
       this.donor = parseInt(this.props.match.params.id);
       this.state = {
-        loggedIn: true
+        loggedIn: true,
+        userId: 0,
       };
 
     this.checkLogin();
