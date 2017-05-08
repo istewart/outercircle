@@ -10,8 +10,14 @@ export default class SignupPage extends React.Component {
   render() {
     return (
       <div>
-        <Navbar/>
         <Signup/>
+        <p>
+          Or 
+          <a 
+            href={window.location.origin + "/login"}
+            className="btn btn-primary">Login
+          </a>
+        </p>
       </div>
     );
   }
