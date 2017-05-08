@@ -475,7 +475,7 @@ app.get('*', function(request, response) {
 // initialize the database the web server
 init(function() {
   app.listen(8081, function(){
-    console.log('- Server listening on port 8080');
+    console.log('- Server listening on port 8081');
   });
 })
 // Alright now lets handle login with a LocalStrategy

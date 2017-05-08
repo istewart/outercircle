@@ -12,7 +12,8 @@ export default class Navbar extends React.Component {
             keyWord:'',
             user: this.props.user,
             loggedIn: this.props.loggedIn,
-            logout: false
+            logout: false,
+            profile_image: "default_profile.jpg"
         }
         this._logout = this._logout.bind(this);
         // this.getData();
@@ -20,6 +21,21 @@ export default class Navbar extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({user:nextProps.user,loggedIn:nextProps.loggedIn});
+        this.fetchData(nextProps.user);
+    }
+
+    fetchData(user) {
+        $.get('/donor/' + user + '/data', function(data, status) {
+          if (status === 'success') {
+            console.log("PROFILE IMAGE: " + data.profile_image);
+            // we succesfully retrieved some data so update state
+            this.setState({
+                profile_image: data.profile_image
+            });
+          } else {
+            console.log("error fetching profile image")
+          }
+        }.bind(this));
     }
 
     _logout() {
@@ -93,7 +109,7 @@ export default class Navbar extends React.Component {
         />
         {showAllSearch}
         <Link to={"/donor/"+this.state.user}>
-          <img src={window.location.origin + "/profile.jpg"} className="img-rounded profile-thumbnail" id="user-menu" alt="profile image"/>
+          <img src={window.location.origin + "/" + this.state.profile_image} className="img-rounded profile-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
         {loginButton}
       </div>
