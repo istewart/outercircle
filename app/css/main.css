@@ -116,6 +116,7 @@ post-title a>p{
 }
 
 .donor-toolbar {
+    height: 30px;
   text-align: right;
 }
 
@@ -141,6 +142,10 @@ post-title a>p{
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
+}
+
+#donor-profile p {
+    font-size: 14px;
 }
 
 .donor-thumbnail {
@@ -363,10 +368,4 @@ span.psw {
 
 .friendsButton {
     align-items: right;
-}
-
-.donor-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }

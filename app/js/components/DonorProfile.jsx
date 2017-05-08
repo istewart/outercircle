@@ -55,7 +55,7 @@ export default class DonorProfile extends React.Component {
                     <div className="donor-info panel panel-default shadow-box">
                         {edit}
                         <div className="panel-body" id="donor-profile">
-                            <h2>{this.state.name}</h2>
+                            <h3>{this.state.name}</h3>
                             <p>{this.state.description}</p>
                             <p className="donor-toolbar">
                                 <Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/>
