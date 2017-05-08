@@ -19,9 +19,8 @@ export default class CharityPage extends React.Component {
       $.post('/loggedIn', "", function(data, status) {
           if (status === 'success' && data.isAuth === "authorized") {
               this.setState({loggedIn: true,userId:data.userId});
-              console.log('logged in, user id is'+data.userId);
-          }
-          else {
+              console.log('logged in, user id is '+ data.userId);
+          } else {
               this.setState({loggedIn: false});
               console.log('not logged in');
           }
@@ -37,9 +36,7 @@ export default class CharityPage extends React.Component {
         <Navbar loggedIn={this.state.loggedIn} user={this.state.userId}/>
         <div id="main">
           <div className="row">
-            <div className="container">
-              <CharityProfile charity={Id} user={this.state.userId}/>
-            </div>
+            <CharityProfile charity={Id} user={this.state.userId}/>
           </div>
           <div className="row">
             <div className="col-sm-4 col-sm-push-6 col-sm-offset-1">

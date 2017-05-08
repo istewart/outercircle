@@ -88,13 +88,9 @@ post-title a>p{
   color: #8899a6;
 }
 
-.headerIMGContainer {
-  padding: 10px;
-  margin: auto;
+.header-img-container {
   height: 250px;
-  display: block;
-  overflow: hidden;
-  position: relative;
+  width: 100%;
   z-index:-100;
 }
 
@@ -131,7 +127,7 @@ post-title a>p{
 .donor-header {
   display: flex;
   justify-content: space-between;
-  margin-top: -100px;
+  margin-top: -125px;
   width:80%;
   margin-left: auto;
   margin-right: auto;
@@ -169,7 +165,7 @@ post-title a>p{
 }
 
 .charity-title {
-  margin-top: -100px;
+  margin-top: -125px;
   padding-top: 0;
   width:70%;
   padding-bottom: 0;
