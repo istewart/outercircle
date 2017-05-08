@@ -40,15 +40,6 @@ body {
   z-index: 99999;
 }
 
-#logo {
-  display: block;
-  background-color: green;
-  height: 34px;
-  width: 34px;
-  margin-right: 16px;
-  border-radius: 3px;
-}
-
 #user-menu {
   margin-left: 16px;
 }
@@ -58,7 +49,6 @@ body {
   padding-top: 78px;
   float: none;
 }
-
 
 .post-header {
   display: flex;

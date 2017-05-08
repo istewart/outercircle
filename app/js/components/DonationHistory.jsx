@@ -27,19 +27,19 @@ export default class DonationHistory extends React.Component {
   }
 
   render() {
-    var renderedDonations; // todo: add categories back
+    var renderedDonations;
     if (this.state.donations.length) {
       renderedDonations = this.state.donations.map((donation) =>
         <tr>
           <td>{donation.name}</td>
           <td>{"$" + donation.amount + ".00"}</td>
+          <td>{donation.category}</td>
           <td>{new Date(donation.time).toLocaleDateString()}</td>
         </tr>
       ); // TODO: this is a hack on amount
     } else {
       renderedDonations = [<tr><td>Record a donation to see something here!</td></tr>];
     }
-    
 
     return (
       <div>
@@ -50,6 +50,7 @@ export default class DonationHistory extends React.Component {
               <tr>
                 <th>Charity</th>
                 <th>Amount</th>
+                <th>Category</th>
                 <th>Date</th>
               </tr>
             </thead>
