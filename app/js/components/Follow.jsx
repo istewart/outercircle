@@ -21,33 +21,55 @@ function UnfollowButton(props){
 export default class Follow extends React.Component {
   constructor(props) {
     super(props);
-    this.checkFollow();
     this.state = {
       isFollow : this.props.isFollow,
       isLogin : this.props.isLogin,
-      useId: -1,
     };
+    this.checkFollow();
     this.handleFollow = this.handleFollow.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
   checkFollow(){
-    const  follow = this;
-      $.get('/checkFollow', function(data, status) {
-          if (status === 'success') {
-              if(data === 'true') {
-                  follow.setState({isFollow: true});
+    const follow = this;
+    console.log(follow.props.user);
+      if(follow.props.truetext==="Followed") {
+          const data= {
+              user: follow.props.user,
+              charity: follow.props.id,
+          };
+          $.get('/checkFollow',data, function (data, status) {
+              if (status === 'success') {
+                  if (data === 'true') {
+                      follow.setState({isFollow: true});
+                  } else {
+                      follow.setState({isFollow: false});
+                  }
               } else {
-                  follow.setState({isFollow: false});
+                  // todo error handling
               }
-          } else {
-              // todo error handling
-          }
-      });
+          });
+      } else{
+          const data = {
+              user: follow.props.user,
+              donor: follow.props.id,
+          };
+          $.get('/checkConnect',data, function (data, status) {
+              if (status === 'success') {
+                  if (data === 'true') {
+                      follow.setState({isFollow: true});
+                  } else {
+                      follow.setState({isFollow: false});
+                  }
+              } else {
+                  // todo error handling
+              }
+          });
+      }
   }
 
   handleFollow(){
-    const  follow = this;
+    const follow = this;
     follow.setState({isFollow: true});
     if(follow.props.truetext==="Followed"){
         const data= {

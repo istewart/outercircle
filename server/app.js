@@ -102,8 +102,24 @@ app.get('/searchData', function(request, response) {
 // check whether a user has followed a certain user or charity
 app.get('/checkFollow', isLoggedIn, function(request, response) {
     //console.log('- Request received /checkFollow:');
-    var sql = 'SELECT charity, donor FROM following WHERE charity = ? AND donor = ?';
-    db.query(sql, [1,1],function(error, result) {
+    var sql = 'SELECT donor, charity FROM following WHERE donor = ? AND charity = ?';
+    db.query(sql, [request.query.user,request.query.charity],function(error, result) {
+        if (error) {
+            console.log("Check follow error: "+error)
+        } else {
+            if(result.rows.length === 0) {
+                response.json('false');
+            } else {
+                response.json('true');
+            }
+        }
+    });
+});
+
+app.get('/checkConnect', isLoggedIn, function(request, response) {
+    //console.log('- Request received /checkFollow:');
+    var sql = 'SELECT user, donor FROM connection WHERE user = ? AND donor = ?';
+    db.query(sql, [request.query.user,request.query.donor],function(error, result) {
         if (error) {
             console.log("Check follow error: "+error)
         } else {

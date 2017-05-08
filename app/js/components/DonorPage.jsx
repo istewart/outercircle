@@ -11,7 +11,7 @@ import SuggestDonor from './SuggestDonor.jsx';
 export default class DonorPage extends React.Component {
   constructor(props) {
     super(props);
-      this.donor = this.props.match.params.id;
+      this.donor = parseInt(this.props.match.params.id);
       this.state = {
         loggedIn: true
       };
