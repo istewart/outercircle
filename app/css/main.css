@@ -150,6 +150,8 @@ post-title a>p{
 
 .donor-thumbnail {
     margin-right: 10px;
+    height: 34px;
+    width: 34px;
 }
 
 .btn-margin{
