@@ -37,7 +37,7 @@ export default class Home extends React.Component {
     } else {
       return (
         <div>
-          <Navbar/>
+          <Navbar loggedIn={this.state.loggedIn} user={this.state.userId}/>
           <div id="main" className="center-block">
               <div className="col-md-4 col-sm-4 col-sm-push-7">
                   <SuggestDonor user={this.state.userId}/>
