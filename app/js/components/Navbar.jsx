@@ -98,7 +98,7 @@ export default class Navbar extends React.Component {
     return (
       <div id="navbar">
         <Link to="/">
-          <div id="logo"></div>
+            <img src={window.location.origin + "/logo_green.png"} className="img-rounded profile-thumbnail"/>
         </Link>
         {logoutRedirect}
         <input id="search"
