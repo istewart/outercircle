@@ -11,12 +11,16 @@ export default class DonorProfile extends React.Component {
         this.state = {};
         this.changeItem = this.changeItem.bind(this);
         this.fetchData = this.fetchData.bind(this);
-        this.fetchData();
-
+        this.fetchData(this.props.donor);
     }
 
-    fetchData() {
-        $.get('/donor/' + this.props.donor + '/data', function(data, status) {
+    // update state whenever we receive new props
+    componentWillReceiveProps(nextProps) {
+        this.fetchData(nextProps.donor);
+    }
+
+    fetchData(donor) {
+        $.get('/donor/' + donor + '/data', function(data, status) {
           if (status === 'success') {
             // we succesfully retrieved some data so update state
             this.setState({
