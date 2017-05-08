@@ -37,13 +37,13 @@ export default class CharityPage extends React.Component {
         <div id="main">
           <div className="row">
             <div className="container">
-              <CharityProfile id={this.id} user={this.state.userId}/>
+              <CharityProfile charity={this.id} user={this.state.userId}/>
             </div>
           </div>
           <div className="row">
             <div className="col-sm-4 col-sm-push-6 col-sm-offset-1">
               <Stats/>
-              <SuggestCharity id={this.id} user={this.state.userId}/>
+              <SuggestCharity charity={this.id} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
               <Feed/>
