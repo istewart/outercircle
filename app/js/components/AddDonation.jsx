@@ -7,27 +7,7 @@ export default class AddDonation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) { // TODO: security, xss, rendering, errors
-    event.preventDefault();
 
-    const data = {
-      donor: this.props.userId,
-      charity: 1, // todo
-      category: $('#category').val(),
-      amount: $('#amount').val(),
-    };
-
-    // const feed = this;
-
-    $.post('/donate', data, function(data, status) {
-      $('#name').val('');
-      $('#category').val('');
-      $('#amount').val('');
-      // feed.setState({
-      //   posts: [data].concat(feed.state.posts),
-      // });
-    });
-  }
   
   render() {
     return (

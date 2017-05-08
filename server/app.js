@@ -43,13 +43,14 @@ var db = anyDB.createPool( // TODO: need to transition to postgres
 app.post('/post', function(request, response) {
   console.log('- Request received /post');
   
-  const donor = request.body.donor;
-  const body = request.body.body;
+  const Donor = request.body.donor;
+  const Charity = request.body.charity;
+  const Body = request.body.body;
   const time = new Date().getTime();
 
-  let sql = 'INSERT INTO post (donor, body, time) \
+  let sql = 'INSERT INTO post (donor, charity, body, time) \
             VALUES (?, ?, ?)';
-  db.query(sql, [donor, body, time], function(error, result) {
+  db.query(sql, [Donor,Charity, Body, time], function(error, result) {
     const id = result.lastInsertId; // todo unused
 
     // TODO: error handling and security and auth and xss and csrf
@@ -59,8 +60,8 @@ app.post('/post', function(request, response) {
         id: id,
         name: result.rows[0].name,
         profile_image: result.rows[0].profile_image,
-        donor: donor,
-        body: body,
+        donor: Donor,
+        body: Body,
         time: time,
       });
     });
@@ -254,28 +255,27 @@ app.get('/donor/:id/stats', function(request, response) {
 app.post('/donate', function(request, response) {
   console.log('- Request received /donate');
   
-  const donor = request.body.donor;
-  const charity = request.body.charity;
-  const category = request.body.category; // todo this should be in charity
-  const amount = request.body.amount; // todo non negative
+  const Donor = request.body.donor;
+  const Charity = request.body.charity;
+  const Category = request.body.category; // todo this should be in charity
+  const Amount = request.body.amount; // todo non negative
   const time = new Date().getTime();
 
   var sql = 'INSERT INTO donation (donor, charity, category, amount, time) \
             VALUES (?, ?, ?, ?, ?)';
-  db.query(sql, [donor, charity, category, amount, time], function(error, result) {
+  db.query(sql, [Donor, Charity, Category, Amount, time], function(error, result) {
     const id = result.lastInsertId; // todo unused
-    response.sendStatus(200);
-    // // TODO: error handling and security and auth and xss and csrf
-    // sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    // db.query(sql, [donor], function(error, result) {
-    //   response.json({
-    //     name: result.rows[0].name,
-    //     profile_image: result.rows[0].profile_image,
-    //     donor: donor,
-    //     body: body,
-    //     time: time,
-    //   });
-    // });
+    // response.sendStatus(200);
+    // TODO: error handling and security and auth and xss and csrf
+    sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
+    db.query(sql, [Donor], function(error, result) {
+      response.json({
+        name: result.rows[0].name,
+        amount:Amount,
+        category: Category,
+        time: time,
+      });
+    });
   });
 });
 
@@ -515,15 +515,16 @@ app.post('/signup', function(request, response) {
     // User doesn't exist so can continue with signup
     if (result.rows.length === 0) {
       var passwd = createHash(password);
-      sql = 'INSERT INTO donor (email, name, password) VALUES (?, ?, ?)';
+      sql = 'INSERT INTO donor (email, name, password, description, profile_image, cover_image) VALUES (?, ?, ?, ?, ?, ?)';
       db.query(sql,
-          [username, firstname + " " + lastname, passwd],
+          [username, firstname + " " + lastname, passwd, "Update profile to give a donor description", "default_profile.jpg", "beach.jpg"],
           function(error, result) {
             console.log('Inserted donor: ' + username + ", With password hash: " + passwd);
             console.log('Name: ' + firstname + " " + lastname);
             response.send({signup: "success"});
           });
     }
+
     // User exists so need to let user know
     else {
       response.send({signup: "failure"});

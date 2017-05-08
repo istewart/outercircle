@@ -34,7 +34,7 @@ export default class CharityPage extends React.Component {
 
     return (
       <div>
-        <Navbar/>
+        <Navbar loggedIn={this.state.loggedIn} user={this.state.userId}/>
         <div id="main">
           <div className="row">
             <div className="container">
