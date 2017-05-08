@@ -31,6 +31,24 @@ export default class DonorPage extends React.Component {
     }.bind(this));
   }
 
+  handleSubmit(event) { // TODO: security, xss, rendering, errors
+        event.preventDefault();
+        const data = {
+            donor: this.state.userId,
+            charity: 1, // todo
+            category: $('#category').val(),
+            amount: $('#amount').val(),
+        };
+
+        $.post('/donate', data, function(data, status) {
+            $('#name').val('');
+            $('#category').val('');
+            $('#amount').val('');
+        });
+
+
+  }
+
   render() {
     const Id = parseInt(this.props.match.params.id);
 
@@ -43,7 +61,7 @@ export default class DonorPage extends React.Component {
 
     return (
       <div>
-        <Navbar/>
+        <Navbar loggedIn={this.state.loggedIn} user={this.state.userId}/>
         <div id="main">
           <div className="row">
             <div className="container">
