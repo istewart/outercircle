@@ -1,4 +1,6 @@
+// use strict compiling
 "use strict";
+
 var express = require('express');
 var anyDB = require('any-db'); // TODO:
 var bodyParser = require('body-parser');
@@ -28,10 +30,6 @@ app.use(bodyParser.urlencoded({
 app.use(expressSession({secret: 'Thisisasecretshhhh'}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-
 
 // set up a connection pool
 var db = anyDB.createPool( // TODO: need to transition to postgres
@@ -230,26 +228,30 @@ app.get('/donor/:id/stats', function(request, response) {
 
   const requester = 'todo';
   const donor = request.params.id;
-  var sql = 'SELECT category, SUM(amount) AS amount '
-    + 'FROM donation '
-    + 'WHERE donor = ? GROUP BY category ORDER BY category;';
+  var sql = 'SELECT c.category, SUM(d.amount) AS amount '
+    + 'FROM donation AS d JOIN charity AS c ON d.charity = c.id '
+    + 'WHERE d.donor = ? GROUP BY c.category ORDER BY c.category;';
   db.query(sql, [donor], function(error, result) {
-      if(result !== undefined) {
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
-          // todo errors, also auth
-        } else {
-          // return the requested donation information
-          const labels = result.rows.map((row) => row.category);
-          const data = result.rows.map((row) => row.amount);
+    if (result !== undefined) {
+      if (!result.rowCount) { // TODO: errors, which posts, sorting
+        // todo errors, also auth
+      } else {
+        // return the requested donation information
+        const labels = result.rows.map((row) => row.category);
+        const data = result.rows.map((row) => row.amount);
 
-          response.json({
-            labels: labels,
-            data: data,
-          });
-        }
-      } else{
-         console.log("fetch donor stats failed!")
+        response.json({
+          labels: labels,
+          data: data,
+        });
       }
+    } else {
+      console.log("fetch donor stats failed!");
+      response.json({
+        labels: [],
+        data: [],
+      })
+    }
   });
 });
 
@@ -292,7 +294,7 @@ app.get('/donations/:id', function(request, response) {
   const donor = request.params.id;
   const charity = 'todo';
 
-  var sql = 'SELECT c.name, d.amount, d.time '
+  var sql = 'SELECT c.name, d.amount, d.time, c.category '
     + 'FROM donation AS d JOIN charity AS c '
     + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = \'true\' '
     + 'ORDER BY time DESC;';
@@ -668,22 +670,27 @@ function init(callback) {
     website TEXT, \
     description TEXT, \
     cover_image TEXT, \
-    profile_image TEXT \
+    profile_image TEXT, \
+    category TEXT \
   );';
 
   db.query(sql, function(error, result) {
     console.log('Initialized charity table.');
-      db.query('INSERT INTO charity '
-          + '(name, website, description, cover_image, profile_image) '
-          + 'VALUES (?, ?, ?, ?, ?) ',
-          ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
-              'beach.jpg','profile2.jpg'],
-          function(error, result) {
+    db.query('INSERT INTO charity '
+        + '(name, website, description, cover_image, profile_image, category) '
+        + 'VALUES (?, ?, ?, ?, ?, ?) ',
+        ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
+            'beach.jpg','profile2.jpg', 'Health'],
+        function(error, result) {
+            if (error) {
+              console.log('error in sample charity: ' + error);
+            } else {
               console.log('sample charity');
-      });
+            }
+    });
   });
 
-   sql = 'CREATE TABLE IF NOT EXISTS following ( \
+  sql = 'CREATE TABLE IF NOT EXISTS following ( \
     donor INTEGER, \
     charity INTEGER, \
     PRIMARY KEY (donor, charity) \
@@ -747,31 +754,6 @@ function init(callback) {
     console.log('Initialized donation table.');
   });
 
-
-  // sql = 'CREATE TABLE user ( \
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT, \
-  //   username TEXT, \
-  //   password TEXT, \
-  //   firstname TEXT, \
-  //   lastname TEXT \
-  // );'
-
-  // db.query(sql, function(error, result) {
-  //   console.log('Initialized user table.');
-  // });
-
-  /*
-  db.query('INSERT INTO user '
-          + '(username, password, email) '
-          + 'VALUES (?, ?, ?)',
-          ['Doge', 'suchsecure', 'doggo@pupper.com'],
-          function(error, result) {
-              console.log('Insert Test User');
-      });
-  */
-
-
-
-  // wait a second for things to finish then start the server
-  setTimeout(callback, 1000);
+  // wait a few seconds for things to finish then start the server
+  setTimeout(callback, 3000);
 }
