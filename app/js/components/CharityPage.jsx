@@ -19,17 +19,15 @@ export default class CharityPage extends React.Component {
       $.post('/loggedIn', "", function(data, status) {
           if (status === 'success' && data.isAuth === "authorized") {
               this.setState({loggedIn: true,userId:data.userId});
-              console.log('logged in, user id is '+ data.userId);
-          } else {
+          }
+          else {
               this.setState({loggedIn: false});
-              console.log('not logged in');
           }
       }.bind(this));
   }
 
   render(){
     const Id = parseInt(this.props.match.params.id);
-    console.log("Charity id: "+Id);
 
     return (
       <div>

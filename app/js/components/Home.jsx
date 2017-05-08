@@ -21,11 +21,9 @@ export default class Home extends React.Component {
     $.post('/loggedIn', "", function(data, status) {
         if (status === 'success' && data.isAuth === "authorized") {
             this.setState({loggedIn: true, userId:data.userId});
-            console.log('logged in, user id is '+data.userId);
         }
         else {
             this.setState({loggedIn: false});
-            console.log('not logged in');
         }
     }.bind(this));
   }
