@@ -14,7 +14,7 @@ export default class SearchItem extends React.Component {
                         <Link to={'/donor/' + this.props.data.id}>
                             <img
                                 src={window.location.origin + "/" + this.props.data.profile}
-                                className="img-rounded donor-thumbnail" alt="profile image"
+                                className="img-rounded search-result-thumbnail" alt="profile image"
                             />
                         </Link>
                         <div className="post-title">
