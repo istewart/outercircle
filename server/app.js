@@ -49,19 +49,24 @@ app.post('/post', function(request, response) {
   let sql = 'INSERT INTO post (donor, charity, body, time) \
             VALUES (?, ?, ?)';
   db.query(sql, [Donor,Charity, Body, time], function(error, result) {
-    const id = result.lastInsertId; // todo unused
+    // const id = result.lastInsertId; // todo unused
 
     // TODO: error handling and security and auth and xss and csrf
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [donor], function(error, result) {
-      response.json({
-        id: id,
-        name: result.rows[0].name,
-        profile_image: result.rows[0].profile_image,
-        donor: Donor,
-        body: Body,
-        time: time,
-      });
+    db.query(sql, [Donor], function(error, result) {
+        if(result.rows.length !== 0) {
+            response.json({
+                id: result.rows[0].id,
+                name: result.rows[0].name,
+                profile_image: result.rows[0].profile_image,
+                donor: Donor,
+                body: Body,
+                time: time,
+            });
+        }
+        else {
+            response.json([]);
+        }
     });
   });
 });
