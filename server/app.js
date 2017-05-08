@@ -628,9 +628,23 @@ function init(callback) {
     console.log('Initialized donor table.');
       db.query(' INSERT INTO donor '
           + '(name, email, password, description, profile_image, cover_image) '
-          + 'VALUES (?, ?, ?, ?, ?, ?) ',
-          ['Ian Stewart', 'ian_stewart@brown.edu', 'pass', 'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.',
-              'profile.jpg', 'beach.jpg'],
+          + 'VALUES (?, ?, ?, ?, ?, ?),'
+          + '(?, ?, ?, ?, ?, ?), '
+          + '(?, ?, ?, ?, ?, ?), '
+          + '(?, ?, ?, ?, ?, ?), '
+          + '(?, ?, ?, ?, ?, ?) ',
+          [
+          'Ian Stewart', 'ian_stewart@brown.edu', 'pass',
+          'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
+          'David Branse', 'david_branse@brown.edu', 'pass',
+          'To give away money is an easy matter and in any man\'s power. But to decide to whom to give it and how large and when, and for what purpose and how, is neither in every man\'s power nor an easy matter.', 'profileD.png', 'beach.jpg',
+          'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass',
+          'Nothing brings me more happiness than trying to help the most vulnerable people in society. It is a goal and an essential part of my life - a kind of destiny.', 'profileS.png', 'beach.jpg',
+          'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass',
+          'It is one of the most beautiful compensations of this life that no man can sincerely try to help another without helping himself… Serve and thou shall be served.', 'profileZ.jpg', 'beach.jpg',
+          'Xuenan Li', 'xuenan_li@brown.edu', 'pass',
+          'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'beach.jpg'
+          ],
           function(error, result) {
               console.log('sample donor');
       });

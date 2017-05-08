@@ -35,11 +35,11 @@ export default class SearchPage extends React.Component{
 
     render(){
         const renderedDonor = this.state.donor.map((item) =>
-            <SearchItem data={item}/>
+            <SearchItem data={item} key={item.id}/>
         );
 
         const renderedCharity = this.state.charity.map((item) =>
-            <SearchItem data={item}/>
+            <SearchItem data={item} key={item.id}/>
         );
 
         return (
