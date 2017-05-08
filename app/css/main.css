@@ -360,3 +360,7 @@ span.psw {
     margin-left: 20px;
     float: left;
 }
+
+.friendsButton {
+    align-items: right;
+}

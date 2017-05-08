@@ -2,6 +2,7 @@ import React from 'react';
 
 import ImageHeader from './ImageHeader.jsx';
 import EditProfile from './EditProfile.jsx';
+import Follow from './Follow.jsx';
 
 
 export default class DonorProfile extends React.Component {
@@ -55,7 +56,7 @@ export default class DonorProfile extends React.Component {
                         {edit}
                         <div className="panel-body" id="donor-profile">
 
-                            <h2>{this.state.name}</h2>
+                            <h2>{this.state.name}<span><Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/></span></h2>
                             <p>{this.state.description}</p>
                             <p className="donor-toolbar">
                                 <span className="glyphicon glyphicon-user"></span>

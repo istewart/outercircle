@@ -46,7 +46,7 @@ export default class DonorPage extends React.Component {
         <div id="main">
           <div className="row">
             <div className="container">
-              <DonorProfile donor={this.donor} id={this.state.userId}/>
+              <DonorProfile donor={this.donor} user={this.state.userId}/>
             </div>
           </div>
           <div className="row">
