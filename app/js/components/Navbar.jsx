@@ -10,30 +10,24 @@ export default class Navbar extends React.Component {
         this.state = {
             items: [],
             keyWord:'',
+            user: this.props.user,
             loggedIn: this.props.loggedIn,
             logout: false
         }
         this._logout = this._logout.bind(this);
         // this.getData();
     }
-    _checkLogin() {
-        $.post('/loggedIn', "", function(data, status) {
-            if (status === 'success' && data.isAuth === "authorized") {
-                this.setState({loggedIn: true});
-                console.log('logged in');
-            }
-            else {
-                this.setState({loggedIn: false});
-                console.log('not logged in');
-            }
-        }.bind(this))
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({user:nextProps.user,loggedIn:nextProps.loggedIn});
     }
+
     _logout() {
         const navbar = this;
         $.post('/logout', "", function(data, status) {
             if (status === 'success') {
                 console.log('logged out');
-                navbar.setState({loggedIn: false, logout: true});
+                navbar.setState({loggedIn: false, logout: true, userId:0});
             }
         })
     }
@@ -65,10 +59,9 @@ export default class Navbar extends React.Component {
         }
     }
 
-    componentWillMount() {
-        this._checkLogin();
-        this.setState({items: []});
-    }
+    // componentWillMount() {
+    //     this.setState({items: []});
+    // }
 
     render() {
     var loginButton = "";
@@ -99,7 +92,7 @@ export default class Navbar extends React.Component {
           onChange={this.filterList.bind(this)}
         />
         {showAllSearch}
-        <Link to="/">
+        <Link to={"/donor/"+this.state.user}>
           <img src={window.location.origin + "/profile.jpg"} className="img-rounded donor-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
         {loginButton}

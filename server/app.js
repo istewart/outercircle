@@ -43,13 +43,14 @@ var db = anyDB.createPool( // TODO: need to transition to postgres
 app.post('/post', function(request, response) {
   console.log('- Request received /post');
   
-  const donor = request.body.donor;
-  const body = request.body.body;
+  const Donor = request.body.donor;
+  const Charity = request.body.charity;
+  const Body = request.body.body;
   const time = new Date().getTime();
 
-  let sql = 'INSERT INTO post (donor, body, time) \
+  let sql = 'INSERT INTO post (donor, charity, body, time) \
             VALUES (?, ?, ?)';
-  db.query(sql, [donor, body, time], function(error, result) {
+  db.query(sql, [Donor,Charity, Body, time], function(error, result) {
     const id = result.lastInsertId; // todo unused
 
     // TODO: error handling and security and auth and xss and csrf
@@ -59,8 +60,8 @@ app.post('/post', function(request, response) {
         id: id,
         name: result.rows[0].name,
         profile_image: result.rows[0].profile_image,
-        donor: donor,
-        body: body,
+        donor: Donor,
+        body: Body,
         time: time,
       });
     });
@@ -264,18 +265,17 @@ app.post('/donate', function(request, response) {
             VALUES (?, ?, ?, ?, ?)';
   db.query(sql, [donor, charity, amount, time, isPublic], function(error, result) {
     const id = result.lastInsertId; // todo unused
-    response.sendStatus(200);
-    // // TODO: error handling and security and auth and xss and csrf
-    // sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    // db.query(sql, [donor], function(error, result) {
-    //   response.json({
-    //     name: result.rows[0].name,
-    //     profile_image: result.rows[0].profile_image,
-    //     donor: donor,
-    //     body: body,
-    //     time: time,
-    //   });
-    // });
+    // response.sendStatus(200);
+    // TODO: error handling and security and auth and xss and csrf
+    sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
+    db.query(sql, [Donor], function(error, result) {
+      response.json({
+        name: result.rows[0].name,
+        amount:Amount,
+        category: Category,
+        time: time,
+      });
+    });
   });
 });
 
@@ -521,15 +521,16 @@ app.post('/signup', function(request, response) {
     // User doesn't exist so can continue with signup
     if (result.rows.length === 0) {
       var passwd = createHash(password);
-      sql = 'INSERT INTO donor (email, name, password) VALUES (?, ?, ?)';
+      sql = 'INSERT INTO donor (email, name, password, description, profile_image, cover_image) VALUES (?, ?, ?, ?, ?, ?)';
       db.query(sql,
-          [username, firstname + " " + lastname, passwd],
+          [username, firstname + " " + lastname, passwd, "Update profile to give a donor description", "default_profile.jpg", "beach.jpg"],
           function(error, result) {
             console.log('Inserted donor: ' + username + ", With password hash: " + passwd);
             console.log('Name: ' + firstname + " " + lastname);
             response.send({signup: "success"});
           });
     }
+
     // User exists so need to let user know
     else {
       response.send({signup: "failure"});
@@ -634,9 +635,23 @@ function init(callback) {
     console.log('Initialized donor table.');
       db.query(' INSERT INTO donor '
           + '(name, email, password, description, profile_image, cover_image) '
-          + 'VALUES (?, ?, ?, ?, ?, ?) ',
-          ['Ian Stewart', 'ian_stewart@brown.edu', 'pass', 'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.',
-              'profile.jpg', 'beach.jpg'],
+          + 'VALUES (?, ?, ?, ?, ?, ?),'
+          + '(?, ?, ?, ?, ?, ?), '
+          + '(?, ?, ?, ?, ?, ?), '
+          + '(?, ?, ?, ?, ?, ?), '
+          + '(?, ?, ?, ?, ?, ?) ',
+          [
+          'Ian Stewart', 'ian_stewart@brown.edu', 'pass',
+          'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
+          'David Branse', 'david_branse@brown.edu', 'pass',
+          'To give away money is an easy matter and in any man\'s power. But to decide to whom to give it and how large and when, and for what purpose and how, is neither in every man\'s power nor an easy matter.', 'profileD.png', 'beach.jpg',
+          'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass',
+          'Nothing brings me more happiness than trying to help the most vulnerable people in society. It is a goal and an essential part of my life - a kind of destiny.', 'profileS.png', 'beach.jpg',
+          'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass',
+          'It is one of the most beautiful compensations of this life that no man can sincerely try to help another without helping himself… Serve and thou shall be served.', 'profileZ.jpg', 'beach.jpg',
+          'Xuenan Li', 'xuenan_li@brown.edu', 'pass',
+          'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'beach.jpg'
+          ],
           function(error, result) {
               console.log('sample donor');
       });
