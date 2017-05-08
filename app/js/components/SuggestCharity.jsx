@@ -45,6 +45,6 @@ export default class SuggestCharity extends React.Component {
 }
 
 SuggestCharity.defaultProps = {
-    id: 1,
+    user: 0,
     charity : 0,
 };

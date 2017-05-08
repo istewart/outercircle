@@ -13,7 +13,6 @@ export default class DonorPage extends React.Component {
     super(props);
       this.state = {
         loggedIn: true,
-        userId: 0,
       };
 
     this.checkLogin();
