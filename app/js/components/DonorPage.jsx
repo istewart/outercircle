@@ -62,7 +62,7 @@ export default class DonorPage extends React.Component {
         <Navbar loggedIn={this.state.loggedIn} user={this.state.userId}/>
         <div id="main">
           <div className="row">
-            <div className="container">
+            <div className="col-sm-12">
               <DonorProfile donor={Id} user={this.state.userId}/>
             </div>
           </div>
