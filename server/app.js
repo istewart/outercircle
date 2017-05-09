@@ -797,13 +797,13 @@ function init(callback) {
                     + 'VALUES (?, ?, ?, ?, ?, ?),  (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)',
                     [
                         'Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
-                        'beach.jpg','profile2.jpg', 'Health',
+                        'beach.jpg','charityD.jpg', 'Health',
                         'World Wildlife Fund', 'https://www.worldwildlife.org/', 'The world’s leading conservation organization, WWF works in 100 countries and is supported by more than one million members in the United States and close to five million globally. WWF\'s unique way of working combines global reach with a foundation in science, involves action at every level from local to global, and ensures the delivery of innovative solutions that meet the needs of both people and nature.',
-                        'beach.jpg','profile2.jpg', 'Environment',
+                        'beach.jpg','charityW.jpg', 'Environment',
                         'American Civil Liberties Union Foundation', 'https://www.aclu.org/', 'For almost 100 years, the ACLU has worked to defend and preserve the individual rights and liberties guaranteed by the Constitution and laws of the United States.',
-                        'beach.jpg','profile2.jpg', 'Human',
+                        'beach.jpg','charityL.jpg', 'Human',
                         'Step Up For Students', 'https://www.stepupforstudents.org/', 'Step Up For Students empowers parents to pursue and engage in the most appropriate learning options for their children, with an emphasis on families who lack the financial resources to access these options. By pursuing this mission, we help public education fulfill the promise of equal opportunity.',
-                        'beach.jpg','profile2.jpg', 'Education'
+                        'beach.jpg','charityS.jpg', 'Education'
                     ],
                     function(error, result) {
                         if (error) {
