@@ -43,7 +43,7 @@ export default class EditProfile extends React.Component {
 		
 		return (
 			<div>
-				<button id="editProfile" className="btn btn-info pull-right" onClick={this._buttonClick.bind(this)}>Edit Profile</button>
+				<button id="editProfile" className="btn btn-info" onClick={this._buttonClick.bind(this)}>Edit Profile</button>
 				<div className={style}>
 					<form className="modal-content animate">
 					    <div className="form-group form-padding">
