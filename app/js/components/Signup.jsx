@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+var genHash = require('sha256');
+
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -15,8 +17,8 @@ export default class Signup extends React.Component {
       event.preventDefault();
       const data = {
         username: $('#email').val(),
-        password: $('#password').val(),
-        confirmPassword: $('#confirmPassword').val(),
+        password: genHash($('#password').val()),
+        confirmPassword: genHash($('#confirmPassword').val()),
         firstname: $('#firstname').val(),
         lastname: $('#lastname').val()
       };
