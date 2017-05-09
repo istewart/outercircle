@@ -200,14 +200,14 @@ post-title a>p{
 }
 
 /* Center the image and position the close button */
-.imgcontainer {
+.img-container {
     text-align: center;
     margin: 24px 0 12px 0;
     position: relative;
 }
 
 img.avatar {
-    width: 40%;
+    width: 60%;
     border-radius: 50%;
 }
 

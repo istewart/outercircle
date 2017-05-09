@@ -43,9 +43,9 @@ export default class LoginPage extends React.Component {
     else {
       return (
         <div className="row">
-          <div className="col-md-6 col-md-offset-3">
+          <div className="col-md-4 col-md-offset-4">
             <form onSubmit={this._handleLogin.bind(this)}>
-              <div className="imgcontainer">
+              <div className="img-container">
                 <img src={window.location.origin + "/" + this.state.imgsrc} alt="Avatar" className="avatar" />
               </div>
               {alert}
@@ -75,24 +75,12 @@ export default class LoginPage extends React.Component {
                 <button className="btn btn-primary" type="submit">
                   Login
                 </button>
-                <div className="checkbox">
-                  <label>
-                    <input type="checkbox" defaultChecked={false}/>
-                    Remember Me
-                  </label>
-                </div>
-              </div>
-              <div className="form-group space-between">
                 <p>
-                  Forgot <a href="#">password</a>?
-                </p>
-                <p>
-                  Or <a 
+                  Need an account? Sign up <a 
                     href={window.location.origin + "/signup"}
-                    className="btn btn-primary"
                   >
-                    Sign Up
-                  </a>
+                    here
+                  </a>!
                 </p>
               </div>
             </form>
