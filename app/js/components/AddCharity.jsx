@@ -14,6 +14,7 @@ export default class AddCharity extends React.Component {
       event.preventDefault();
       const data = {
         name: $('#name').val(),
+        category: $('#category').val(),
         website: $('#website').val(),
         description: $('#description').val(),
       };
@@ -48,43 +49,39 @@ export default class AddCharity extends React.Component {
     var alert = "";
     if (this.state.added === 'success') {
       alert = <div className='alert alert-success'><strong>Completed</strong> Charity has been added</div>;
-    }
-    else if (this.state.added === 'failure') {
+    } else if (this.state.added === 'failure') {
       alert = <div className='alert alert-danger'><strong>Failure</strong> An error has occurred</div>;
     }
+
     if (this.state.unauthorized) {
       return (<Redirect to="/login"/>);
-    }
-    else {
+    } else {
       return(
-      <div>
-        <div className="row">
-          <div className="col-md-7 col-md-offset-1 col-xs-12">
-            <h1 className="signup-header">Add a Charity</h1>
-          </div>
-        </div>
         <div>
+          {alert}
           <form onSubmit={this._handleSubmit.bind(this)}>
-          <br/>
-            {alert}
-            <div className="form-group form-padding">
-              <label><b>Charity Name</b></label>
+            <div className="form-group">
+              <label htmlFor="name">Charity Name:</label>
               <input className="form-control" id="name" type="text" placeholder="Enter Charity Name" name="name" required />
-
-              <label><b>Charity Website</b></label>
+            </div>
+            <div className="form-group">
+              <label htmlFor="category">Charity Category:</label>
+              <input className="form-control" id="category" type="text" placeholder="Enter Charity Category" name="category" required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="website">Charity Website:</label>
               <input className="form-control" id="website" type="text" placeholder="Enter Charity Website" name="website" required />
-
-              <label><b>Charity Description</b></label>
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Charity Description:</label>
               <textarea className="form-control" id="description" placeholder="Enter Description" name="decsription" rows="5"></textarea>
-
-              <div className="form-padding-top">
-                <button className="btn btn-primary" type="submit">Add Charity</button>
-              </div>
+            </div>
+            <div className="form-group">
+              <button className="btn btn-primary" type="submit">Add Charity</button>
             </div>
           </form>
         </div>
-      </div>
-    );
+      );
     }
   }
 }

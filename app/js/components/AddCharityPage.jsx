@@ -9,9 +9,13 @@ export default class AddCharityPage extends React.Component {
   
   render() {
     return (
-      <div>
+      <div id="main">
         <Navbar/>
-        <AddCharity/>
+        <div className="row">
+          <div className="col-sm-6 col-sm-offset-3">
+            <AddCharity/>
+          </div>
+        </div>
       </div>
     );
   }

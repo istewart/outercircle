@@ -455,13 +455,14 @@ app.post('/addCharity', isLoggedIn, function(req, res) {
   console.log('request received to add charity');
   if (req.user.rows[0].email === "admin@outercircle.com") {
     let sql = 'INSERT INTO charity '
-            + '(name, website, description, cover_image, profile_image) '
-            + 'VALUES (?, ?, ?, ?, ?)';
+            + '(name, website, description, cover_image, profile_image, category) '
+            + 'VALUES (?, ?, ?, ?, ?, ?)';
     var name = req.body.name;
     var website = req.body.website;
     var description = req.body.description;
+    var category = req.body.category;
     db.query(sql,
-            [name, website, description, 'beach.jpg','profile2.jpg'],
+            [name, website, description, 'beach.jpg','profile2.jpg', category],
             function(error, result) {
                 console.log('added charity ' + name);
                 res.send({added: 'success'});
