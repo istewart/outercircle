@@ -45,9 +45,6 @@ var uploader = upload()
   .to('img')
 
 app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
-  console.log('/uplodCover request success');
-  console.log("file received");
-  console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
     var time = new Date().getTime();
     time = time + "";
@@ -77,14 +74,10 @@ app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
 },
 function(req, res) {
   onsole.log('/uplodCover request failed');
-  console.log(req);
   res.redirect("/");
 });
 
 app.post('/uploadProfile', uploader.middleware('imagefile'), function(req, res) {
-  console.log('/uplodProfile request success');
-  console.log("file received");
-  console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
     var time = new Date().getTime();
     time = time + "";
@@ -142,7 +135,6 @@ app.post('/post', function(request, response) {
         console.log('post failed with: ' + error);
         response.json({error: error});
       } else {
-        console.log(result);
         response.json({
           id: id,
           name: result.rows[0].name,
@@ -166,6 +158,7 @@ app.get('/searchDataShorted', function(request, response) {
     db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
             console.log("Search error: "+error)
+            response.json([]);
         } else {
             // console.log(result);
             response.json(result.rows);
@@ -182,6 +175,7 @@ app.get('/searchData', function(request, response) {
     db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
             console.log("Search error: "+error)
+            response.json([]);
         } else {
             response.json(result.rows);
         }
@@ -195,6 +189,7 @@ app.get('/checkFollow', isLoggedIn, function(request, response) {
     db.query(sql, [request.query.user,request.query.charity],function(error, result) {
         if (error) {
             console.log("Check follow error: "+error)
+            response.json([]);
         } else {
             if(result.rows.length === 0) {
                 response.json('false');
@@ -211,6 +206,7 @@ app.get('/checkConnect', isLoggedIn, function(request, response) {
     db.query(sql, [request.query.user,request.query.donor],function(error, result) {
         if (error) {
             console.log("Check follow error: "+error)
+            response.json([]);
         } else {
             if(result.rows.length === 0) {
                 response.json('false');
@@ -237,6 +233,7 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
       if(result !== undefined) {
           if (!result.rowCount) { // TODO: errors, which posts, sorting
               // todo errors, also auth
+              response.json([]);
           } else {
               // return the requested posts
               response.json(result.rows);
@@ -302,6 +299,7 @@ app.get('/donor/:id/data', function(request, response) {
       if(result !== undefined) {
         if (!result.rowCount === 1) { // TODO: errors, which posts, sorting
           // todo errors, also auth
+          response.json([]);
         } else {
           // return the requested donor information
           response.json(result.rows[0]);
@@ -468,8 +466,10 @@ app.post('/follow', function(request, response) {
   db.query(sql, [donor, charity], function(error, result) {
     if (error) {
       console.log(error);
+      response.json([]);
     } else {
       console.log("(donor " + donor + ", charity " + charity + ") was added successfully");
+      response.json([]);
     }
   });
 });
@@ -485,8 +485,10 @@ app.post('/connect', function(request, response) {
     db.query(sql, [user, donor], function(error, result) {
         if (error) {
             console.log(error);
+            response.json([]);
         } else {
             console.log("(user " + user + ", donor " + donor + ") was added successfully");
+            response.json([]);
         }
     });
 });
@@ -501,8 +503,10 @@ app.post('/unfollow', function(request, response) {
     db.query(sql, [donor, charity], function(error, result) {
         if (error) {
             console.log(error);
+            response.json([]);
         } else {
             console.log("(donor " + donor + ", charity " + charity + ") was deleted successfully");
+            response.json([]);
         }
     });
 });
@@ -517,8 +521,10 @@ app.post('/unconnect', function(request, response) {
     db.query(sql, [user, donor], function(error, result) {
         if (error) {
             console.log(error);
+            response.json([]);
         } else {
             console.log("(user " + user + ", donor " + donor + ") was deleted successfully");
+            response.json([]);
         }
     });
 });
@@ -534,8 +540,10 @@ app.post('/editProfile', function(request, response) {
   db.query(sql, [name, description, donor], function(error, result) {
     if (error) {
       console.log(error);
+      response.json([]);
     } else {
       console.log("donor " + donor + " updated their name to " + name + " and description to " + description);
+      response.json([]);
     }
   });
   response.end();
@@ -733,6 +741,7 @@ function init(callback) {
     description TEXT, \
     profile_image TEXT, \
     cover_image TEXT \
+    PRIMARY KEY (email) \
   );';
 
   db.query(sql, function(error, result) {
@@ -769,6 +778,7 @@ function init(callback) {
     cover_image TEXT, \
     profile_image TEXT, \
     category TEXT \
+    PRIMARY KEY (website) \
   );';
 
   db.query(sql, function(error, result) {

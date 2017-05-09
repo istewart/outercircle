@@ -7,6 +7,7 @@ export default class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: this.props.user,
       posts: [],
     };
 
@@ -15,6 +16,7 @@ export default class Feed extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({user:nextProps.user});
     this.fetchPosts(nextProps.type, nextProps.user);
   }
 
@@ -55,7 +57,7 @@ export default class Feed extends React.Component {
 
   handlePost() { // TODO: security, xss, rendering, errors
     const data = {
-      donor: this.props.user,
+      donor: this.state.user,
       charity: this.props.charity,
       body: $('#newPost').val()
     };

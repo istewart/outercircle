@@ -3,6 +3,8 @@ import React from 'react';
 import Home from './Home.jsx';
 import { Redirect } from 'react-router-dom';
 
+var genHash = require('sha256');
+
 export default class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ export default class LoginPage extends React.Component {
 
       const data = {
         username: $('#username').val(),
-        password: $('#password').val()
+        password: genHash($('#password').val())
       };
       
       $.post('/login', data, function(result, status) {
