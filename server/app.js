@@ -45,7 +45,8 @@ var uploader = upload()
   .to('img')
 
 app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
-  fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
+  console.log(req.files.imagefile);
+  fs.readFile(req.files.imagefile.path, function (err, data) {
     var time = new Date().getTime();
     time = time + "";
     var newFileName = createHash(time + req.files.imagefile.name);
@@ -62,10 +63,8 @@ app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
         console.log('Set cover_image of ' + email + ' to ' + filename);
       }
     });
-
-    console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
-      console.log(err);
+      console.log("!!!" + err);
     });
 
   });
@@ -73,12 +72,13 @@ app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
   res.redirect("/");
 },
 function(req, res) {
-  onsole.log('/uplodCover request failed');
+  console.log('/uplodCover request failed');
   res.redirect("/");
 });
 
 app.post('/uploadProfile', uploader.middleware('imagefile'), function(req, res) {
-  fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
+  console.log(req.files.imagefile);
+  fs.readFile(req.files.imagefile.path, function (err, data) {
     var time = new Date().getTime();
     time = time + "";
     var newFileName = createHash(time + req.files.imagefile.name);
@@ -90,13 +90,12 @@ app.post('/uploadProfile', uploader.middleware('imagefile'), function(req, res) 
     var sqldata = [filename, email];
     db.query(sql, sqldata, function(error, result) {
       if (error) {
-        console.log(error);
+        console.log("!!!" + error);
       } else {
         console.log('Set profile_image of ' + email + ' to ' + filename);
       }
     });
 
-    console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
       console.log(err);
     });
