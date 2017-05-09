@@ -47,17 +47,53 @@ var uploader = upload()
 app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
   console.log('/uplodCover request success');
   console.log("file received");
-  console.log(req);
+  console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
     var newPath = __dirname + "/../img/" + req.files.imagefile.name;
     var sql = 'UPDATE donor SET cover_image = ? WHERE email = ?';
+    var email = req.user.rows[0].email;
+    var filename = req.files.imagefile.name + "";
 
-    var data = [req.files.imagefile.name, req.user.rows[0].email];
-    db.query(sql, data, function(error, result) {
+    var sqldata = [filename, email];
+    db.query(sql, sqldata, function(error, result) {
       if (error) {
         console.log(error);
       } else {
-        console.log('Set cover_image of ' + req.user.rows[0].email + ' to ' + req.files.imagefile.name);
+        console.log('Set cover_image of ' + email + ' to ' + filename);
+      }
+    });
+
+    console.log(newPath);
+    fs.writeFile(newPath, data, function (err) {
+      console.log(err);
+    });
+
+  });
+
+  res.redirect("/");
+},
+function(req, res) {
+  onsole.log('/uplodCover request failed');
+  console.log(req);
+  res.redirect("/");
+});
+
+app.post('/uploadProfile', uploader.middleware('imagefile'), function(req, res) {
+  console.log('/uplodProfile request success');
+  console.log("file received");
+  console.log(req.files.imagefile);
+  fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
+    var newPath = __dirname + "/../img/" + req.files.imagefile.name;
+    var sql = 'UPDATE donor SET profile_image = ? WHERE email = ?';
+    var email = req.user.rows[0].email;
+    var filename = req.files.imagefile.name + "";
+
+    var sqldata = [filename, email];
+    db.query(sql, sqldata, function(error, result) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Set cover_image of ' + email + ' to ' + filename);
       }
     });
 

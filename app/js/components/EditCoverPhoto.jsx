@@ -52,14 +52,3 @@ export default class EditCoverPhoto extends React.Component {
 		);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
