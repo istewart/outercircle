@@ -2,6 +2,8 @@ import React from 'react';
 
 import ImageHeader from './ImageHeader.jsx';
 import EditProfile from './EditProfile.jsx';
+import EditCoverPhoto from './EditCoverPhoto.jsx';
+import EditProfilePhoto from './EditProfilePhoto.jsx';
 import Follow from './Follow.jsx';
 
 
@@ -44,10 +46,14 @@ export default class DonorProfile extends React.Component {
 
     render() {
         let edit = <br/>;
+        let coverEdit = "";
+        let profilePhotoEdit = "";
         let connect = <Follow className="friendsButton" isFollow={false} truetext='Connected' falsetext='Connect' id={this.props.donor} user={this.props.user}/>;
         if (this.props.donor === this.props.user) {
             edit = <EditProfile className="pull-right" donor={this.props.donor} name={this.state.name} description={this.state.description} changeItem={this.changeItem}/>;
             connect = <br/>;
+            coverEdit = <EditCoverPhoto/>;
+            profilePhotoEdit = <EditProfilePhoto/>;
         }
 
         return (
@@ -60,7 +66,11 @@ export default class DonorProfile extends React.Component {
                     className="img-thumbnail shadow-box"
                 />
                 <div className="donor-info panel panel-default shadow-box">
-                    {edit}
+                    <div className="space-between">
+                        {profilePhotoEdit}
+                        {coverEdit}
+                        {edit}
+                    </div>
                     <div className="panel-body" id="donor-profile">
                         <h3>{this.state.name}</h3>
                         <p>{this.state.description}</p>

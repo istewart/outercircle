@@ -33,6 +33,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "formidable-upload": "0.0.3",
     "jasmine": "^2.6.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

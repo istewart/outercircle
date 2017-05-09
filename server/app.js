@@ -11,6 +11,8 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var genHash = require('sha256');
+var upload = require('formidable-upload');
+var fs = require('fs');
 
 // serve static files
 app.use(express.static('dist'));
@@ -38,6 +40,44 @@ var db = anyDB.createPool( // TODO: need to transition to postgres
   'sqlite3://outercircle.db', // for prod
   {min: 2, max: 8}
 );
+
+// Configure upload things
+var uploader = upload()
+  .accept(['image/png', 'image/gif', 'image/jpg', 'image/jpeg'])
+  .to('img')
+
+app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
+  console.log('/uplodCover request success');
+  console.log("file received");
+  console.log(req);
+  fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
+    var newPath = __dirname + "/../img/" + req.files.imagefile.name;
+    var sql = 'UPDATE donor SET cover_image = ? WHERE email = ?';
+
+    var data = [req.files.imagefile.name, req.user.rows[0].email];
+    db.query(sql, data, function(error, result) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Set cover_image of ' + req.user.rows[0].email + ' to ' + req.files.imagefile.name);
+      }
+    });
+
+    console.log(newPath);
+    fs.writeFile(newPath, data, function (err) {
+      console.log(err);
+    });
+
+  });
+
+  res.redirect("/");
+},
+function(req, res) {
+  onsole.log('/uplodCover request failed');
+  console.log(req);
+  res.redirect("/");
+})
+
 
 // create a post for a given donor // TODO: security, cookies, auth
 app.post('/post', function(request, response) {
@@ -428,7 +468,7 @@ app.post('/unconnect', function(request, response) {
 
 app.post('/editProfile', function(request, response) {
   console.log('- Request received /editProfile');
-  
+  console.log(request.body);
   const donor = request.body.donor;
   const name = request.body.name;
   const description = request.body.description;
