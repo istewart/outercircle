@@ -47,16 +47,15 @@ Host:
 
 To host OuterCircle on AWS, first launch an AWS EC2 instance using the MEAN Stack by Bitnami and using an SSH key you have access to. Then SSH to that instance using:
 
-    ssh -i path/to/ssh/key.pem bitnami@<public ip>
+    ssh -i path/to/ssh/key.pem bitnami@{public ip}
 
 Next, install OuterCircle using:
 
     git clone https://github.com/istewart/outercircle.git
     cd outercircle
-    chmod 700 run.sh
     ./run.sh
 
-You can then access the OuterCircle website at <public ip>.
+You can then access the OuterCircle website at {public ip}.
 
 Administrator:
 ==============
