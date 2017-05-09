@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "clean": "rm -rf dist/",
+    "clean": "rm -rf dist/ npm-debug.log",
     "server": "node server/app.js",
     "boot": "npm run clean && npm run build && npm run server"
   },

@@ -51,13 +51,13 @@ export default class CharityProfile extends React.Component {
               >
                 Donate
               </a>
-                <Follow 
-                  isFollow={false} 
-                  truetext='Followed' 
-                  falsetext='Follow'
-                  id={this.props.charity}
-                  user={this.props.user}
-                />
+              <Follow 
+                isFollow={false} 
+                truetext='Followed' 
+                falsetext='Follow'
+                id={this.props.charity}
+                user={this.props.user}
+              />
             </div>
           </div>
           <p>{this.state.description}</p>
