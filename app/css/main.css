@@ -22,6 +22,11 @@ body {
 .space-between {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.space-between p {
+  margin: 0;
 }
 
 .form-end {
@@ -52,6 +57,7 @@ body {
 
 .post-header {
   display: flex;
+  overflow: hidden;
 }
 
 .post-title {
