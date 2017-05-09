@@ -229,7 +229,7 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
     + 'IN (SELECT donor FROM connection WHERE '
     + 'user = ?) OR p.charity IN (SELECT charity FROM '
     + 'following WHERE donor = ?) ORDER BY time DESC';
-  db.query(sql, [User,User], function(error, result) {
+  db.query(sql, [User,User,User], function(error, result) {
       if(result !== undefined) {
           if (!result.rowCount) { // TODO: errors, which posts, sorting
               // todo errors, also auth
