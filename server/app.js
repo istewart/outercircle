@@ -741,14 +741,13 @@ function init(callback) {
     description TEXT, \
     profile_image TEXT, \
     cover_image TEXT \
-    PRIMARY KEY (email) \
   );';
 
     db.query(sql, function(error, result) {
         console.log('Initialized donor table.');
         var sql2 = 'SELECT COUNT(id) AS count FROM donor';
         db.query(sql2, function(error, result) {
-            if(result === undefined || result.rows[0].count === 0 || result.rows[0].count === 1) {
+            if(result === undefined || result.rows[0].count == 0 || result.rows[0].count == 1) {
                 db.query(' INSERT INTO donor '
                     + '(name, email, password, description, profile_image, cover_image) '
                     + 'VALUES (?, ?, ?, ?, ?, ?),'
@@ -790,7 +789,7 @@ function init(callback) {
         console.log('Initialized charity table.');
         var sql2 = 'SELECT COUNT(id) AS count FROM charity';
         db.query(sql2, function(error, result) {
-            if(result === undefined || result.rows[0].count === 0) {
+            if(result === undefined || result.rows[0].count == 0) {
                 console.log('Initialized charity table.');
                 db.query('INSERT INTO charity '
                     + '(name, website, description, cover_image, profile_image, category) '
@@ -860,7 +859,7 @@ function init(callback) {
     console.log('Initialized post table.');
       var sql2 = 'SELECT COUNT(id) AS count FROM post';
       db.query(sql2, function(error, result) {
-          if(result === undefined || result.rows[0].count === 0) {
+          if(result === undefined || result.rows[0].count == 0) {
               db.query('INSERT INTO post '
                   + '(donor, charity, body, time) '
                   + 'VALUES (?, ?, ?, ?) ',
