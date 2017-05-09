@@ -49,10 +49,13 @@ app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
   console.log("file received");
   console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
-    var newPath = __dirname + "/../img/" + req.files.imagefile.name;
+    var time = new Date().getTime();
+    time = time + "";
+    var newFileName = createHash(time + req.files.imagefile.name);
+    var newPath = __dirname + "/../img/" + newFileName;
     var sql = 'UPDATE donor SET cover_image = ? WHERE email = ?';
     var email = req.user.rows[0].email;
-    var filename = req.files.imagefile.name + "";
+    var filename = newFileName + "";
 
     var sqldata = [filename, email];
     db.query(sql, sqldata, function(error, result) {
@@ -83,17 +86,20 @@ app.post('/uploadProfile', uploader.middleware('imagefile'), function(req, res) 
   console.log("file received");
   console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
-    var newPath = __dirname + "/../img/" + req.files.imagefile.name;
+    var time = new Date().getTime();
+    time = time + "";
+    var newFileName = createHash(time + req.files.imagefile.name);
+    var newPath = __dirname + "/../img/" + newFileName;
     var sql = 'UPDATE donor SET profile_image = ? WHERE email = ?';
     var email = req.user.rows[0].email;
-    var filename = req.files.imagefile.name + "";
+    var filename = newFileName + "";
 
     var sqldata = [filename, email];
     db.query(sql, sqldata, function(error, result) {
       if (error) {
         console.log(error);
       } else {
-        console.log('Set cover_image of ' + email + ' to ' + filename);
+        console.log('Set profile_image of ' + email + ' to ' + filename);
       }
     });
 
