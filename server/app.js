@@ -117,35 +117,35 @@ function(req, res) {
 app.post('/post', function(request, response) {
   console.log('- Request received /post');
   
-  const Donor = request.body.donor;
-  const Charity = request.body.charity;
-  const Body = request.body.body;
+  const donor = request.body.donor;
+  const charity = request.body.charity;
+  const body = request.body.body;
   const time = new Date().getTime();
 
-  let sql = 'INSERT INTO post (donor, charity, body, time) VALUES (?, ?, ?, ?)';
-  db.query(sql, [Donor, Charity, Body, time], function(error, result) {
-    const id = result.lastInsertId; // todo unused
+  console.log([donor, charity, body, time]);
+
+  let sql = 'INSERT INTO post (donor, charity, body, time) VALUES '
+          + '(?, ?, ?, ?)';
+  db.query(sql, [donor, charity, body, time], function(error, result) {
+    const id = result.lastInsertId;
 
     // TODO: error handling and security and auth and xss and csrf
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [Donor], function(error, result) {
-        console.log({
-            id: id,
-            name: result.rows[0].name,
-            profile_image: result.rows[0].profile_image,
-            donor: Donor,
-            body: Body,
-            time: time,
+    db.query(sql, [donor], function(error, result) {
+      if (error) { // todo: not this
+        console.log('post failed with: ' + error);
+        response.json({error: error});
+      } else {
+        console.log(result);
+        response.json({
+          id: id,
+          name: result.rows[0].name,
+          profile_image: result.rows[0].profile_image,
+          donor: donor,
+          body: body,
+          time: time,
         });
-        console.log(result.rows);
-      response.json({
-        id: id,
-        name: result.rows[0].name,
-        profile_image: result.rows[0].profile_image,
-        donor: Donor,
-        body: Body,
-        time: time,
-      });
+      }
     });
   });
 });

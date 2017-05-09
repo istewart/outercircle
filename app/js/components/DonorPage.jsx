@@ -77,7 +77,7 @@ export default class DonorPage extends React.Component {
               <SuggestDonor donor={Id} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
-              <Feed donor={Id} type="donor"/>
+              <Feed user={this.state.userId} donor={Id} type="donor"/>
             </div>
           </div>
         </div>
