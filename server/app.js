@@ -741,6 +741,7 @@ function init(callback) {
     description TEXT, \
     profile_image TEXT, \
     cover_image TEXT \
+    PRIMARY KEY (name, email) \
   );';
 
   db.query(sql, function(error, result) {
@@ -777,6 +778,7 @@ function init(callback) {
     cover_image TEXT, \
     profile_image TEXT, \
     category TEXT \
+    PRIMARY KEY (name, website) \
   );';
 
   db.query(sql, function(error, result) {
