@@ -744,34 +744,38 @@ function init(callback) {
   );';
 
     db.query(sql, function(error, result) {
-        console.log('Initialized donor table.');
-        var sql2 = 'SELECT COUNT(id) AS count FROM donor';
-        db.query(sql2, function(error, result) {
-            if(result === undefined || result.rows[0].count == 0 || result.rows[0].count == 1) {
-                db.query(' INSERT INTO donor '
-                    + '(name, email, password, description, profile_image, cover_image) '
-                    + 'VALUES (?, ?, ?, ?, ?, ?),'
-                    + '(?, ?, ?, ?, ?, ?), '
-                    + '(?, ?, ?, ?, ?, ?), '
-                    + '(?, ?, ?, ?, ?, ?), '
-                    + '(?, ?, ?, ?, ?, ?) ',
-                    [
-                        'Ian Stewart', 'ian_stewart@brown.edu', 'pass1',
-                        'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
-                        'David Branse', 'david_branse@brown.edu', 'pass2',
-                        'If we can teach people about wildlife, they will be touched. Share my wildlife with me. Because humans want to save things that they love.', 'profileD.jpg', 'whale.jpg',
-                        'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass3',
-                        'I tried to discover, in the rumor of forests and waves, words that other men could not hear, and I pricked up my ears to listen to the revelation of their harmony', 'profileS.jpg', 'forest.jpg',
-                        'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass4',
-                        'A dog will teach you unconditional love. If you can have that in your life, things won\'t be too bad.', 'profileZ.jpg', 'dogs.jpg',
-                        'Xuenan Li', 'xuenan_li@brown.edu', 'pass5',
-                        'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'charity.jpg'
-                    ],
-                    function(error, result) {
-                        console.log('sample donor');
-                    });
-            }
-        });
+        if (error) {
+            console.log("!!" + error);
+        } else {
+            console.log('Initialized donor table.');
+            var sql2 = 'SELECT COUNT(id) AS count FROM donor';
+            db.query(sql2, function(error, result) {
+                if(result === undefined || result.rows[0].count == 0 || result.rows[0].count == 1) {
+                    db.query(' INSERT INTO donor '
+                        + '(name, email, password, description, profile_image, cover_image) '
+                        + 'VALUES (?, ?, ?, ?, ?, ?),'
+                        + '(?, ?, ?, ?, ?, ?), '
+                        + '(?, ?, ?, ?, ?, ?), '
+                        + '(?, ?, ?, ?, ?, ?), '
+                        + '(?, ?, ?, ?, ?, ?) ',
+                        [
+                            'Ian Stewart', 'ian_stewart@brown.edu', 'pass1',
+                            'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
+                            'David Branse', 'david_branse@brown.edu', 'pass2',
+                            'If we can teach people about wildlife, they will be touched. Share my wildlife with me. Because humans want to save things that they love.', 'profileD.jpg', 'whale.jpg',
+                            'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass3',
+                            'I tried to discover, in the rumor of forests and waves, words that other men could not hear, and I pricked up my ears to listen to the revelation of their harmony', 'profileS.jpg', 'forest.jpg',
+                            'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass4',
+                            'A dog will teach you unconditional love. If you can have that in your life, things won\'t be too bad.', 'profileZ.jpg', 'dogs.jpg',
+                            'Xuenan Li', 'xuenan_li@brown.edu', 'pass5',
+                            'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'charity.jpg'
+                        ],
+                        function(error, result) {
+                            console.log('sample donor');
+                        });
+                }
+            });
+        }
     });
 
 
@@ -786,33 +790,37 @@ function init(callback) {
   );';
 
     db.query(sql, function(error, result) {
-        console.log('Initialized charity table.');
-        var sql2 = 'SELECT COUNT(id) AS count FROM charity';
-        db.query(sql2, function(error, result) {
-            if(result === undefined || result.rows[0].count == 0) {
-                console.log('Initialized charity table.');
-                db.query('INSERT INTO charity '
-                    + '(name, website, description, cover_image, profile_image, category) '
-                    + 'VALUES (?, ?, ?, ?, ?, ?),  (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)',
-                    [
-                        'Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
-                        'beach.jpg','charityD.jpg', 'Health',
-                        'World Wildlife Fund', 'https://www.worldwildlife.org/', 'The world’s leading conservation organization, WWF works in 100 countries and is supported by more than one million members in the United States and close to five million globally. WWF\'s unique way of working combines global reach with a foundation in science, involves action at every level from local to global, and ensures the delivery of innovative solutions that meet the needs of both people and nature.',
-                        'beach.jpg','charityW.jpg', 'Environment',
-                        'American Civil Liberties Union Foundation', 'https://www.aclu.org/', 'For almost 100 years, the ACLU has worked to defend and preserve the individual rights and liberties guaranteed by the Constitution and laws of the United States.',
-                        'beach.jpg','charityL.jpg', 'Human',
-                        'Step Up For Students', 'https://www.stepupforstudents.org/', 'Step Up For Students empowers parents to pursue and engage in the most appropriate learning options for their children, with an emphasis on families who lack the financial resources to access these options. By pursuing this mission, we help public education fulfill the promise of equal opportunity.',
-                        'beach.jpg','charityS.jpg', 'Education'
-                    ],
-                    function(error, result) {
-                        if (error) {
-                            console.log('error in sample charity: ' + error);
-                        } else {
-                            console.log('sample charity');
-                        }
-                    });
-            }
-        });
+        if (error) {
+            console.log("!!" + error);
+        } else {
+            console.log('Initialized charity table.');
+            var sql2 = 'SELECT COUNT(id) AS count FROM charity';
+            db.query(sql2, function(error, result) {
+                if(result === undefined || result.rows[0].count == 0) {
+                    console.log('Initialized charity table.');
+                    db.query('INSERT INTO charity '
+                        + '(name, website, description, cover_image, profile_image, category) '
+                        + 'VALUES (?, ?, ?, ?, ?, ?),  (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)',
+                        [
+                            'Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
+                            'beach.jpg','charityD.jpg', 'Health',
+                            'World Wildlife Fund', 'https://www.worldwildlife.org/', 'The world’s leading conservation organization, WWF works in 100 countries and is supported by more than one million members in the United States and close to five million globally. WWF\'s unique way of working combines global reach with a foundation in science, involves action at every level from local to global, and ensures the delivery of innovative solutions that meet the needs of both people and nature.',
+                            'beach.jpg','charityW.jpg', 'Environment',
+                            'American Civil Liberties Union Foundation', 'https://www.aclu.org/', 'For almost 100 years, the ACLU has worked to defend and preserve the individual rights and liberties guaranteed by the Constitution and laws of the United States.',
+                            'beach.jpg','charityL.jpg', 'Human',
+                            'Step Up For Students', 'https://www.stepupforstudents.org/', 'Step Up For Students empowers parents to pursue and engage in the most appropriate learning options for their children, with an emphasis on families who lack the financial resources to access these options. By pursuing this mission, we help public education fulfill the promise of equal opportunity.',
+                            'beach.jpg','charityS.jpg', 'Education'
+                        ],
+                        function(error, result) {
+                            if (error) {
+                                console.log('error in sample charity: ' + error);
+                            } else {
+                                console.log('sample charity');
+                            }
+                        });
+                }
+            });
+        }
     });
 
 
@@ -856,19 +864,23 @@ function init(callback) {
   );';
 
   db.query(sql, function(error, result) {
-    console.log('Initialized post table.');
-      var sql2 = 'SELECT COUNT(id) AS count FROM post';
-      db.query(sql2, function(error, result) {
-          if(result === undefined || result.rows[0].count == 0) {
-              db.query('INSERT INTO post '
-                  + '(donor, charity, body, time) '
-                  + 'VALUES (?, ?, ?, ?) ',
-                  [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
-                  function(error, result) {
-                      console.log('sample post');
-              });
-          }
-      });
+      if (error) {
+          console.log("!!" + error);
+      } else {
+          console.log('Initialized post table.');
+          var sql2 = 'SELECT COUNT(id) AS count FROM post';
+          db.query(sql2, function(error, result) {
+              if(result === undefined || result.rows[0].count == 0) {
+                  db.query('INSERT INTO post '
+                      + '(donor, charity, body, time) '
+                      + 'VALUES (?, ?, ?, ?) ',
+                      [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
+                      function(error, result) {
+                          console.log('sample post');
+                      });
+              }
+          });
+      }
   });
 
   sql = 'CREATE TABLE IF NOT EXISTS donation ( \
