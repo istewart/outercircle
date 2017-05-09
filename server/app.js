@@ -135,7 +135,6 @@ app.post('/post', function(request, response) {
         console.log('post failed with: ' + error);
         response.json({error: error});
       } else {
-        console.log(result);
         response.json({
           id: id,
           name: result.rows[0].name,

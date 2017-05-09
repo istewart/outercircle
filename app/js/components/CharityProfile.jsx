@@ -33,7 +33,6 @@ export default class CharityProfile extends React.Component {
   }
 
   render() {
-    console.log(this.props.user+" "+this.state.charity);
     return (
       <div>
         <ImageHeader 

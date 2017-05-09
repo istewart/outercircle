@@ -12,7 +12,6 @@ export default class DonationHistory extends React.Component {
   }
 
     componentWillReceiveProps(nextProps) {
-        console.log("last: "+nextProps.last);
         if(nextProps.last!==""){
             this.setState({
                 donations:[nextProps.last].concat(this.state.donations)
