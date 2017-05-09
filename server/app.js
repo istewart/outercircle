@@ -546,7 +546,6 @@ app.post('/editProfile', function(request, response) {
       response.json([]);
     }
   });
-  response.end();
 });
 
 app.post('/addCharity', isLoggedIn, function(req, res) {
