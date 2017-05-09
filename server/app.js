@@ -1,4 +1,6 @@
+// use strict compiling
 "use strict";
+
 var express = require('express');
 var anyDB = require('any-db'); // TODO:
 var bodyParser = require('body-parser');
@@ -30,10 +32,6 @@ app.use(bodyParser.urlencoded({
 app.use(expressSession({secret: 'Thisisasecretshhhh'}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-
 
 // set up a connection pool
 var db = anyDB.createPool( // TODO: need to transition to postgres
@@ -88,14 +86,22 @@ app.post('/post', function(request, response) {
   const Body = request.body.body;
   const time = new Date().getTime();
 
-  let sql = 'INSERT INTO post (donor, charity, body, time) \
-            VALUES (?, ?, ?)';
-  db.query(sql, [Donor,Charity, Body, time], function(error, result) {
+  let sql = 'INSERT INTO post (donor, charity, body, time) VALUES (?, ?, ?, ?)';
+  db.query(sql, [Donor, Charity, Body, time], function(error, result) {
     const id = result.lastInsertId; // todo unused
 
     // TODO: error handling and security and auth and xss and csrf
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [donor], function(error, result) {
+    db.query(sql, [Donor], function(error, result) {
+        console.log({
+            id: id,
+            name: result.rows[0].name,
+            profile_image: result.rows[0].profile_image,
+            donor: Donor,
+            body: Body,
+            time: time,
+        });
+        console.log(result.rows);
       response.json({
         id: id,
         name: result.rows[0].name,
@@ -181,9 +187,9 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
   console.log("User id: "+User);
   let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
-    + 'ON p.donor = d.id WHERE p.donor IN '
-    + '(SELECT donor FROM connection '
-    + 'WHERE user = ?) OR p.charity IN (SELECT charity FROM '
+    + 'ON p.donor = d.id WHERE p.donor = ? OR p.donor '
+    + 'IN (SELECT donor FROM connection WHERE '
+    + 'user = ?) OR p.charity IN (SELECT charity FROM '
     + 'following WHERE donor = ?) ORDER BY time DESC';
   db.query(sql, [User,User], function(error, result) {
       if(result !== undefined) {
@@ -270,26 +276,35 @@ app.get('/donor/:id/stats', function(request, response) {
 
   const requester = 'todo';
   const donor = request.params.id;
-  var sql = 'SELECT category, SUM(amount) AS amount '
-    + 'FROM donation '
-    + 'WHERE donor = ? GROUP BY category ORDER BY category;';
-  db.query(sql, [donor], function(error, result) {
-      if(result !== undefined) {
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
-          // todo errors, also auth
-        } else {
-          // return the requested donation information
-          const labels = result.rows.map((row) => row.category);
-          const data = result.rows.map((row) => row.amount);
 
-          response.json({
-            labels: labels,
-            data: data,
-          });
-        }
-      } else{
-         console.log("fetch donor stats failed!")
+  var sql = 'SELECT c.category, SUM(d.amount) AS amount '
+      + 'FROM donation AS d JOIN charity AS c ON d.charity = c.id '
+      + 'WHERE d.donor = ? GROUP BY c.category ORDER BY c.category;';
+  db.query(sql, [donor], function(error, result) {
+    if(result !== undefined) {
+      if (!result.rowCount) { // TODO: errors, which posts, sorting
+        // todo errors, also auth
+        response.json({
+          labels: [],
+          data: [],
+        });
+      } else {
+        // return the requested donation information
+        const labels = result.rows.map((row) => row.category);
+        const data = result.rows.map((row) => row.amount);
+
+        response.json({
+          labels: labels,
+          data: data,
+        });
       }
+    } else {
+      console.log("fetch donor stats failed!");
+      response.json({
+        labels: [],
+        data: [],
+      });
+    }
   });
 });
 
@@ -309,8 +324,8 @@ app.post('/donate', function(request, response) {
     const id = result.lastInsertId; // todo unused
     // response.sendStatus(200);
     // TODO: error handling and security and auth and xss and csrf
-    sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [donor], function(error, result) {
+    sql = 'SELECT name FROM charity WHERE id = ?';
+    db.query(sql, [charity], function(error, result) {
       if (isPublic) {
         response.json({
           name: result.rows[0].name,
@@ -330,9 +345,9 @@ app.get('/donations/:id', function(request, response) {
 
   const requester = 'todo';
   const donor = request.params.id;
-  const charity = 'todo';
+  const charity = 'todo ';
 
-  var sql = 'SELECT c.name, d.amount, d.time '
+  var sql = 'SELECT c.name, d.id, d.amount, d.time, c.category '
     + 'FROM donation AS d JOIN charity AS c '
     + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = \'true\' '
     + 'ORDER BY time DESC;';
@@ -481,19 +496,21 @@ app.post('/editProfile', function(request, response) {
       console.log("donor " + donor + " updated their name to " + name + " and description to " + description);
     }
   });
+  response.end();
 });
 
 app.post('/addCharity', isLoggedIn, function(req, res) {
   console.log('request received to add charity');
   if (req.user.rows[0].email === "admin@outercircle.com") {
     let sql = 'INSERT INTO charity '
-            + '(name, website, description, cover_image, profile_image) '
-            + 'VALUES (?, ?, ?, ?, ?)';
+            + '(name, website, description, cover_image, profile_image, category) '
+            + 'VALUES (?, ?, ?, ?, ?, ?)';
     var name = req.body.name;
     var website = req.body.website;
     var description = req.body.description;
+    var category = req.body.category;
     db.query(sql,
-            [name, website, description, 'beach.jpg','profile2.jpg'],
+            [name, website, description, 'beach.jpg','profile2.jpg', category],
             function(error, result) {
                 console.log('added charity ' + name);
                 res.send({added: 'success'});
@@ -689,13 +706,13 @@ function init(callback) {
           'Ian Stewart', 'ian_stewart@brown.edu', 'pass',
           'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
           'David Branse', 'david_branse@brown.edu', 'pass',
-          'To give away money is an easy matter and in any man\'s power. But to decide to whom to give it and how large and when, and for what purpose and how, is neither in every man\'s power nor an easy matter.', 'profileD.png', 'beach.jpg',
+          'If we can teach people about wildlife, they will be touched. Share my wildlife with me. Because humans want to save things that they love.', 'profileD.jpg', 'whale.jpg',
           'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass',
-          'Nothing brings me more happiness than trying to help the most vulnerable people in society. It is a goal and an essential part of my life - a kind of destiny.', 'profileS.png', 'beach.jpg',
+          'I tried to discover, in the rumor of forests and waves, words that other men could not hear, and I pricked up my ears to listen to the revelation of their harmony', 'profileS.jpg', 'forest.jpg',
           'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass',
-          'It is one of the most beautiful compensations of this life that no man can sincerely try to help another without helping himself… Serve and thou shall be served.', 'profileZ.jpg', 'beach.jpg',
+          'A dog will teach you unconditional love. If you can have that in your life, things won\'t be too bad.', 'profileZ.jpg', 'dogs.jpg',
           'Xuenan Li', 'xuenan_li@brown.edu', 'pass',
-          'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'beach.jpg'
+          'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'charity.jpg'
           ],
           function(error, result) {
               console.log('sample donor');
@@ -708,22 +725,27 @@ function init(callback) {
     website TEXT, \
     description TEXT, \
     cover_image TEXT, \
-    profile_image TEXT \
+    profile_image TEXT, \
+    category TEXT \
   );';
 
   db.query(sql, function(error, result) {
     console.log('Initialized charity table.');
-      db.query('INSERT INTO charity '
-          + '(name, website, description, cover_image, profile_image) '
-          + 'VALUES (?, ?, ?, ?, ?) ',
-          ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
-              'beach.jpg','profile2.jpg'],
-          function(error, result) {
+    db.query('INSERT INTO charity '
+        + '(name, website, description, cover_image, profile_image, category) '
+        + 'VALUES (?, ?, ?, ?, ?, ?) ',
+        ['Doctors Without Borders, USA', 'http://www.doctorswithoutborders.org/', 'Doctors Without Borders, USA (DWB-USA) was founded in 1990 in New York City to raise funds, create awareness, recruit field staff, and advocate with the United Nations and US government on humanitarian concerns. Doctors Without Borders/Médecins Sans Frontières (MSF) is an international medical humanitarian organization that provides aid in nearly 60 countries to people whose survival is threatened by violence, neglect, or catastrophe, primarily due to armed conflict, epidemics, malnutrition, exclusion from health care, or natural disasters.',
+            'beach.jpg','profile2.jpg', 'Health'],
+        function(error, result) {
+            if (error) {
+              console.log('error in sample charity: ' + error);
+            } else {
               console.log('sample charity');
-      });
+            }
+    });
   });
 
-   sql = 'CREATE TABLE IF NOT EXISTS following ( \
+  sql = 'CREATE TABLE IF NOT EXISTS following ( \
     donor INTEGER, \
     charity INTEGER, \
     PRIMARY KEY (donor, charity) \
@@ -787,31 +809,6 @@ function init(callback) {
     console.log('Initialized donation table.');
   });
 
-
-  // sql = 'CREATE TABLE user ( \
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT, \
-  //   username TEXT, \
-  //   password TEXT, \
-  //   firstname TEXT, \
-  //   lastname TEXT \
-  // );'
-
-  // db.query(sql, function(error, result) {
-  //   console.log('Initialized user table.');
-  // });
-
-  /*
-  db.query('INSERT INTO user '
-          + '(username, password, email) '
-          + 'VALUES (?, ?, ?)',
-          ['Doge', 'suchsecure', 'doggo@pupper.com'],
-          function(error, result) {
-              console.log('Insert Test User');
-      });
-  */
-
-
-
-  // wait a second for things to finish then start the server
-  setTimeout(callback, 1000);
+  // wait a few seconds for things to finish then start the server
+  setTimeout(callback, 3000);
 }
