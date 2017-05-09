@@ -744,31 +744,34 @@ function init(callback) {
     PRIMARY KEY (email) \
   );';
 
-  db.query(sql, function(error, result) {
-    console.log('Initialized donor table.');
-      db.query(' INSERT INTO donor '
-          + '(name, email, password, description, profile_image, cover_image) '
-          + 'VALUES (?, ?, ?, ?, ?, ?),'
-          + '(?, ?, ?, ?, ?, ?), '
-          + '(?, ?, ?, ?, ?, ?), '
-          + '(?, ?, ?, ?, ?, ?), '
-          + '(?, ?, ?, ?, ?, ?) ',
-          [
-          'Ian Stewart', 'ian_stewart@brown.edu', 'pass1',
-          'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
-          'David Branse', 'david_branse@brown.edu', 'pass2',
-          'If we can teach people about wildlife, they will be touched. Share my wildlife with me. Because humans want to save things that they love.', 'profileD.jpg', 'whale.jpg',
-          'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass3',
-          'I tried to discover, in the rumor of forests and waves, words that other men could not hear, and I pricked up my ears to listen to the revelation of their harmony', 'profileS.jpg', 'forest.jpg',
-          'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass4',
-          'A dog will teach you unconditional love. If you can have that in your life, things won\'t be too bad.', 'profileZ.jpg', 'dogs.jpg',
-          'Xuenan Li', 'xuenan_li@brown.edu', 'pass5',
-          'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'charity.jpg'
-          ],
-          function(error, result) {
-              console.log('sample donor');
-      });
-  });
+  var sql2 = 'SELECT COUNT(id) AS count FROM donor';
+    db.query(sql2, function(error, result) {
+        if(result.rows[0].count === 0 || result.rows[0].count === 1) {
+            console.log('Initialized donor table.');
+            db.query(' INSERT INTO donor '
+                + '(name, email, password, description, profile_image, cover_image) '
+                + 'VALUES (?, ?, ?, ?, ?, ?),'
+                + '(?, ?, ?, ?, ?, ?), '
+                + '(?, ?, ?, ?, ?, ?), '
+                + '(?, ?, ?, ?, ?, ?), '
+                + '(?, ?, ?, ?, ?, ?) ',
+                [
+                    'Ian Stewart', 'ian_stewart@brown.edu', 'pass1',
+                    'Philanthropy plays a strong role in solving some of the world’s biggest health and development challenges. Generosity is part of what makes us human, and nearly all cultures have strong traditions of giving and caring for their communities. We aim to increase the quantity and quality of generosity by all people—from high net worth individuals to everyday givers.', 'profileI.jpg', 'beach.jpg',
+                    'David Branse', 'david_branse@brown.edu', 'pass2',
+                    'If we can teach people about wildlife, they will be touched. Share my wildlife with me. Because humans want to save things that they love.', 'profileD.jpg', 'whale.jpg',
+                    'Shingo Lavine', 'shingo_lavine@brown.edu', 'pass3',
+                    'I tried to discover, in the rumor of forests and waves, words that other men could not hear, and I pricked up my ears to listen to the revelation of their harmony', 'profileS.jpg', 'forest.jpg',
+                    'Zhengwei Liu', 'zhengwei_liu@brown.edu', 'pass4',
+                    'A dog will teach you unconditional love. If you can have that in your life, things won\'t be too bad.', 'profileZ.jpg', 'dogs.jpg',
+                    'Xuenan Li', 'xuenan_li@brown.edu', 'pass5',
+                    'There is a natural law, a Divine law, that obliges you and me to relieve the suffering, the distressed and the destitute.', 'profileX.jpg', 'charity.jpg'
+                ],
+                function(error, result) {
+                    console.log('sample donor');
+                });
+        }
+    });
 
   sql = 'CREATE TABLE IF NOT EXISTS charity ( \
     id INTEGER PRIMARY KEY AUTOINCREMENT, \
