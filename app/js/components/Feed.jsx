@@ -6,13 +6,12 @@ import Post from './Post.jsx';
 export default class Feed extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       posts: [],
     };
-    this.fetchPosts(this.props.type,this.props.user);
 
     this.handlePost = this.handlePost.bind(this);
+    this.fetchPosts(this.props.type, this.props.user);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,9 +20,9 @@ export default class Feed extends React.Component {
 
   fetchPosts(type,User) {
     const feed = this;
-    if(type==="home"){
-        console.log("User id: "+User);
-        $.get('/homeposts', {user:User}, function(data, status) {
+    if (type==="home"){
+        console.log("User id: " + User);
+        $.get('/homeposts', {user: User}, function(data, status) {
             if (status === 'success') {
                 // we succesfully retrieved some posts so update state
                 feed.setState({posts: data});
@@ -31,9 +30,9 @@ export default class Feed extends React.Component {
                 // todo error handling
             }
         });
-    } else if(type==="donor"){
-        console.log("donor: "+feed.props.donor);
-        $.get('/donorposts', {donor:feed.props.donor}, function(data, status) {
+    } else if (type==="donor"){
+        console.log("donor: " + feed.props.donor);
+        $.get('/donorposts', {donor: feed.props.donor}, function(data, status) {
             if (status === 'success') {
                 // we succesfully retrieved some posts so update state
                 feed.setState({posts: data});
@@ -41,8 +40,8 @@ export default class Feed extends React.Component {
                 // todo error handling
             }
         });
-    } else{
-        $.get('/charityposts', {charity:feed.props.charity}, function(data, status) {
+    } else {
+        $.get('/charityposts', {charity: feed.props.charity}, function(data, status) {
             if (status === 'success') {
                 // we succesfully retrieved some posts so update state
                 feed.setState({posts: data});

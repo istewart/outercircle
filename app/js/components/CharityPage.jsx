@@ -18,7 +18,7 @@ export default class CharityPage extends React.Component {
   checkLogin() {
       $.post('/loggedIn', "", function(data, status) {
           if (status === 'success' && data.isAuth === "authorized") {
-              this.setState({loggedIn: true,userId:data.userId});
+              this.setState({loggedIn: true, userId: data.userId});
           }
           else {
               this.setState({loggedIn: false});
@@ -42,7 +42,7 @@ export default class CharityPage extends React.Component {
               <SuggestCharity charity={Id} user={this.state.userId}/>
             </div>
             <div className="col-sm-6 col-sm-pull-4">
-              <Feed charity={Id} type="charity"/>
+              <Feed charity={Id} user={this.state.userId} type="charity"/>
             </div>
           </div>
         </div>
