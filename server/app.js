@@ -45,9 +45,6 @@ var uploader = upload()
   .to('img')
 
 app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
-  console.log('/uplodCover request success');
-  console.log("file received");
-  console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
     var time = new Date().getTime();
     time = time + "";
@@ -77,14 +74,10 @@ app.post('/uploadCover', uploader.middleware('imagefile'), function(req, res) {
 },
 function(req, res) {
   onsole.log('/uplodCover request failed');
-  console.log(req);
   res.redirect("/");
 });
 
 app.post('/uploadProfile', uploader.middleware('imagefile'), function(req, res) {
-  console.log('/uplodProfile request success');
-  console.log("file received");
-  console.log(req.files.imagefile);
   fs.readFile(req.files.imagefile._writeStream.path, function (err, data) {
     var time = new Date().getTime();
     time = time + "";
