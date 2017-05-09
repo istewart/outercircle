@@ -858,12 +858,17 @@ function init(callback) {
 
   db.query(sql, function(error, result) {
     console.log('Initialized post table.');
-      db.query('INSERT INTO post '
-          + '(donor, charity, body, time) '
-          + 'VALUES (?, ?, ?, ?) ',
-          [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
-          function(error, result) {
-              console.log('sample post');
+      var sql2 = 'SELECT COUNT(id) AS count FROM post';
+      db.query(sql2, function(error, result) {
+          if(result === undefined || result.rows[0].count === 0) {
+              db.query('INSERT INTO post '
+                  + '(donor, charity, body, time) '
+                  + 'VALUES (?, ?, ?, ?) ',
+                  [1, 1, 'Without doubt, DWB is a greatly deserving charity--I commend them for facing danger every day for the sake of those much less fortunate. Give!', 1492637449237],
+                  function(error, result) {
+                      console.log('sample post');
+              });
+          }
       });
   });
 
