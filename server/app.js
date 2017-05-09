@@ -46,14 +46,22 @@ app.post('/post', function(request, response) {
   const Body = request.body.body;
   const time = new Date().getTime();
 
-  let sql = 'INSERT INTO post (donor, charity, body, time) \
-            VALUES (?, ?, ?)';
-  db.query(sql, [Donor,Charity, Body, time], function(error, result) {
+  let sql = 'INSERT INTO post (donor, charity, body, time) VALUES (?, ?, ?, ?)';
+  db.query(sql, [Donor, Charity, Body, time], function(error, result) {
     const id = result.lastInsertId; // todo unused
 
     // TODO: error handling and security and auth and xss and csrf
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
-    db.query(sql, [donor], function(error, result) {
+    db.query(sql, [Donor], function(error, result) {
+        console.log({
+            id: id,
+            name: result.rows[0].name,
+            profile_image: result.rows[0].profile_image,
+            donor: Donor,
+            body: Body,
+            time: time,
+        });
+        console.log(result.rows);
       response.json({
         id: id,
         name: result.rows[0].name,
@@ -139,9 +147,9 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
   console.log("User id: "+User);
   let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
-    + 'ON p.donor = d.id WHERE p.donor IN '
-    + '(SELECT donor FROM connection '
-    + 'WHERE user = ?) OR p.charity IN (SELECT charity FROM '
+    + 'ON p.donor = d.id WHERE p.donor = ? OR p.donor '
+    + 'IN (SELECT donor FROM connection WHERE '
+    + 'user = ?) OR p.charity IN (SELECT charity FROM '
     + 'following WHERE donor = ?) ORDER BY time DESC';
   db.query(sql, [User,User], function(error, result) {
       if(result !== undefined) {
