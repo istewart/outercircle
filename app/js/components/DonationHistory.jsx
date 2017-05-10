@@ -8,18 +8,20 @@ export default class DonationHistory extends React.Component {
     this.state = {
       donations: [],
     };
+    this.fetchDonations = this.fetchDonations.bind(this);
     this.fetchDonations();
   }
 
     componentWillReceiveProps(nextProps) {
+        this.fetchDonations();
         if(nextProps.last!==""){
-            var len = this.state.donations.length;
-            if(len !== 0 && [nextProps.last].id !== this.state.donations[0].id) {
-                console.log([nextProps.last].id + ' '+ this.state.donations[0].id)
+            // var len = this.state.donations.length;
+            // if(len !== 0 && [nextProps.last].id !== this.state.donations[0].id) {
+            //     console.log([nextProps.last].id + ' '+ this.state.donations[0].id)
                 this.setState({
                     donations:[nextProps.last].concat(this.state.donations)
                 });
-            }
+            // }
         }
     }
 
