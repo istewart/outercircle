@@ -5,9 +5,9 @@ export default class SearchCharityList extends React.Component {
         super(props);
     }
 
-    returnText(text, e) {
+    returnText(Text, Id, e) {
         e.preventDefault();
-        this.props.text(text);
+        this.props.onText(Text,Id);
     }
 
     render(){
@@ -18,7 +18,7 @@ export default class SearchCharityList extends React.Component {
                 <div className="search-charity-list">
                     <ul>
                         {
-                            this.props.items.map((item) => <li key={item.name} onClick={this.returnText.bind(this, item.name)}>{item.name}</li>)
+                            this.props.items.map((item) => <li key={item.name} onClick={this.returnText.bind(this, item.name, item.id)}>{item.name}</li>)
                         }
                     </ul>
                 </div>

@@ -167,7 +167,7 @@ app.get('/searchDataShorted', function(request, response) {
 
 app.get('/searchCharityShorted', function(request, response) {
     // console.log('- Request received /searchCharity:');
-    var sql = 'SELECT c.name AS name FROM charity AS c WHERE c.name LIKE ?' +
+    var sql = 'SELECT c.id, c.name AS name FROM charity AS c WHERE c.name LIKE ?' +
         'LIMIT 5';
     // console.log(sql)
     db.query(sql, ['%'+request.query.keyWord+'%'],function(error, result) {
@@ -596,7 +596,7 @@ app.get('*', function(request, response) {
 // initialize the database the web server
 init(function() {
   app.listen(8080, function(){
-    console.log('- Server listening on port 8081');
+    console.log('- Server listening on port 8080');
   });
 })
 // Alright now lets handle login with a LocalStrategy

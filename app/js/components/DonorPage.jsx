@@ -30,11 +30,11 @@ export default class DonorPage extends React.Component {
     }.bind(this));
   }
 
-  handleSubmit() { // TODO: security, xss, rendering, errors
+  handleSubmit(Charity) { // TODO: security, xss, rendering, errors
 
       const data = {
           donor: this.state.userId,
-          charity: 1, // todo
+          charity: Charity, // todo
           // category: 'TODO: ADD THIS TO CHARITY',
           amount: $('#amount').val(),
           isPublic: +($('#public').val() == 'Public'),

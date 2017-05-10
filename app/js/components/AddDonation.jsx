@@ -14,7 +14,7 @@ export default class AddDonation extends React.Component {
 
   Submit(event){
       event.preventDefault();
-      this.props.handleSubmit();
+      this.props.handleSubmit(this.state.charity);
   }
 
   getData(keyWord) {
@@ -29,9 +29,9 @@ export default class AddDonation extends React.Component {
       });
   }
 
-  changeText(text) {
-    this.refs.text.value = text;
-    this.setState({items: []});
+  changeText(Text,Id) {
+    this.refs.text.value = Text;
+    this.setState({items: [],charity:Id});
   }
 
   filterList(event) {
@@ -56,7 +56,7 @@ export default class AddDonation extends React.Component {
                    ref="text"
                    onChange={this.filterList.bind(this)}
             />
-            <SearchCharityList items={this.state.items} text={this.changeText.bind(this)}/>
+            <SearchCharityList items={this.state.items} onText={this.changeText.bind(this)}/>
           </div>
           <div className="form-group">
             <label htmlFor="public">Privacy:</label>
