@@ -23,7 +23,7 @@ export default class Feed extends React.Component {
   fetchPosts(type,User) {
     const feed = this;
     if (type==="home"){
-        console.log("User id: " + User);
+        // console.log("User id: " + User);
         $.get('/homeposts', {user: User}, function(data, status) {
             if (status === 'success') {
                 // we succesfully retrieved some posts so update state
@@ -33,7 +33,7 @@ export default class Feed extends React.Component {
             }
         });
     } else if (type==="donor"){
-        console.log("donor: " + feed.props.donor);
+        // console.log("donor: " + feed.props.donor);
         $.get('/donorposts', {donor: feed.props.donor}, function(data, status) {
             if (status === 'success') {
                 // we succesfully retrieved some posts so update state

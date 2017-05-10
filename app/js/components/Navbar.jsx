@@ -26,7 +26,7 @@ export default class Navbar extends React.Component {
     fetchData(user) {
         $.get('/donor/' + user + '/data', function(data, status) {
           if (status === 'success') {
-            console.log("PROFILE IMAGE: " + data.profile_image);
+            // console.log("PROFILE IMAGE: " + data.profile_image);
             // we succesfully retrieved some data so update state
             this.setState({
                 profile_image: data.profile_image

@@ -13,7 +13,7 @@ export default class SearchPage extends React.Component{
             keyWord: this.props.match.params.keyWord
         };
         // console.log(this.state.keyWord);
-        console.log(this.props.location.pathname);
+        // console.log(this.props.location.pathname);
         this.search(this.state.keyWord);
     }
 

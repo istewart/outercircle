@@ -169,7 +169,6 @@ app.get('/searchCharityShorted', function(request, response) {
     // console.log('- Request received /searchCharity:');
     var sql = 'SELECT c.id, c.name AS name FROM charity AS c WHERE c.name LIKE ?' +
         'LIMIT 5';
-    // console.log(sql)
     db.query(sql, ['%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
             console.log("Search error: "+error)
@@ -186,7 +185,6 @@ app.get('/searchData', function(request, response) {
     // console.log('- Request received /searchData:');
     var sql = 'SELECT d.name AS name, d.id AS id, d.profile_image AS profile, \'D\' AS category FROM donor AS d WHERE d.name LIKE ?' +
         'UNION SELECT c.name AS name, c.id AS id, c.profile_image AS profile, \'C\' AS category FROM charity AS c WHERE c.name LIKE ?';
-    // console.log(sql)
     db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
         if (error) {
             console.log("Search error: "+error)
@@ -220,7 +218,7 @@ app.get('/checkConnect', isLoggedIn, function(request, response) {
     var sql = 'SELECT user, donor FROM connection WHERE user = ? AND donor = ?';
     db.query(sql, [request.query.user,request.query.donor],function(error, result) {
         if (error) {
-            console.log("Check follow error: "+error)
+            console.log("Check connect error: "+error)
             response.json([]);
         } else {
             if(result.rows.length === 0) {
@@ -234,10 +232,9 @@ app.get('/checkConnect', isLoggedIn, function(request, response) {
 
 // retrieve the posts for feed on homepage
 app.get('/homeposts', isLoggedIn, function(request, response) {
-  console.log('- Request received /homeposts:');
+  // console.log('- Request received /homeposts:');
 
   const User = request.query.user; //ToDo:security check
-  console.log("User id: "+User);
   let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
     + 'ON p.donor = d.id WHERE p.donor = ? OR p.donor '
@@ -259,10 +256,9 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
 
 // retrieve the posts for feed on donorpage
 app.get('/donorposts', isLoggedIn, function(request, response) {
-    console.log('- Request received /donorposts:');
+    // console.log('- Requexst received /donorposts:');
 
     const Donor = request.query.donor; //ToDo:security check
-     console.log("Donor id: "+Donor);
     let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
         + 'FROM post AS p JOIN donor AS d '
         + 'ON p.donor = d.id WHERE p.donor = ? ORDER BY time DESC';
@@ -281,7 +277,7 @@ app.get('/donorposts', isLoggedIn, function(request, response) {
 
 // retrieve the posts for feed on charitypage
 app.get('/charityposts', isLoggedIn, function(request, response) {
-    console.log('- Request received /charityposts:');
+    // console.log('- Request received /charityposts:');
 
     const Charity = request.query.charity; //ToDo:security check
 
@@ -327,7 +323,7 @@ app.get('/donor/:id/data', function(request, response) {
 
 // retrieve the stats for a donor
 app.get('/donor/:id/stats', function(request, response) {
-  console.log('- Request received /donor/:id:/stats');
+  // console.log('- Request received /donor/:id:/stats');
 
   const requester = 'todo';
   const donor = request.params.id;
@@ -365,7 +361,7 @@ app.get('/donor/:id/stats', function(request, response) {
 
 // record a donation // TODO: security, cookies, auth
 app.post('/donate', function(request, response) {
-  console.log('- Request received /donate');
+  // console.log('- Request received /donate');
   
   const donor = request.body.donor;
   const charity = request.body.charity;
@@ -396,7 +392,7 @@ app.post('/donate', function(request, response) {
 
 // retrieve the donations for TODO
 app.get('/donations/:id', function(request, response) {
-  console.log('- Request received /donations/:id:');
+  // console.log('- Request received /donations/:id:');
 
   const requester = 'todo';
   const donor = request.params.id;
@@ -413,7 +409,7 @@ app.get('/donations/:id', function(request, response) {
           response.json([]);
         } else {
           // return the requested posts
-          console.log('found donations ' + result.rows);
+          // console.log('found donations ' + result.rows);
           response.json(result.rows);
         }
       } else {
@@ -426,7 +422,7 @@ app.get('/donations/:id', function(request, response) {
 
 // retrieve data about a charity
 app.get('/charity/:id/data', function(request,response) {
-  console.log('- Request received /charity/:id/data:');
+  // console.log('- Request received /charity/:id/data:');
 
   const id = request.params.id;
 
@@ -471,7 +467,7 @@ app.get('/suggestCharity',function(request,response){
 });
 
 app.post('/follow', function(request, response) {
-  console.log('- Request received /follow');
+  // console.log('- Request received /follow');
   
   const donor = request.body.user;
   const charity = request.body.charity;
@@ -490,7 +486,7 @@ app.post('/follow', function(request, response) {
 });
 
 app.post('/connect', function(request, response) {
-    console.log('- Request received /connect');
+    // console.log('- Request received /connect');
 
     const user = request.body.user;
     const donor = request.body.donor;
@@ -509,7 +505,7 @@ app.post('/connect', function(request, response) {
 });
 
 app.post('/unfollow', function(request, response) {
-    console.log('- Request received /unfollow');
+    // console.log('- Request received /unfollow');
 
     const donor = request.body.user;
     const charity = request.body.charity;
@@ -527,7 +523,7 @@ app.post('/unfollow', function(request, response) {
 });
 
 app.post('/unconnect', function(request, response) {
-    console.log('- Request received /unconnect');
+    // console.log('- Request received /unconnect');
 
     const user = request.body.user;
     const donor = request.body.donor;
@@ -545,8 +541,8 @@ app.post('/unconnect', function(request, response) {
 });
 
 app.post('/editProfile', function(request, response) {
-  console.log('- Request received /editProfile');
-  console.log(request.body);
+  // console.log('- Request received /editProfile');
+  // console.log(request.body);
   const donor = request.body.donor;
   const name = request.body.name;
   const description = request.body.description;
@@ -564,7 +560,7 @@ app.post('/editProfile', function(request, response) {
 });
 
 app.post('/addCharity', isLoggedIn, function(req, res) {
-  console.log('request received to add charity');
+  // console.log('request received to add charity');
   if (req.user.rows[0].email === "admin@outercircle.com") {
     let sql = 'INSERT INTO charity '
             + '(name, website, description, cover_image, profile_image, category) '
@@ -605,8 +601,8 @@ passport.use('login', new LocalStrategy({
 }, function(req, username, password, done) {
 		// Check if user exists in database
 		var sql = 'SELECT * FROM donor WHERE email = ?';
-    console.log("SQL request: "+ username);
-    console.log("Pass: " + password);
+    // console.log("SQL request: "+ username);
+    // console.log("Pass: " + password);
 		db.query(sql, [username], function(err, result) {
 			// If there is an error, return using done method
 			if (err) {
@@ -666,8 +662,8 @@ app.post('/signup', function(request, response) {
 });
 // This is what we will use to compare hashes
 function isValidPassword(input, password) {
-  console.log("input: " + createHash(input));
-  console.log("password: " + password);
+  // console.log("input: " + createHash(input));
+  // console.log("password: " + password);
 	return (password === createHash(input))
 }
 
@@ -706,7 +702,7 @@ app.post('/login',
 
 
 passport.serializeUser(function (user, done) {
-    console.log('serializing user:', user);
+    // console.log('serializing user:', user);
     done(null, user.id);
 });
 
