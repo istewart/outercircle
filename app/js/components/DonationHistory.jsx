@@ -13,9 +13,13 @@ export default class DonationHistory extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.last!==""){
-            this.setState({
-                donations:[nextProps.last].concat(this.state.donations)
-            });
+            var len = this.state.donations.length;
+            if(len !== 0 && [nextProps.last].id !== this.state.donations[0].id) {
+                console.log([nextProps.last].id + ' '+ this.state.donations[0].id)
+                this.setState({
+                    donations:[nextProps.last].concat(this.state.donations)
+                });
+            }
         }
     }
 

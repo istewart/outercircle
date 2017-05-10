@@ -37,7 +37,7 @@ export default class DonorPage extends React.Component {
           charity: Charity, // todo
           // category: 'TODO: ADD THIS TO CHARITY',
           amount: $('#amount').val(),
-          isPublic: +($('#public').val() == 'Public'),
+          isPublic: +($('#public').val() === 'Public'),
       };
 
       const donorpage = this;

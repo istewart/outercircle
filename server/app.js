@@ -404,7 +404,7 @@ app.get('/donations/:id', function(request, response) {
 
   var sql = 'SELECT c.name, d.id, d.amount, d.time, c.category '
     + 'FROM donation AS d JOIN charity AS c '
-    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = \'true\' '
+    + 'ON d.charity = c.id WHERE d.donor = ? AND d.isPublic = 1 '
     + 'ORDER BY time DESC;';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
