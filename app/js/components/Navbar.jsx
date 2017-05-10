@@ -16,7 +16,6 @@ export default class Navbar extends React.Component {
             profile_image: "default_profile.jpg"
         }
         this._logout = this._logout.bind(this);
-        // this.getData();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -65,19 +64,11 @@ export default class Navbar extends React.Component {
             var updatedList = [];
             this.getData(event.target.value.toLowerCase());
             updatedList = this.state.items;
-            // var dataList = this.state.initialItems;
-            // updatedList = dataList.filter(function(item){
-            //     return item.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
-            // });
             this.setState({items: updatedList});
         } else {
             this.setState({items: []});
         }
     }
-
-    // componentWillMount() {
-    //     this.setState({items: []});
-    // }
 
     render() {
     var loginButton = "";

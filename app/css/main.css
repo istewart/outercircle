@@ -302,18 +302,26 @@ span.psw {
     border-radius: 5px;
 }
 
-.search-list:focus {
+.search-charity-list {
+    position: absolute;
+    width: 300px;
+    background: white;
+    border-radius: 5px;
+    z-index: 999;
+}
+
+.search-list:focus, .search-charity-list:focus {
      outline: none;
  }
 
-.search-list ul {
+.search-list ul, .search-charity-list ul {
     margin: 0;
     padding: 0;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.search-list li {
+.search-list li, .search-charity-list li {
     list-style-type: none;
     margin: 0;
     color: black;
@@ -321,11 +329,11 @@ span.psw {
     border-radius: 5px;
 }
 
-.search-list a {
+.search-list a, .search-charity-list a {
     text-decoration: none;
 }
 
-.search-list li:hover {
+.search-list li:hover, .search-charity-list li:hover {
     background: lightblue;
  }
 

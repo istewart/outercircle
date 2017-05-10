@@ -9,7 +9,7 @@ export default class SearchList extends React.Component {
     render(){
         const list = this;
         var All = "";
-        console.log(list.props.asd);
+        // console.log(list.props.asd);
         if(list.props.asd === true) { All = <Link to={'/search/' + list.props.keyWord}><li className="allRes">{'See all results for '+list.props.keyWord}</li></Link>; }
         if(list.props.items.length !== 0) {
             return (
