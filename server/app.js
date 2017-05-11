@@ -2,7 +2,7 @@
 "use strict";
 
 var express = require('express');
-var anyDB = require('any-db'); // TODO:
+var anyDB = require('any-db');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -21,7 +21,6 @@ app.use(express.static('dist'));
 app.use(express.static('img'));
 
 // Use express session and initialize passport
-// TODO: Figure out what flash does
 app.use(flash());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -34,7 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // set up a connection pool
-var db = anyDB.createPool( // TODO: need to transition to postgres
+var db = anyDB.createPool(
   'sqlite3://outercircle.db', // for prod
   {min: 2, max: 8}
 );
@@ -111,7 +110,7 @@ function(req, res) {
 })
 
 
-// create a post for a given donor // TODO: security, cookies, auth
+// create a post for a given donor
 app.post('/post', function(request, response) {
   console.log('- Request received /post');
   
@@ -127,10 +126,10 @@ app.post('/post', function(request, response) {
   db.query(sql, [donor, charity, body, time], function(error, result) {
     const id = result.lastInsertId;
 
-    // TODO: error handling and security and auth and xss and csrf
+
     sql = 'SELECT name, profile_image FROM donor WHERE id = ?';
     db.query(sql, [donor], function(error, result) {
-      if (error) { // todo: not this
+      if (error) {
         console.log('post failed with: ' + error);
         response.json({error: error});
       } else {
@@ -234,7 +233,7 @@ app.get('/checkConnect', isLoggedIn, function(request, response) {
 app.get('/homeposts', isLoggedIn, function(request, response) {
   // console.log('- Request received /homeposts:');
 
-  const User = request.query.user; //ToDo:security check
+  const User = request.query.user;
   let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
     + 'FROM post AS p JOIN donor AS d '
     + 'ON p.donor = d.id WHERE p.donor = ? OR p.donor '
@@ -243,8 +242,7 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
     + 'following WHERE donor = ?) ORDER BY time DESC';
   db.query(sql, [User,User,User], function(error, result) {
       if(result !== undefined) {
-          if (!result.rowCount) { // TODO: errors, which posts, sorting
-              // todo errors, also auth
+          if (!result.rowCount) {
               response.json([]);
           } else {
               // return the requested posts
@@ -258,14 +256,13 @@ app.get('/homeposts', isLoggedIn, function(request, response) {
 app.get('/donorposts', isLoggedIn, function(request, response) {
     // console.log('- Requexst received /donorposts:');
 
-    const Donor = request.query.donor; //ToDo:security check
+    const Donor = request.query.donor;
     let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
         + 'FROM post AS p JOIN donor AS d '
         + 'ON p.donor = d.id WHERE p.donor = ? ORDER BY time DESC';
     db.query(sql, [Donor], function(error, result) {
         if(result !== undefined) {
-            if (!result.rowCount) { // TODO: errors, which posts, sorting
-                // todo errors, also auth
+            if (!result.rowCount) {
                 response.json([]);
             } else {
                 // return the requested posts
@@ -279,15 +276,14 @@ app.get('/donorposts', isLoggedIn, function(request, response) {
 app.get('/charityposts', isLoggedIn, function(request, response) {
     // console.log('- Request received /charityposts:');
 
-    const Charity = request.query.charity; //ToDo:security check
+    const Charity = request.query.charity;
 
     let sql = 'SELECT d.id AS donor, d.name, d.profile_image, p.id, p.body, p.time '
         + 'FROM post AS p JOIN donor AS d '
         + 'ON p.donor = d.id WHERE p.charity = ? ORDER BY time DESC';
     db.query(sql, [Charity], function(error, result) {
         if(result !== undefined) {
-            if (!result.rowCount) { // TODO: errors, which posts, sorting
-                // todo errors, also auth
+            if (!result.rowCount) {
                 response.json([]);
             } else {
                 // return the requested posts
@@ -308,8 +304,7 @@ app.get('/donor/:id/data', function(request, response) {
     + 'WHERE d.id = ?';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
-        if (!result.rowCount === 1) { // TODO: errors, which posts, sorting
-          // todo errors, also auth
+        if (!result.rowCount === 1) {
           response.json([]);
         } else {
           // return the requested donor information
@@ -333,8 +328,7 @@ app.get('/donor/:id/stats', function(request, response) {
       + 'WHERE d.donor = ? GROUP BY c.category ORDER BY c.category;';
   db.query(sql, [donor], function(error, result) {
     if(result !== undefined) {
-      if (!result.rowCount) { // TODO: errors, which posts, sorting
-        // todo errors, also auth
+      if (!result.rowCount) {
         response.json({
           labels: [],
           data: [],
@@ -359,22 +353,21 @@ app.get('/donor/:id/stats', function(request, response) {
   });
 });
 
-// record a donation // TODO: security, cookies, auth
+// record a donation
 app.post('/donate', function(request, response) {
   // console.log('- Request received /donate');
   
   const donor = request.body.donor;
   const charity = request.body.charity;
-  const isPublic = request.body.isPublic; // todo this should be in charity
-  const amount = request.body.amount; // todo non negative
+  const isPublic = request.body.isPublic;
+  const amount = request.body.amount;
   const time = new Date().getTime();
 
   var sql = 'INSERT INTO donation (donor, charity, amount, time, isPublic) \
             VALUES (?, ?, ?, ?, ?)';
   db.query(sql, [donor, charity, amount, time, isPublic], function(error, result) {
-    const id = result.lastInsertId; // todo unused
+    const id = result.lastInsertId;
     // response.sendStatus(200);
-    // TODO: error handling and security and auth and xss and csrf
     sql = 'SELECT name FROM charity WHERE id = ?';
     db.query(sql, [charity], function(error, result) {
       if (isPublic) {
@@ -404,8 +397,7 @@ app.get('/donations/:id', function(request, response) {
     + 'ORDER BY time DESC;';
   db.query(sql, [donor], function(error, result) {
       if(result !== undefined) {
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
-          // todo errors, also auth
+        if (!result.rowCount) {
           response.json([]);
         } else {
           // return the requested posts
@@ -429,8 +421,7 @@ app.get('/charity/:id/data', function(request,response) {
   let sql = 'SELECT name, website, description, cover_image '
           + 'FROM charity WHERE id = ?;';
   db.query(sql, [id], function(error, result) {
-    if (!result.rowCount == 1) { // TODO: errors, which posts, sorting
-      // todo errors, also auth
+    if (!result.rowCount == 1) {
     } else {
       response.json(result.rows[0]);
     }
@@ -438,12 +429,11 @@ app.get('/charity/:id/data', function(request,response) {
 });
 
 app.get('/suggestDonor',function(request,response){
-    let sql= 'SELECT id, name, description, profile_image FROM donor' // TODO: not good security
+    let sql= 'SELECT id, name, description, profile_image FROM donor'
         + ' WHERE id != ? ORDER BY id ASC';
     db.query(sql, [request.query.donor], function(error, result) {
 
-        if (!result.rowCount) { // TODO: errors, which posts, sorting
-            // todo errors, also auth
+        if (!result.rowCount) {
             console.log(error);
         } else {
             response.json(result.rows);
@@ -452,14 +442,13 @@ app.get('/suggestDonor',function(request,response){
 });
 
 app.get('/suggestCharity',function(request,response){
-    let sql= 'SELECT id, name, description, profile_image FROM charity' // TODO: not good security
+    let sql= 'SELECT id, name, description, profile_image FROM charity'
         + ' WHERE id NOT IN (SELECT charity from following WHERE donor=?) ORDER BY id ASC';
     db.query(sql, [request.query.id], function(error, result) {
         if(error){
             console.log("Fetch suggestion error: "+error);
         }
-        else if (!result.rowCount) { // TODO: errors, which posts, sorting
-            // todo errors, also auth
+        else if (!result.rowCount) {
         } else {
             response.json(result.rows);
         }
@@ -583,10 +572,10 @@ app.post('/addCharity', isLoggedIn, function(req, res) {
   }
 });
 
-// serve the home page on any other request // TODO: this is sketchy
+// serve the home page on any other request
 app.get('*', function(request, response) {
   // console.log('- Request received *:');
-  response.sendFile('index.html', {root : 'dist'}); // TODO: again here
+  response.sendFile('index.html', {root : 'dist'});
 });
 
 // initialize the database the web server
