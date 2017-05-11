@@ -17,9 +17,9 @@ export default class DonorProfile extends React.Component {
     }
 
     // // update state whenever we receive new props
-    // componentWillReceiveProps(nextProps) {
-    //     this.fetchData(nextProps.donor);
-    // }
+    componentWillReceiveProps(nextProps) {
+        this.fetchData(nextProps.donor);
+    }
 
     fetchData(donor) {
         $.get('/donor/' + donor + '/data', function(data, status) {
