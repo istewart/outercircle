@@ -297,7 +297,6 @@ app.get('/charityposts', isLoggedIn, function(request, response) {
 app.get('/donor/:id/data', function(request, response) {
   // console.log('- Request received /donor/:id:/data');
 
-  const requester = 'todo';
   const donor = request.params.id;
   var sql = 'SELECT d.name, d.description, d.profile_image, d.cover_image '
     + 'FROM donor AS d '
@@ -320,7 +319,6 @@ app.get('/donor/:id/data', function(request, response) {
 app.get('/donor/:id/stats', function(request, response) {
   // console.log('- Request received /donor/:id:/stats');
 
-  const requester = 'todo';
   const donor = request.params.id;
 
   var sql = 'SELECT c.category, SUM(d.amount) AS amount '
@@ -383,13 +381,10 @@ app.post('/donate', function(request, response) {
   });
 });
 
-// retrieve the donations for TODO
+// retrieve the donations
 app.get('/donations/:id', function(request, response) {
   // console.log('- Request received /donations/:id:');
-
-  const requester = 'todo';
   const donor = request.params.id;
-  const charity = 'todo ';
 
   var sql = 'SELECT c.name, d.id, d.amount, d.time, c.category '
     + 'FROM donation AS d JOIN charity AS c '
