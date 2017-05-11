@@ -28,10 +28,6 @@ Which will clean dist, run build, and start the server.
 Sign In:
 ========
 
-IMPORTANT FOR USE OF THE APPLICATION: You must first log in to see many of the features of the application. Either navigate to http://localhost/login or click the login button.
-
-In order to login, you must sign up first. Sign up by clicking the sign up button on the login page and enter desired credentials.
-
 If you are not logged in, you will be automatically redirected to /login.
 
 Host:
@@ -53,3 +49,9 @@ Administrator:
 ==============
 
 Administrator is admin@outercircle.org. If the user doesn't exist you can add it with whatever password you want. After logging in as admin@outercircle.org go to /adminPortal to add charities.
+
+
+Features Since Presentation:
+============================
+
+We added autofill for charities when entering donations since Steve mentioned that it would be a nice feature.
