@@ -194,6 +194,29 @@ app.get('/searchData', function(request, response) {
     });
 });
 
+// search donors and charities
+app.get('/search', function(request, response) {
+  const q = request.query.q;
+
+  var sql = "SELECT d.name AS name, d.id AS id, d.profile_image AS profile, printf('%s%d', '/donor/', d.id) AS link FROM donor AS d WHERE d.name LIKE ?" +
+        "UNION SELECT c.name AS name, c.id AS id, c.profile_image AS profile, printf('%s%d', '/charity/', c.id) AS link FROM charity AS c WHERE c.name LIKE ?";
+  db.query(sql, ['%' + q + '%', '%' + q + '%'], function(error, result) {
+      if (!error) {
+        if (!result.rowCount) {
+          response.json([]);
+        } else {
+          // return the requested posts
+          response.json(result.rows);
+        }
+      } else {
+        // return an error
+        console.log('error in search: ');
+        console.log(error);
+        response.json([]);
+      }
+  });
+});
+
 // check whether a user has followed a certain user or charity
 app.get('/checkFollow', isLoggedIn, function(request, response) {
     //console.log('- Request received /checkFollow:');
@@ -579,6 +602,7 @@ init(function() {
     console.log('- Server listening on port 8080');
   });
 })
+
 // Alright now lets handle login with a LocalStrategy
 passport.use('login', new LocalStrategy({
 	passReqToCallback: true

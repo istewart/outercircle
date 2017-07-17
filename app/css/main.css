@@ -40,13 +40,14 @@ body {
   background-color: #313333;
   padding: 12px 16px;
   width: 100%;
+  max-height: 58.4px;
   display: flex;
   justify-content: space-between;
   z-index: 99999;
 }
 
 #user-menu {
-  margin-left: 16px;
+  margin-left: 10px;
 }
 
 #main {
@@ -383,4 +384,30 @@ span.psw {
 
 .friendsButton {
     align-items: right;
+}
+
+.search-group {
+  flex-grow: 1;
+}
+
+.search-results {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  list-style-type: none;
+  box-shadow: 1px 3px 8px 0 rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.12);
+}
+
+.search-result:hover, .search-result:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+.search-result li:hover,  .search-result:focus li {
+  background-color: #dee6ec;
+}
+
+.search-result li {
+  padding: 0 12px;
+  line-height: 22px;
 }

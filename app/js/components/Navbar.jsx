@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import LoginButton from './LoginButton.jsx';
 import SearchList from './SearchList.jsx';
+import SearchBar from './SearchBar.jsx';
 
 export default class Navbar extends React.Component {
     constructor(props) {
@@ -92,13 +93,7 @@ export default class Navbar extends React.Component {
             <img src={window.location.origin + "/logo_green.png"} className="img-rounded profile-thumbnail"/>
         </Link>
         {logoutRedirect}
-        <input id="search"
-          className="form-control"
-          type="text"
-          placeholder="Search"
-          onChange={this.filterList.bind(this)}
-        />
-        {showAllSearch}
+        <SearchBar/>
         <Link to={"/donor/"+this.state.user}>
           <img src={window.location.origin + "/" + this.state.profile_image} className="img-rounded profile-thumbnail" id="user-menu" alt="profile image"/>
         </Link>
