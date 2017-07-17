@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import SearchResult from './SearchResult.jsx';
 
@@ -18,7 +17,7 @@ export default class SearchBar extends React.Component {
     event.preventDefault();
     const query = $('#search').val();
 
-    // hide autocomplete if search is deleted
+    // hide autocomplete if search is empty
     if (!query) {
       this.setState({results: []});
       return;
@@ -36,10 +35,10 @@ export default class SearchBar extends React.Component {
 
   // clear the search bar when a link is clicked
   handleClick() {
-    $('#search').val("");
+    $('#search').val('');
   }
 
-  render() { // TODO: fix overlap display
+  render() { // TODO: CLEAN UP RELATED CODE, something cool with rounded edges
     const renderedResults = this.state.results.map((result) =>
       <SearchResult 
         name={result.name}

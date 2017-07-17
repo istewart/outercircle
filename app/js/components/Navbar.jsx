@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import LoginButton from './LoginButton.jsx';
-import SearchList from './SearchList.jsx';
 import SearchBar from './SearchBar.jsx';
 
 export default class Navbar extends React.Component {
@@ -20,18 +19,15 @@ export default class Navbar extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({user:nextProps.user,loggedIn:nextProps.loggedIn});
+        this.setState({user:nextProps.user, loggedIn:nextProps.loggedIn});
         this.fetchData(nextProps.user);
     }
 
     fetchData(user) {
         $.get('/donor/' + user + '/data', function(data, status) {
           if (status === 'success') {
-            // console.log("PROFILE IMAGE: " + data.profile_image);
             // we succesfully retrieved some data so update state
-            this.setState({
-                profile_image: data.profile_image
-            });
+            this.setState({profile_image: data.profile_image});
           } else {
             console.log("error fetching profile image")
           }
@@ -48,58 +44,32 @@ export default class Navbar extends React.Component {
         })
     }
 
-    getData(keyWord) {
-        const search = this;
-        // console.log(keyWord);
-        $.get('/searchDataShorted', {keyWord: keyWord}, function(data, status) {
-            if (status === 'success') {
-                search.setState({items: data, keyWord: keyWord});
-            } else {
-                // error handling
-            }
-        });
-    }
-
-    filterList(event) {
-        if(event.target.value !== "") {
-            var updatedList = [];
-            this.getData(event.target.value.toLowerCase());
-            updatedList = this.state.items;
-            this.setState({items: updatedList});
-        } else {
-            this.setState({items: []});
-        }
-    }
-
     render() {
-    var loginButton = "";
-    var logoutRedirect = "";
-    var showAllSearch = <SearchList items={this.state.items} keyWord={this.state.keyWord} asd={true}/>;
-    if (this.state.logout) {
-        logoutRedirect = <Redirect to="/login"/>;
-    }
-    if (!this.state.loggedIn) {
-        loginButton = <Link to="/login" className="btn btn-primary">Login</Link>;
-    }
-    else {
-        loginButton = <button className="btn btn-primary" onClick={this._logout}>Logout</button>;
-    }
-    if(window.location.pathname.includes('/search/')) {
-        showAllSearch = <SearchList items={this.state.items} keyWord={this.state.keyWord} asd={false}/>;
-    }
-    return (
-      <div id="navbar">
-        <Link to="/">
-            <img src={window.location.origin + "/logo_green.png"} className="img-rounded profile-thumbnail"/>
-        </Link>
-        {logoutRedirect}
-        <SearchBar/>
-        <Link to={"/donor/"+this.state.user}>
-          <img src={window.location.origin + "/" + this.state.profile_image} className="img-rounded profile-thumbnail" id="user-menu" alt="profile image"/>
-        </Link>
-        {loginButton}
-      </div>
-    )
+        var loginButton = "";
+        var logoutRedirect = "";
+        if (this.state.logout) {
+            logoutRedirect = <Redirect to="/login"/>;
+        }
+        if (!this.state.loggedIn) {
+            loginButton = <Link to="/login" className="btn btn-primary">Login</Link>;
+        }
+        else {
+            loginButton = <button className="btn btn-primary" onClick={this._logout}>Logout</button>;
+        }
+
+        return (
+          <div id="navbar">
+            <Link to="/">
+                <img src={window.location.origin + "/logo_green.png"} className="img-rounded profile-thumbnail"/>
+            </Link>
+            {logoutRedirect}
+            <SearchBar/>
+            <Link to={"/donor/"+this.state.user}>
+              <img src={window.location.origin + "/" + this.state.profile_image} className="img-rounded profile-thumbnail" id="user-menu" alt="profile image"/>
+            </Link>
+            {loginButton}
+          </div>
+        );
     }
 }
 
