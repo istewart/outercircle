@@ -17,7 +17,7 @@ export default class SearchBar extends React.Component {
     event.preventDefault();
     const query = $('#search').val();
 
-    // hide autocomplete if search is empty
+    // hide autocomplete if search is empty // TODO: handle loss of focus
     if (!query) {
       this.setState({results: []});
       return;
