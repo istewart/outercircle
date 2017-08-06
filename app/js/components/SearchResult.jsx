@@ -14,7 +14,17 @@ export default class SearchResult extends React.Component {
         onClick={this.props.click}
       >
         <li>
-          {this.props.name}
+          <div className="post-header">
+            <img 
+              src={window.location.origin + "/" + this.props.profile}
+              className="img-rounded profile-thumbnail"
+              alt={"Profile Image of " + this.props.name}
+            />
+            <div className="post-title">
+              <p>{this.props.name}</p>
+              <p className="post-time">{"TODO uhh number of likes?"}</p>
+            </div>
+          </div>
         </li>
       </Link>
     );
