@@ -10,6 +10,9 @@ export default class SearchBar extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleFocus = this.handleChange.bind(this); // TODO: this is a hack
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   // find autocomplete results for current query
@@ -17,7 +20,7 @@ export default class SearchBar extends React.Component {
     event.preventDefault();
     const query = $('#search').val();
 
-    // hide autocomplete if search is empty // TODO: handle loss of focus
+    // hide autocomplete if search is empty
     if (!query) {
       this.setState({results: []});
       return;
@@ -36,6 +39,19 @@ export default class SearchBar extends React.Component {
   // clear the search bar when a link is clicked
   handleClick() {
     $('#search').val('');
+    this.setState({results: []});
+  }
+
+  // hide the results when search loses focus // TODO: a hack, but only way i think
+  handleBlur(event) {
+    const currentTarget = event.currentTarget;
+
+    // make sure we aren't selecting some sub element when we lose focus
+    setTimeout(function() {
+      if (!currentTarget.contains(document.activeElement)) {
+        this.setState({results: []});
+      }
+    }.bind(this), 0);
   }
 
   render() { // TODO: CLEAN UP RELATED CODE, something cool with rounded edges
@@ -49,7 +65,7 @@ export default class SearchBar extends React.Component {
       />
     );
 
-    var renderedComplete = "";
+    var renderedComplete = ""; // TODO: limit count
     if (renderedResults.length) {
       renderedComplete = (
         <ul className="search-results">
@@ -59,7 +75,10 @@ export default class SearchBar extends React.Component {
     }
 
     return (
-      <div className="search-group">
+      <div className="search-group"
+       onFocus={this.handleFocus}
+       onBlur={this.handleBlur}
+      >
         <input id="search"
           className="form-control"
           type="text"
