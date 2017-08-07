@@ -374,7 +374,7 @@ span.psw {
 
 .search-list .allRes {
     border-radius: 5px;
-    color:deepskyblue;
+    color: deepskyblue;
 }
 
 .search-container {
@@ -404,7 +404,7 @@ span.psw {
 }
 
 .search-result li:hover,  .search-result:focus li {
-  background-color: #dee6ec;
+  background-color: lightblue;
 }
 
 .search-result li {
