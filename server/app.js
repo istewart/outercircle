@@ -32,7 +32,7 @@ app.use(expressSession({secret: 'Thisisasecretshhhh'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// set up a connection pool
+// set up a connection pool to sqlite
 var db = anyDB.createPool(
   'sqlite3://outercircle.db', // for prod
   {min: 2, max: 8}
@@ -146,24 +146,6 @@ app.post('/post', function(request, response) {
   });
 });
 
-// retrieve charities' and donors' name for search
-app.get('/searchDataShorted', function(request, response) {
-    // console.log('- Request received /searchData:');
-    var sql = 'SELECT d.name AS name, d.id AS id, \'D\' AS category FROM donor AS d WHERE d.name LIKE ?' +
-        'UNION SELECT c.name AS name, c.id AS id, \'C\' AS category FROM charity AS c WHERE c.name LIKE ?' +
-        'LIMIT 5';
-    // console.log(sql)
-    db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
-        if (error) {
-            console.log("Search error: "+error)
-            response.json([]);
-        } else {
-            // console.log(result);
-            response.json(result.rows);
-        }
-    });
-});
-
 app.get('/searchCharityShorted', function(request, response) {
     // console.log('- Request received /searchCharity:');
     var sql = 'SELECT c.id, c.name AS name FROM charity AS c WHERE c.name LIKE ?' +
@@ -174,21 +156,6 @@ app.get('/searchCharityShorted', function(request, response) {
             response.json([]);
         } else {
             // console.log(result);
-            response.json(result.rows);
-        }
-    });
-});
-
-// retrieve charities' and donors' name for search
-app.get('/searchData', function(request, response) {
-    // console.log('- Request received /searchData:');
-    var sql = 'SELECT d.name AS name, d.id AS id, d.profile_image AS profile, \'D\' AS category FROM donor AS d WHERE d.name LIKE ?' +
-        'UNION SELECT c.name AS name, c.id AS id, c.profile_image AS profile, \'C\' AS category FROM charity AS c WHERE c.name LIKE ?';
-    db.query(sql, ['%'+request.query.keyWord+'%', '%'+request.query.keyWord+'%'],function(error, result) {
-        if (error) {
-            console.log("Search error: "+error)
-            response.json([]);
-        } else {
             response.json(result.rows);
         }
     });
@@ -318,8 +285,6 @@ app.get('/charityposts', isLoggedIn, function(request, response) {
 
 // retrieve the data for a donor
 app.get('/donor/:id/data', function(request, response) {
-  // console.log('- Request received /donor/:id:/data');
-
   const donor = request.params.id;
   var sql = 'SELECT d.name, d.description, d.profile_image, d.cover_image '
     + 'FROM donor AS d '
@@ -340,8 +305,6 @@ app.get('/donor/:id/data', function(request, response) {
 
 // retrieve the stats for a donor
 app.get('/donor/:id/stats', function(request, response) {
-  // console.log('- Request received /donor/:id:/stats');
-
   const donor = request.params.id;
 
   var sql = 'SELECT c.category, SUM(d.amount) AS amount '
@@ -376,8 +339,6 @@ app.get('/donor/:id/stats', function(request, response) {
 
 // record a donation
 app.post('/donate', function(request, response) {
-  // console.log('- Request received /donate');
-  
   const donor = request.body.donor;
   const charity = request.body.charity;
   const isPublic = request.body.isPublic;
@@ -406,7 +367,6 @@ app.post('/donate', function(request, response) {
 
 // retrieve the donations
 app.get('/donations/:id', function(request, response) {
-  // console.log('- Request received /donations/:id:');
   const donor = request.params.id;
 
   var sql = 'SELECT c.name, d.id, d.amount, d.time, c.category '
@@ -493,8 +453,6 @@ app.post('/follow', function(request, response) {
 });
 
 app.post('/connect', function(request, response) {
-    // console.log('- Request received /connect');
-
     const user = request.body.user;
     const donor = request.body.donor;
 
@@ -512,8 +470,6 @@ app.post('/connect', function(request, response) {
 });
 
 app.post('/unfollow', function(request, response) {
-    // console.log('- Request received /unfollow');
-
     const donor = request.body.user;
     const charity = request.body.charity;
 
@@ -530,8 +486,6 @@ app.post('/unfollow', function(request, response) {
 });
 
 app.post('/unconnect', function(request, response) {
-    // console.log('- Request received /unconnect');
-
     const user = request.body.user;
     const donor = request.body.donor;
 
@@ -548,8 +502,6 @@ app.post('/unconnect', function(request, response) {
 });
 
 app.post('/editProfile', function(request, response) {
-  // console.log('- Request received /editProfile');
-  // console.log(request.body);
   const donor = request.body.donor;
   const name = request.body.name;
   const description = request.body.description;
@@ -592,11 +544,10 @@ app.post('/addCharity', isLoggedIn, function(req, res) {
 
 // serve the home page on any other request
 app.get('*', function(request, response) {
-  // console.log('- Request received *:');
   response.sendFile('index.html', {root : 'dist'});
 });
 
-// initialize the database the web server
+// initialize the database then the web server
 init(function() {
   app.listen(8080, function(){
     console.log('- Server listening on port 8080');
