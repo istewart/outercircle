@@ -406,17 +406,17 @@ app.get('/charity/:id/data', function(request,response) {
   });
 });
 
-app.get('/suggestDonor',function(request,response){
-    let sql= 'SELECT id, name, description, profile_image FROM donor'
-        + ' WHERE id != ? ORDER BY id ASC';
-    db.query(sql, [request.query.donor], function(error, result) {
-
-        if (!result.rowCount) {
-            console.log(error);
-        } else {
-            response.json(result.rows);
-        }
-    });
+app.get('/suggestDonor', function(request,response) {
+  let sql= 'SELECT id, name, description, profile_image FROM donor'
+      + ' WHERE id != ? AND id NOT IN '
+      + '(SELECT donor FROM connection WHERE user = ?) ORDER BY id ASC';
+  db.query(sql, [request.query.user, request.query.user], function(error, result) {
+      if (!result.rowCount) {
+          console.log(error);
+      } else {
+          response.json(result.rows);
+      }
+  });
 });
 
 app.get('/suggestCharity',function(request,response){
