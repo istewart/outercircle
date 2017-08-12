@@ -406,10 +406,12 @@ app.get('/charity/:id/data', function(request,response) {
   });
 });
 
+// TODO: this function is a mess
 app.get('/suggestDonor', function(request,response) {
   let sql= 'SELECT id, name, description, profile_image FROM donor'
       + ' WHERE id != ? AND id NOT IN '
-      + '(SELECT donor FROM connection WHERE user = ?) ORDER BY id ASC';
+      + '(SELECT donor FROM connection WHERE user = ?) ORDER BY id ASC '
+      + 'LIMIT 3';
   db.query(sql, [request.query.user, request.query.user], function(error, result) {
       if (!result.rowCount) {
           console.log(error);
@@ -419,18 +421,20 @@ app.get('/suggestDonor', function(request,response) {
   });
 });
 
-app.get('/suggestCharity',function(request,response){
-    let sql= 'SELECT id, name, description, profile_image FROM charity'
-        + ' WHERE id NOT IN (SELECT charity from following WHERE donor=?) ORDER BY id ASC';
-    db.query(sql, [request.query.id], function(error, result) {
-        if(error){
-            console.log("Fetch suggestion error: "+error);
-        }
-        else if (!result.rowCount) {
-        } else {
-            response.json(result.rows);
-        }
-    });
+app.get('/suggestCharity', function(request, response) {
+  let sql= 'SELECT id, name, description, profile_image FROM charity'
+      + ' WHERE id NOT IN '
+      + '(SELECT charity from following WHERE donor = ?) ORDER BY id ASC '
+      + 'LIMIT 3';
+  db.query(sql, [request.query.user], function(error, result) {
+    if (error) {
+      console.log("Fetch suggestion error: " + error);
+    } else if (!result.rowCount) {
+      // TODO: this function is a disaster
+    } else {
+      response.json(result.rows);
+    }
+  });
 });
 
 app.post('/follow', function(request, response) {

@@ -34,7 +34,7 @@ export default class SuggestDonor extends React.Component {
 
     return (
       <div>
-        <header className="component-header">People you may know</header>
+        <header className="component-header">People you may know:</header>
         <ul className="list-group suggest-list shadow-box">
           {renderedSuggestions}
         </ul>
