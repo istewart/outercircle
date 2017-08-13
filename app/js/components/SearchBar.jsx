@@ -83,6 +83,7 @@ export default class SearchBar extends React.Component {
           className="form-control"
           type="text"
           placeholder="Search"
+          autoComplete="off"
           onChange={this.handleChange}
         />
         {renderedComplete}

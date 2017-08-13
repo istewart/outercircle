@@ -54,6 +54,7 @@ export default class AddDonation extends React.Component {
             <input type="text" className="form-control"
                    id="name"
                    ref="text"
+                   autoComplete="off"
                    onChange={this.filterList.bind(this)}
             />
             <SearchCharityList items={this.state.items} onText={this.changeText.bind(this)}/>
