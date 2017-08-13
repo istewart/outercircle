@@ -22,7 +22,7 @@ export default class SearchResult extends React.Component {
             />
             <div className="post-title">
               <p>{this.props.name}</p>
-              <p className="post-time">{"TODO uhh number of likes?"}</p>
+              <p className="post-time">{this.props.subtitle}</p>
             </div>
           </div>
         </li>

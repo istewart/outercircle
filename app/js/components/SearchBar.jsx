@@ -60,6 +60,7 @@ export default class SearchBar extends React.Component {
         name={result.name}
         profile={result.profile}
         link={result.link}
+        subtitle={result.subtitle}
         key={result.link}
         click={this.handleClick}
       />

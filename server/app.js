@@ -165,8 +165,13 @@ app.get('/searchCharityShorted', function(request, response) {
 app.get('/search', function(request, response) {
   const q = request.query.q;
 
-  var sql = "SELECT d.name AS name, d.id AS id, d.profile_image AS profile, printf('%s%d', '/donor/', d.id) AS link FROM donor AS d WHERE d.name LIKE ? " +
-        "UNION SELECT c.name AS name, c.id AS id, c.profile_image AS profile, printf('%s%d', '/charity/', c.id) AS link FROM charity AS c WHERE c.name LIKE ? LIMIT 5";
+  var sql = "SELECT d.name AS name, d.id AS id, d.profile_image AS profile, "
+        + "printf('%s%d', '/donor/', d.id) AS link, count(*) AS stat, printf('%d followers', count(c.user)) AS subtitle "
+        + "FROM donor AS d LEFT JOIN connection AS c ON d.id = c.donor WHERE d.name LIKE ? GROUP BY d.id "
+        + "UNION SELECT c.name AS name, c.id AS id, c.profile_image AS profile, "
+        + "printf('%s%d', '/charity/', c.id) AS link, count(*) AS stat, printf('%d followers', count(f.donor)) AS subtitle "
+        + "FROM charity AS c LEFT JOIN following AS f ON c.id = f.charity WHERE c.name LIKE ? GROUP BY c.id "
+        + "ORDER BY stat DESC LIMIT 5";
   db.query(sql, ['%' + q + '%', '%' + q + '%'], function(error, result) {
       if (!error) {
         if (!result.rowCount) {
