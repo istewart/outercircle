@@ -1,7 +1,7 @@
 OuterCircle
 ===========
 
-As of 7/17/2017, OuterCircle is publicly hosted at <http://ec2-52-32-167-201.us-west-2.compute.amazonaws.com>.
+As of 7/17/2017, OuterCircle is publicly hosted at <http://ec2-35-160-168-110.us-west-2.compute.amazonaws.com>.
 
 To install OuterCircle, run:
 
